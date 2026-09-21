@@ -117,6 +117,10 @@
 
 ## 用法
 
+### 保留 Markdown(`--keep-markdown`)
+
+模型默认会把 `#` 标题剥掉(训练目标是人写文本,几乎没有标题;检测器也把标题当机器特征)。三个脚本都加了 `--keep-markdown`:按标题、``` 代码块和列表项切块,只改写块之间的正文,标题/代码/项目符号原样放回。这是外面包的一层,模型和提示词没动;开了过检率会低一些,段与段之间也少一点连贯。见 issue #1。
+
 ### GGUF(llama.cpp、Ollama、LM Studio、llama-cpp-python)— 推荐
 
 文件在 `jialinyyzz/humanizer-gemma-4-e4b` 的 `gguf/` 目录:`Q8_0`(8.0 GB)、`Q6_K`(6.2 GB)、`bf16`(14.9 GB)。Q8_0 和 Q6_K(v1 上实测,v2 同配方)的事实错都在 bf16 的噪声带内。**Q5_K_M 和 Q4_K_M 不发布**:Q5_K_M 严重错翻近三倍(17/62 对 6),Q4_K_M 和 MLX 4bit 一样退化成乱码(见 `docs/QUALITY.md`)。

@@ -49,6 +49,7 @@ Human-written originals from the training genres score 9/9 "human" on the same d
 * Rewrites are deeper than v1; very occasionally a sentence comes out garbled ("from thousands to thousands"). Resample if it reads wrong.
 * Chinese is weaker than English (13/16).
 * Drafts under ~120 words are rewritten less reliably.
+* **Markdown headings are dropped** (`#`…`####`; bold and tables usually survive). The training targets are human-written texts that almost never carry ATX headings, and detectors treat headings as a machine signal, so the model writes prose. Pass `--keep-markdown` (all three scripts) to keep headings, fenced code and list bullets verbatim: the prose between them is rewritten block by block. Expect a lower detector pass rate in that mode, and a little less flow across sections (each block is rewritten without seeing the others). See issue #1.
 
 ## Samples
 
@@ -136,6 +137,16 @@ python humanizer/hf_infer.py --model jialinyyzz/humanizer-gemma-4-e4b draft.txt
 ### MLX (Apple silicon), bf16 only
 
 `humanizer/mlx_nocopy_server.py` + `humanizer/humanize.py` serve the merged bf16 weights with the guard. Note: mlx_lm's Gemma 4 loader rejects the 54 unused k/v tensors of the 18 shared-KV layers in the HF checkpoint; strip `layers.24–41.self_attn.(k_proj|v_proj|k_norm)` before loading. MLX 4-/6-bit quantisation of this model is not usable (see `docs/QUALITY.md`); use the GGUF quants instead.
+
+### Keeping Markdown (`--keep-markdown`)
+
+```bash
+python humanizer/gguf_infer.py --gguf humanizer-gemma-4-e4b-Q8_0.gguf --format prompt_format.json --keep-markdown notes.md
+python humanizer/hf_infer.py --model jialinyyzz/humanizer-gemma-4-e4b --keep-markdown notes.md
+python humanizer/humanize.py --model-dir ./humanizer-gemma-4-e4b-mlx --port 8104 --keep-markdown notes.md
+```
+
+`humanizer/markdown_guard.py` splits the draft at `#` headings, ``` fences and list items, rewrites each prose block on its own, and puts the headings, code and bullets back in place unchanged. The model and prompt are untouched; this is a wrapper. Off by default because a heading-heavy skeleton is exactly what detectors key on.
 
 ### Prompt format — read this before anything else
 

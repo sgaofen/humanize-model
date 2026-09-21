@@ -53,9 +53,14 @@ def humanize(llm, pf, draft, thr=0.35, penalty=2.0, temperature=0.85):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('draft', nargs='?'); ap.add_argument('--gguf', required=True); ap.add_argument('--format', required=True, help='prompt_format.json')
+    ap.add_argument('--keep-markdown', action='store_true', help='keep #-headings and ``` code blocks verbatim; prose rewritten block by block')
     ap.add_argument('--n-gpu-layers', type=int, default=-1); ap.add_argument('--ctx', type=int, default=8192); ap.add_argument('--threads', type=int, default=None)
     a = ap.parse_args()
     llm = Llama(model_path=a.gguf, n_ctx=a.ctx, n_gpu_layers=a.n_gpu_layers, n_threads=a.threads, verbose=False)
     pf = json.load(open(a.format)); draft = open(a.draft).read() if a.draft else sys.stdin.read()
-    txt, meta = humanize(llm, pf, draft)
+    if a.keep_markdown:
+        from markdown_guard import rewrite_keeping_markdown
+        txt = rewrite_keeping_markdown(draft, lambda b: humanize(llm, pf, b)[0]); meta = {'copy_5gram': round(copy_rate(draft, txt)['copy_5gram'], 3), 'keep_markdown': True}
+    else:
+        txt, meta = humanize(llm, pf, draft)
     print(txt); print(f"\n[{meta}]", file=sys.stderr)

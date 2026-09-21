@@ -46,23 +46,31 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('draft', nargs='?'); ap.add_argument('--model', default='jialinyyzz/humanizer-gemma-4-e4b')
     ap.add_argument('--thr', type=float, default=0.35); ap.add_argument('--penalty', type=float, default=2.0)
+    ap.add_argument('--keep-markdown', action='store_true', help='keep #-headings and ``` code blocks verbatim; prose rewritten block by block')
     a = ap.parse_args()
-    draft = open(a.draft).read() if a.draft else sys.stdin.read()
+    draft_full = open(a.draft).read() if a.draft else sys.stdin.read()
     pf_path = os.path.join(a.model, 'prompt_format.json') if os.path.isdir(a.model) else hf_hub_download(a.model, 'prompt_format.json')
-    pf = json.load(open(pf_path)); prompt = pf['instr'] + '\n\n' + draft.strip() + pf['sep']
+    pf = json.load(open(pf_path))
     tok = AutoTokenizer.from_pretrained(a.model)
     model = AutoModelForCausalLM.from_pretrained(a.model, dtype=torch.bfloat16, device_map='cuda').eval()
 
-    def gen(penalty=False):
+    def gen(draft, penalty=False):
+        prompt = pf['instr'] + '\n\n' + draft.strip() + pf['sep']
         ids = tok(prompt, return_tensors='pt').to('cuda')
         lp = LogitsProcessorList([NoCopyProcessor(tok(draft, return_tensors='pt')['input_ids'][0], n=5, penalty=a.penalty, tok=tok)]) if penalty else None
         out = model.generate(**ids, max_new_tokens=max(700, int(len(draft.split()) * 2.2) + 200), do_sample=True,
                              temperature=0.85, top_p=0.95, logits_processor=lp)
         return tok.decode(out[0][ids['input_ids'].shape[1]:], skip_special_tokens=True).strip()
 
-    txt = gen(); c = copy_rate(draft, txt)['copy_5gram']
-    if c > a.thr:
-        txt = gen(penalty=True); c = copy_rate(draft, txt)['copy_5gram']
+    def one(draft):
+        txt = gen(draft); c = copy_rate(draft, txt)['copy_5gram']
+        if c > a.thr:
+            txt = gen(draft, penalty=True)
+        return txt
+
+    from markdown_guard import rewrite_keeping_markdown
+    txt = rewrite_keeping_markdown(draft_full, one) if a.keep_markdown else one(draft_full)
+    c = copy_rate(draft_full, txt)['copy_5gram']
     print(txt); print(f'\n[copy_5gram={c:.3f}]', file=sys.stderr)
 
 
