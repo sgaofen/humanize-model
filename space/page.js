@@ -10,10 +10,7 @@
   var lang = null;
   try { var q = new URLSearchParams(location.search).get('lang'); if (q === 'zh' || q === 'en') lang = q; } catch (e) {}
   if (!lang) lang = store(KEY);
-  if (lang !== 'zh' && lang !== 'en') {
-    var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
-    lang = /^zh/i.test(nav) ? 'zh' : 'en';
-  }
+  if (lang !== 'zh' && lang !== 'en') lang = 'en';   // English unless ?lang=zh or the visitor picked 中文 before
   root.dataset.lang = lang;
   root.lang = lang === 'zh' ? 'zh-CN' : 'en';
 
@@ -78,6 +75,14 @@
   }
 
   document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a && a.getAttribute('href').length > 1) {
+      // On huggingface.co the Space sits in an auto-height iframe, so a plain #hash jump scrolls nothing.
+      // scrollIntoView also scrolls the parent page.
+      var dest = document.getElementById(a.getAttribute('href').slice(1));
+      if (dest) { e.preventDefault(); dest.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      return;
+    }
     var t = e.target.closest('[data-setlang],[data-act],[data-sample]');
     if (!t) return;
     if (t.dataset.setlang) { setLang(t.dataset.setlang); return; }
