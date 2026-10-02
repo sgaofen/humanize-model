@@ -1,0 +1,19 @@
+Subject: Handoff — 3 Pending Orders in ERP, 2 Expedited
+
+Hi Marcus,
+
+End-of-shift handoff for today, Thursday, June 12. Three orders are still pending in the ERP and need attention on your end tonight.
+
+1. **Order #55821 — Hartwell Medical Supply** — Flagged EXPEDITED. Must ship by Friday 3:00 PM to hit their Saturday delivery window. The picking list is complete, but the box size is missing — check with warehouse for a 24x18x12. Contact there is Dana Ruiz, (503) 555-0194.
+
+2. **Order #55835 — Cascade Print Group** — Also EXPEDITED. Payment authorization is still pending; it went to accounting at 2:15 PM but hasn't cleared. If it's not approved by 10:00 PM, escalate to Priya in finance (she's on call). Once approved, it can go straight to packing.
+
+3. **Order #55840 — Bellamy Foods** — Standard shipping, no rush, but the address on file shows their old Portland location. I left a voicemail to confirm the new Beaverton address; if they call back, update the record before release.
+
+All three are logged under queue "NIGHT-0612" if you want to filter. Nothing else outstanding — returns are clear, and the dock report was filed at 5:30.
+
+Call my cell at (503) 555-2287 if anything looks off with the Hartwell order; that one's the priority.
+
+Thanks,
+Elena Voss
+Day Shift Lead, Order Processing

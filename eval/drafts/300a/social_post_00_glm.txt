@@ -1,0 +1,19 @@
+🎉 Excited to share that I've been promoted to Senior Product Manager at Stripe!
+
+Four years ago, I joined Stripe as an Associate PM fresh out of my MBA at Berkeley Haas, working on checkout experiences from our San Francisco office. Today, I'm thrilled to step into this new chapter leading the Payments Optimization team.
+
+Looking back at the journey:
+
+→ Shipped the one-click checkout redesign that lifted conversion by 14% for over 200,000 businesses
+→ Led our Adaptive Pricing launch in 2023, now live in 45 countries
+→ Grew from a team of one to mentoring four incredible PMs
+
+None of this would have been possible without the people around me. Huge thanks to my manager Priya Raman, who took a chance on me in 2021 and has championed my growth every step of the way. To Miguel Santos and the entire payments org — thank you for the late-night debugging sessions, the honest feedback, and the laughs along the way.
+
+And to our users: everything we build starts with you. Your feedback shapes our roadmap more than you know.
+
+The best part? We're just getting started. The next year is packed with launches I can't wait to share.
+
+To anyone early in their product career: keep shipping, keep learning, and find mentors who believe in you. The compounding is real.
+
+#stripe #productmanagement #promotion #careergrowth

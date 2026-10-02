@@ -1,0 +1,176 @@
+# Humanizer 桌面 App 打包。
+#
+# 10-01 已挪到仓库根目录 .github/workflows/。
+# 触发:手动(Actions 页面 → release-app → Run workflow,填版本号),或推 app-v* 标签(如 app-v0.1.0)。
+# 推标签时会额外建一个 *草稿* Release 挂上安装包,需要人去 GitHub 上点发布。
+#
+# 产物:
+#   Humanizer-<版本>-macos-arm64.dmg              (含 Humanizer.app,Apple 芯片)
+#   Humanizer-<版本>-windows-x64-setup.exe        (Inno Setup 安装包,按用户安装,不要管理员)
+#   Humanizer-<版本>-windows-x64-portable.zip     (解压即用)
+#
+# 引擎:llama.cpp 官方发布二进制,版本和 sha256 钉在 app/packaging/llama-cpp.lock.json。
+#
+# 签名(都是可选的,没配就出未签名的包,用户首次打开会被系统拦一下,见 app/README.md):
+#   macOS:  secrets.MACOS_CERT_P12_BASE64 / MACOS_CERT_PASSWORD / MACOS_SIGN_IDENTITY
+#           + APPLE_ID / APPLE_TEAM_ID / APPLE_APP_PASSWORD(公证)
+#   Windows:目前不签;要签可以在 build_win.sh 之后加 signtool / Azure Trusted Signing 一步。
+
+name: release-app
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "版本号,如 0.1.0"
+        required: true
+        default: "0.1.0"
+  push:
+    tags: ["app-v*"]
+
+permissions:
+  contents: read
+
+env:
+  GO_VERSION: "1.27.1"
+  # Inno Setup 简体中文语言文件(runner 自带的版本里没有时才用),钉死提交
+  INNO_ZH_URL: https://raw.githubusercontent.com/jrsoftware/issrc/6ef32198ef1f7b7b375cd4b6b90896c2a58eb4c2/Files/Languages/ChineseSimplified.isl
+
+defaults:
+  run:
+    shell: bash
+    working-directory: app
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+      - name: Go 单测 + 三平台编译检查
+        run: |
+          go vet ./...
+          GOOS=windows go vet ./...
+          GOOS=darwin go vet ./...
+          go test ./...
+      - name: 网页逻辑单测(提示词指纹、差异、数字核对)
+        run: node devtools/webtest.mjs
+      - name: 端到端(假引擎 + 假下载源)
+        run: bash devtools/e2e.sh
+
+  macos:
+    needs: test
+    runs-on: macos-14 # Apple 芯片
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+      - name: 版本号
+        id: ver
+        run: |
+          v="${{ github.event.inputs.version }}"
+          [ -z "$v" ] && v="${GITHUB_REF_NAME#app-v}"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+      - name: 导入签名证书(可选)
+        env:
+          P12: ${{ secrets.MACOS_CERT_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+        if: env.P12 != ''
+        run: |
+          KC="$RUNNER_TEMP/build.keychain"
+          security create-keychain -p ci "$KC"
+          security set-keychain-settings -lut 3600 "$KC"
+          security unlock-keychain -p ci "$KC"
+          echo "$P12" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KC" -P "$P12_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k ci "$KC"
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | tr -d '"')
+      - name: 拉引擎(钉死版本,校验 sha256)
+        run: python3 packaging/fetch_engine.py --target macos --out dist/engine
+      - name: 打 .app 和 .dmg
+        env:
+          MACOS_SIGN_IDENTITY: ${{ secrets.MACOS_SIGN_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: bash packaging/macos/build_app.sh "${{ steps.ver.outputs.version }}"
+      - name: 冒烟:.app 里的启动器能找到引擎、引擎能跑
+        run: |
+          D="$RUNNER_TEMP/hz"
+          dist/mac/Humanizer.app/Contents/Resources/engine/metal/llama-server --version
+          dist/mac/Humanizer.app/Contents/MacOS/Humanizer --serve --no-browser --data-dir "$D" --port 47800 &
+          for i in $(seq 1 40); do curl -sf http://127.0.0.1:47800/app/status > status.json && break; sleep 0.5; done
+          cat status.json
+          grep -q '"backends":\["metal","cpu"\]' status.json
+          curl -s -X POST -H 'X-Humanizer: 1' http://127.0.0.1:47800/app/quit
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: macos
+          path: app/dist/Humanizer-*-macos-arm64.dmg
+          if-no-files-found: error
+
+  windows:
+    needs: test
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+      - name: 版本号
+        id: ver
+        run: |
+          v="${{ github.event.inputs.version }}"
+          [ -z "$v" ] && v="${GITHUB_REF_NAME#app-v}"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+      - name: 拉引擎(CPU / Vulkan / CUDA 12.4,钉死版本,校验 sha256)
+        run: python packaging/fetch_engine.py --target windows --out dist/engine
+      - name: 打安装包和便携 zip
+        run: bash packaging/windows/build_win.sh "${{ steps.ver.outputs.version }}"
+      - name: 冒烟:启动器能找到 CPU 引擎(runner 没有 GPU)
+        run: |
+          D="$RUNNER_TEMP/hz"
+          dist/win/engine/cpu/llama-server.exe --version
+          (dist/win/Humanizer.exe --no-browser --data-dir "$D" --port 47801 &)
+          for i in $(seq 1 40); do curl -sf http://127.0.0.1:47801/app/status > status.json && break; sleep 0.5; done
+          cat status.json
+          grep -q '"cpu"' status.json
+          curl -s -X POST -H 'X-Humanizer: 1' http://127.0.0.1:47801/app/quit
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: windows
+          path: |
+            app/dist/Humanizer-*-windows-x64-setup.exe
+            app/dist/Humanizer-*-windows-x64-portable.zip
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/app-v')
+    needs: [macos, windows]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: out
+          merge-multiple: true
+      - name: 校验和
+        run: cd out && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          draft: true
+          name: Humanizer App ${{ github.ref_name }}
+          files: out/*

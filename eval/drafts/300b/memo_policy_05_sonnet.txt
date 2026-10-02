@@ -1,0 +1,21 @@
+TO: Executive Steering Committee
+FROM: Finance & IT Strategy
+RE: ERP Cloud Migration — Cost-Benefit Summary
+DATE: September 21, 2026
+
+**Recommendation:** Approve the $2.3M migration of our on-premises SAP ECC 6.0 environment to a cloud-based SaaS ERP (S/4HANA Cloud), targeting go-live by Q3 2027.
+
+**Cost Basis**
+The $2.3M upfront investment covers: data migration and cleansing ($620K), integration rebuilds for 14 connected systems including our WMS and Salesforce instance ($540K), workforce retraining across 180 finance and operations users ($310K), dual-running costs during a four-month parallel cutover ($450K), and contingency/PM overhead ($380K). Annual SaaS subscription runs $890K, versus current on-prem maintenance, hosting, and support of $1.15M/year — a $260K annual run-rate savings.
+
+**Payback**
+Combining run-rate savings with elimination of a planned $1.4M server refresh (deferred capex avoided in FY2027) and estimated productivity gains of $310K/year from automated workflows, the project reaches payback in 3.1 years and delivers a 5-year NPV of approximately $1.7M at our 8% discount rate.
+
+**Compliance Considerations**
+Our SOC 2 Type II and GDPR obligations (EU subsidiary in Dublin) require contractual data residency guarantees from the vendor; Legal has confirmed the proposed vendor's EU data center meets this requirement. SOX change-management controls will need updated documentation for the new release-cadence model, since the SaaS vendor pushes quarterly updates outside our direct control.
+
+**Risks**
+Primary risks are cutover disruption to month-end close (mitigated by the parallel-run period) and change-resistance among tenured finance staff, addressed through the retraining budget above.
+
+**Next Step**
+Seeking committee approval by October 10, 2026 to lock vendor pricing ahead of their November rate increase.

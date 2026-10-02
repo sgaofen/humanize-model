@@ -1,0 +1,15 @@
+Subject: Extension Request for CS 340 Group Project – Team 6
+
+Dear Professor Alvarez,
+
+I'm writing on behalf of my group (Team 6) in CS 340 to request a one-week extension on the group project, currently due Friday, September 25.
+
+Our teammate, Marcus Feld, was hospitalized on September 19 for an appendectomy and is expected to remain at Overlook Medical Center through at least September 23, with a recovery period afterward. Marcus was responsible for implementing the backend API and database schema for our project (a course-scheduling app), and the rest of us — myself, Priya Nair, and Diego Ramos — don't have enough visibility into that portion of the codebase to complete it on his behalf without risking major integration issues.
+
+We've already finished the frontend components and initial testing plan, so the remaining work is concentrated in the backend module. We're asking for the deadline to be moved to Friday, October 2, which would give Marcus a few days to recover and rejoin remotely, or give us time to safely take over his section with proper documentation.
+
+We're happy to share our current GitHub repository or provide a brief progress update if that would help you evaluate the request. Thank you for your understanding, and please let us know if you need anything further from us.
+
+Best regards,
+Sarah Chen
+CS 340, Section 2

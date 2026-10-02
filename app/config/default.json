@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "repo": "jialinyyzz/humanizer",
+  "revision": "main",
+  "endpoints": [
+    {
+      "id": "hf",
+      "label": "Hugging Face",
+      "base": "https://huggingface.co"
+    },
+    {
+      "id": "mirror",
+      "label": "hf-mirror.com",
+      "base": "https://hf-mirror.com"
+    }
+  ],
+  "tiers": [
+    {
+      "id": "q8",
+      "label": "Q8_0",
+      "file": "humanizer-12b-Q8_0.gguf",
+      "approx_gb": 12.7,
+      "min_ram_gb": 32,
+      "sha256": "",
+      "note": {
+        "zh": "效果最好",
+        "en": "Best quality"
+      }
+    },
+    {
+      "id": "q6",
+      "label": "Q6_K",
+      "file": "humanizer-12b-Q6_K.gguf",
+      "approx_gb": 10.0,
+      "min_ram_gb": 16,
+      "sha256": "",
+      "note": {
+        "zh": "和 Q8_0 几乎一样(KL 0.003),体积小两成",
+        "en": "Nearly identical to Q8_0 (KL 0.003), ~20% smaller"
+      }
+    },
+    {
+      "id": "lite",
+      "label": "Lite",
+      "file": "lite/humanizer-lite-Q6_K.gguf",
+      "approx_gb": 6.2,
+      "min_ram_gb": 8,
+      "sha256": "",
+      "note": {
+        "zh": "给 8 GB 内存的机器",
+        "en": "For 8 GB machines"
+      }
+    }
+  ],
+  "tier_by_ram": [
+    {
+      "min_gb": 32,
+      "tier": "q8"
+    },
+    {
+      "min_gb": 16,
+      "tier": "q6"
+    },
+    {
+      "min_gb": 0,
+      "tier": "lite"
+    }
+  ],
+  "ram_slack_gb": 1.0,
+  "engine": {
+    "ctx_size": 8192,
+    "gpu_layers": "all",
+    "parallel": 1,
+    "load_timeout_sec": 900,
+    "extra_args": []
+  },
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 0,
+    "min_p": 0.0,
+    "repeat_penalty": 1.0
+  },
+  "n_predict": {
+    "factor": 2.5,
+    "min": 256,
+    "max": 2048
+  },
+  "idle_exit_minutes": 30,
+  "preferred_port": 47615
+}

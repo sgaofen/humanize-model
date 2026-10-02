@@ -61,13 +61,13 @@ def _sub(logits, idx, p):
     return logits + mask
 
 
-def complete(prompt, max_tokens, temperature, top_p, stop, copy_penalty, copy_n, draft):
+def complete(prompt, max_tokens, temperature, top_p, stop, copy_penalty, copy_n, draft, top_k=0):
     ids = TOK.encode(prompt)
     procs = []
     if copy_penalty and copy_penalty > 0:
         src = TOK.encode(draft) if draft else ids
         procs.append(NoCopy(src, n=int(copy_n or 5), penalty=copy_penalty))
-    sampler = make_sampler(temp=temperature, top_p=top_p)
+    sampler = make_sampler(temp=temperature, top_p=top_p, top_k=top_k)
     out_ids = []
     text = ''
     for tok, _ in generate_step(mx.array(ids), MODEL, max_tokens=max_tokens, sampler=sampler,
@@ -110,9 +110,10 @@ class H(BaseHTTPRequestHandler):
         if isinstance(prompt, list): prompt = prompt[0]
         t0 = time.time()
         with LOCK:
-            text, np_, ng = complete(prompt, int(body.get('max_tokens', 700)), float(body.get('temperature', 0.85)),
+            text, np_, ng = complete(prompt, int(body.get('max_tokens', 700)), float(body.get('temperature', 1.0)),
                                      float(body.get('top_p', 0.95)), body.get('stop') or [],
-                                     float(body.get('copy_penalty', 0) or 0), body.get('copy_n', 5), body.get('draft'))
+                                     float(body.get('copy_penalty', 0) or 0), body.get('copy_n', 5), body.get('draft'),
+                                     int(body.get('top_k', 0) or 0))
         self._json(200, {'id': f'cmpl-{int(t0)}', 'object': 'text_completion', 'model': a.model,
                          'choices': [{'text': text, 'index': 0, 'finish_reason': 'stop'}],
                          'usage': {'prompt_tokens': np_, 'completion_tokens': ng, 'total_tokens': np_ + ng},

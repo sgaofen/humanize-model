@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · AI detection</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="chart.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { lang, markSvg, esc, done } from './common.js';
+import { barRows, axis } from './chart.js';
+const zh = lang === 'zh';
+
+// 全部数字来自 .cache/tmp/release_facts.md「AI 检测」一节(2026-10-01 实测),不要在这里改数。
+const A = [  // 210 篇英文草稿,每篇第 1 发
+  { name: zh ? 'humanizer 12B（本版）' : 'humanizer 12B (this release)', me: true, v: 184 / 210, big: '88%', note: zh ? '26 / 210 被判 AI' : '26 / 210 flagged as AI' },
+  { name: zh ? 'humanizer E4B（上一版 r7）' : 'humanizer E4B (previous release, r7)', v: 184 / 210, big: '88%', note: zh ? '26 / 210 被判 AI' : '26 / 210 flagged as AI' },
+  { name: zh ? '同系 12B 早期版（R12s12b，温度 0.85）' : 'early 12B checkpoint (R12s12b, temp 0.85)', v: 149 / 210, big: '71%', note: zh ? '61 / 210 被判 AI' : '61 / 210 flagged as AI' },
+];
+const B = [  // 同一批 60 篇
+  { name: zh ? 'humanizer 12B（本版）' : 'humanizer 12B (this release)', me: true, v: 50 / 60, big: '50 / 60', note: zh ? '10 / 60 被判 AI' : '10 / 60 flagged as AI' },
+  { name: zh ? 'blader/humanizer skill v3.1.0 + Claude Sonnet' : 'blader/humanizer skill v3.1.0 + Claude Sonnet', base: true, v: 0, big: '0 / 60', note: zh ? '60 / 60 被判 AI · AI 分中位 100%' : '60 / 60 flagged as AI · median AI score 100%' },
+];
+const G = [  // 本版按体裁:被判 AI / 篇数(210 篇全部列出,合计 26 / 210)
+  ['social', 8, 16], ['memo', 5, 13], ['blog', 3, 16], ['essay', 4, 38], ['report', 2, 20], ['paper', 2, 22],
+  ['reddit', 1, 18], ['email', 1, 35], ['forum', 0, 18], ['review', 0, 14],
+];
+const GN = zh
+  ? { social: '社交帖（emoji / 井号 / “1/ 2/”连载）', memo: '政策备忘', blog: '博客', essay: '作文 / 议论文', report: '工作报告', paper: '论文段落', reddit: 'Reddit 帖', email: '邮件', forum: '论坛回答', review: '产品评论' }
+  : { social: 'social posts (emoji, hashtags, “1/ 2/” threads)', memo: 'policy memos', blog: 'blog posts', essay: 'essays (student, opinion)', report: 'work reports', paper: 'paper sections', reddit: 'Reddit posts', email: 'emails', forum: 'forum answers', review: 'product reviews' };
+
+const T = zh ? {
+  eye: 'AI 检测 · 外部核对，从未进入训练', h: '被 Originality.ai 判为人写的比例',
+  sub: '最严档（AI Allowance 0%，API v3）· 自建评测集英文草稿，每篇取第 1 发 · 2026-10-01 实测',
+  a: '全部 210 篇英文草稿', b: '同一批 60 篇：对比公开基线', bn: 'GitHub 上最火的去 AI 味 skill（5.3 万星），由 Claude Sonnet 按它的规则改写',
+  g: '本版仍被判 AI 的地方（按体裁：被判 AI 篇数 / 篇数）', gn: '失败集中在最模板化的体裁 · 合计 26 / 210',
+  foot: '草稿由 GLM-5.3、GPT-5.6 luna、Claude Sonnet 从零写成，各约三分之一。检测器会更新；这是某一天的实测，不是承诺。',
+  ax: '判为人写', gax: '被判 AI',
+} : {
+  eye: 'AI detection · an external check, never a training signal', h: 'Share judged human-written by Originality.ai',
+  sub: 'Strictest setting (AI Allowance 0%, API v3) · held-out English eval drafts, first sample each · measured 2026-10-01',
+  a: 'All 210 English drafts', b: 'Same 60 drafts vs. a public baseline', bn: 'the most popular de-AI skill on GitHub (53k stars), applied by Claude Sonnet following its rules',
+  g: 'Where this release still gets flagged (by genre: flagged / drafts)', gn: 'failures concentrate in the most templated genres · total 26 / 210',
+  foot: 'Drafts written from scratch by GLM-5.3, GPT-5.6 luna and Claude Sonnet (about a third each). Detectors change; this is one day’s measurement, not a promise.',
+  ax: 'judged human', gax: 'flagged as AI',
+};
+
+document.getElementById('m').innerHTML = `
+  <header class="hd"><span class="brand">${markSvg()}<b>humanizer</b></span><span class="eyebrow">${esc(T.eye)}</span></header>
+  <h2>${esc(T.h)}</h2><p class="sub">${esc(T.sub)}</p>
+  <section class="panel sheet">
+    <div class="ptitle">${esc(T.a)}</div>
+    ${barRows(A)}${axis(['0%', '25%', '50%', '75%', '100%'], T.ax)}
+  </section>
+  <section class="panel sheet">
+    <div class="ptitle">${esc(T.b)}<span class="pnote">blader/humanizer: ${esc(T.bn)}</span></div>
+    ${barRows(B)}${axis(['0', '15', '30', '45', '60'], T.ax)}
+  </section>
+  <section class="panel sheet">
+    <div class="ptitle">${esc(T.g)}<span class="pnote">${esc(T.gn)}</span></div>
+    ${barRows(G.map(([k, f, n]) => ({ name: GN[k], v: f / n, big: `${f} / ${n}`, flag: true })), { small: true })}${axis(['0%', '25%', '50%', '75%', '100%'], T.gax)}
+  </section>
+  <p class="foot">${esc(T.foot)}</p>`;
+await done();
+</script>
+</body>
+</html>

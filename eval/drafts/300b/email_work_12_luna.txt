@@ -1,0 +1,10 @@
+Hi Maya, Jordan, and team,
+
+I’m sorry I missed sprint planning on Tuesday, September 15. My mother had a medical emergency in Sacramento that morning, and I needed to take her to Mercy General Hospital and stay with her through the afternoon. I should have sent an update sooner, but everything happened quickly and I wasn’t able to get online until that evening.
+
+I’ve reviewed the recording and notes from the meeting, and I’m caught up on the decisions for Sprint 24. I’ll take ownership of the authentication backlog items assigned to me, including the OAuth error-handling ticket, and I’ll post my updated estimates in Jira by 10:00 a.m. today. I’ll also connect with Priya before Wednesday’s stand-up to confirm the API dependency and make sure my delay hasn’t affected her work.
+
+Thank you for your understanding, and I apologize for creating extra coordination work for everyone. Please let me know if there’s anything from Tuesday’s planning discussion that needs my immediate attention.
+
+Best,  
+Alex

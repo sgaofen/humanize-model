@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · app</title>
+<link rel="stylesheet" href="base.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+<style>
+  /* 快速开始里的 App 截图:真 12B 模型实拍(app/docs/screenshots-real/),整张保留,底栏的速度是真实的。 */
+  main { width: 1080px; padding: 30px 32px 24px; }
+  .shot { border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.07), 0 36px 80px -30px rgba(0,0,0,.95); }
+  .shot img { display: block; width: 100%; }
+  .cap { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 12px; }
+  .cap .l { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cap .l span { font-size: 12.5px; color: var(--ink); border: 1px solid var(--line); background: var(--sheet); border-radius: 999px; padding: 5px 12px 4px; }
+  .cap .r { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { lang, params, done } from './common.js';
+const zh = lang === 'zh';
+const shot = params.get('shot') || 'editor-en-light';
+const chips = zh
+  ? ['Mac（Apple 芯片）· Windows', '按内存选档，只下载一次', '之后完全离线', '荧光笔 = 新写的，删除线 = 被改掉的', '右上角切换 中 / EN']
+  : ['Mac (Apple silicon) · Windows', 'picks a size for your RAM, downloads once', 'then fully offline', 'highlight = new, strike = replaced'];
+document.getElementById('m').innerHTML = `
+  <div class="shot"><img src="../../app/docs/screenshots-real/${shot}.png" alt=""></div>
+  <div class="cap"><div class="l">${chips.map((c) => `<span>${c}</span>`).join('')}</div><span class="r">${zh ? '真机实拍' : 'real screenshot'}</span></div>`;
+await Promise.all([...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; })));
+await done();
+</script>
+</body>
+</html>

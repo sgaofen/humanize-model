@@ -1,0 +1,3152 @@
+[
+ {
+  "case": "blog_personal_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "blog_personal_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Output adds 'night' to the Tuesday walk-in at Taberna da Rua das Flores, a new detail not in the draft; otherwise all facts, numbers and structure are preserved."
+  }
+ },
+ {
+  "case": "blog_personal_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped specifics: 'a family of something' becomes unspecified 'a family'; points gapped 'to spec' lost; cosmetic corrosion reworded."
+  }
+ },
+ {
+  "case": "blog_personal_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "blog_personal_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "'Tuesdays are easy walk-runs' became 'Slow jogs 2x per week on Tuesday', changing workout frequency; also '(Not because I ran when I was 30)' garbles the 'never ran at 30' fact."
+  }
+ },
+ {
+  "case": "blog_personal_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"no more than half a mile each week\" becomes \"half mile per week\" (cap lost); \"progress is not the same as pushing through pain\" softened to \"doesn't always mean\"."
+  }
+ },
+ {
+  "case": "blog_personal_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"said it like it was a superpower\" becomes \"his superpower,\" attributing the superpower to the dad; also \"swim practice\" becomes \"swimming lessons.\""
+  }
+ },
+ {
+  "case": "blog_personal_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "Draft says six hours 'doesn't sound like much until parent-teacher night'; output says 'No problem! At least not when it comes to parent-teacher night' — fact reversed. Also 'across hemispheres' invents a false claim."
+  }
+ },
+ {
+  "case": "blog_personal_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "blog_personal_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "blog_personal_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "'Neither lasted more than six weeks' becomes 'Each lasted only about six weeks', shifting an at-most boundary; 'comparing with the local school calendar' becomes 'aligning with the district's school year'."
+  }
+ },
+ {
+  "case": "blog_personal_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "critical",
+   "evidence": "Draft says one program 'moved through spelling lists too quickly'; output says it 'skipped spelling lists', reversing the program's actual flaw and misleading a curriculum chooser."
+  }
+ },
+ {
+  "case": "blog_personal_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "critical",
+   "evidence": "Invents new fact 'her favorite son' not in DRAFT; also converts DRAFT's bold paragraph sections into bulleted lists, breaking format."
+  }
+ },
+ {
+  "case": "blog_personal_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "critical",
+   "evidence": "Draft says 'Ignore them, mostly' about forum ultralight/5am advice; output says 'They're not wrong,' reversing the recommendation and misleading a reader."
+  }
+ },
+ {
+  "case": "blog_personal_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "blog_personal_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Reversed money fact: draft says she spent about four times the $187 on class fees; output says $187 is about 4x what she spent."
+  }
+ },
+ {
+  "case": "email_prof_00_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_00_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_02_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_02_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_04_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_04_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Difficulty concentrating' strengthened to 'inability to concentrate'; 'about a dozen' shifted to '10-ish' sources."
+  }
+ },
+ {
+  "case": "email_prof_06_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped statistical qualifier: 'no statistically significant employment reduction' becomes 'no significant drop', slightly weakening the certainty of Freakley's finding."
+  }
+ },
+ {
+  "case": "email_prof_06_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "\"Associated with\" becomes causal \"results in\"; paper's quoted phrase \"consistent with a modest negative employment effect\" and the exact paper title are altered."
+  }
+ },
+ {
+  "case": "email_prof_09_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "Paragraph breaks collapsed into one block and 'Best,' replaced with an inline thanks, but all names, dates, times, courses and the request are intact."
+  }
+ },
+ {
+  "case": "email_prof_09_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_11_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_11_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Output says 'you recorded me as absent,' attributing the Canvas absence mark directly to the professor; DRAFT only says 'I was marked absent' without naming who did it."
+  }
+ },
+ {
+  "case": "email_prof_13_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'canopy coverage varies widely block to block' becomes 'seems to differ per block' — drops the magnitude 'widely' and adds hedging."
+  }
+ },
+ {
+  "case": "email_prof_13_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_15_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_15_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_17_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_prof_17_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Draft asks recipient to reply 'at your convenience'; output says 'as soon as you can,' turning a no-rush request into a prompt-response request."
+  }
+ },
+ {
+  "case": "email_work_01_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_01_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_03_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'now disrupting daily work' weakened to 'starting to affect our team's work', softening the stated impact."
+  }
+ },
+ {
+  "case": "email_work_03_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "DRAFT states a Finance document was stuck inside; OUTPUT hedges to 'it appears', weakening a stated fact."
+  }
+ },
+ {
+  "case": "email_work_05_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_05_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_07_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_07_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Drops the 'business' qualifier: 'resolved within two business days' becomes 'clear it out in 2 days'; otherwise faithful."
+  }
+ },
+ {
+  "case": "email_work_09_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Original says adding temps 'would allow us to... complete the count accurately and on schedule'; rewrite weakens this to 'we still have a chance to complete,' lowering certainty."
+  }
+ },
+ {
+  "case": "email_work_09_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_11_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Output adds 'yesterday' as delivery timing, which the draft does not state; also drops 'guide' from 'installation guide'. Dates, numbers, and requests all preserved."
+  }
+ },
+ {
+  "case": "email_work_11_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Output invents the year '2019' for both the delivery and visit dates; DRAFT gives no year — a fabricated date detail."
+  }
+ },
+ {
+  "case": "email_work_13_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_13_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_15_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_15_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "email_work_17_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "Subject line and greeting 'Hi Marcus,' are moved to the end, after the signature, breaking the letter format; all facts and requests are preserved."
+  }
+ },
+ {
+  "case": "email_work_17_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_opinion_01_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Deadline changed: 'car-free before 2030' becomes 'by 2030'; also 'should go' becomes 'we'll probably rule out,' turning a recommendation into a prediction, and 'one of the world's busiest' becomes 'the world's busiest.'"
+  }
+ },
+ {
+  "case": "essay_opinion_01_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'More than 300,000 pedestrians' becomes exactly '300,000'; 'turning traffic' becomes 'left-turning cars', adding a specific detail not in the draft."
+  }
+ },
+ {
+  "case": "essay_opinion_03_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "'Skimmed it once, apparently' becomes 'I think i glanced at it,' dropping the certainty qualifier; 'costs the sender something' weakened to 'means something to the writer.'"
+  }
+ },
+ {
+  "case": "essay_opinion_03_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 2,
+   "severity": "minor",
+   "evidence": "Dropped 'Saturday market' (just 'on Saturday'), 'the one gift that can't be refunded' weakened to 'a gift we can't return', and 'We don't lack words' changed to 'We don't need words'."
+  }
+ },
+ {
+  "case": "essay_opinion_05_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Adds 'It's still running strong' and 'costs more' for the higher-tier feature — new emphasis/claims not in DRAFT, though core facts are intact."
+  }
+ },
+ {
+  "case": "essay_opinion_05_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Vague quantifier tightened: 'oil every few thousand miles' becomes 'every couple thousand miles', and 'never removed' becomes 'never touched' (stronger claim)."
+  }
+ },
+ {
+  "case": "essay_opinion_07_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"low-risk experiment\" became \"low-cost test\" (risk dropped); \"Sundays and public holidays\" became \"Every Sunday and holiday\"; \"central roads\" became \"key streets\"."
+  }
+ },
+ {
+  "case": "essay_opinion_07_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_opinion_09_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Draft's grandmother 'will keep walking' becomes an invented spoken line '\"Oh well.\"', altering the scene's concrete detail; 'staffer' also dropped."
+  }
+ },
+ {
+  "case": "essay_opinion_09_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "\"Last August\" and \"The next year, 2025\" misdate the hikes (August 2022, then 2025); \"$35... climbs to\" turns a completed increase into a future one; \"maintenance\" and the parenthetical aside are added."
+  }
+ },
+ {
+  "case": "essay_opinion_11_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'About 12,000 people' becomes exact 'There are 12,000 ppl', dropping the approximation qualifier; all other numbers, names and facts preserved."
+  }
+ },
+ {
+  "case": "essay_opinion_11_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"you have to either drive (90 min RT on the 6 bus)\" conflates the two separate draft options (needing a car vs. a 90-minute bus round trip), muddling who needs what."
+  }
+ },
+ {
+  "case": "essay_opinion_13_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_opinion_13_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Draft says Maya 'knows how to ask Alexa for the weather'; output says she is 'figuring out how to get Alexa' — an established skill turned into one still being learned."
+  }
+ },
+ {
+  "case": "essay_opinion_15_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_opinion_15_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_opinion_17_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"most Tuesdays\" strengthened to \"nearly every Tuesday\"; Carnegie \"funded\" libraries becomes \"built\" them; \"better than most robber barons\" becomes \"more than any other robber baron\"."
+  }
+ },
+ {
+  "case": "essay_opinion_17_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"most Tuesdays\" strengthened to \"Every Tuesday\", changing visit frequency from sometimes to always; also \"first adopted\" loses \"first\"."
+  }
+ },
+ {
+  "case": "essay_student_01_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'suggesting' hardened into 'Clearly', and 'crimes she helped create' becomes 'deeds she has committed', slightly overstating her direct role."
+  }
+ },
+ {
+  "case": "essay_student_01_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_student_03_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Billboard quote altered: 'a twenty-minute drive from downtown' becomes 'twenty minutes from downtown', dropping 'drive' from a quoted phrase; all facts and figures otherwise preserved."
+  }
+ },
+ {
+  "case": "essay_student_03_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_student_05_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Draft's 'four-dollar jump in one year' becomes 'One day, 4 dollars more?', changing the phase-in timeframe; also 'closer to $11' softened to 'maybe $11'."
+  }
+ },
+ {
+  "case": "essay_student_05_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Boundary shifts: 'pushing past $10.70' becomes 'creeping up on $10.70' (exceeding becomes approaching), and 'close within two years' becomes 'kill us in 2 years'."
+  }
+ },
+ {
+  "case": "essay_student_07_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_student_07_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_student_09_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Details weakened: 'overwhelming majority' becomes 'most'; Japan's heavy investment in energy efficiency becomes 'led the way', dropping the investment fact."
+  }
+ },
+ {
+  "case": "essay_student_09_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'Economists began speaking of stagflation' becomes 'Policymakers talked of stagflation' (who-said-what changed); 'fell sharply' strengthened to 'collapsed'; 'overwhelming majority' to 'almost all'."
+  }
+ },
+ {
+  "case": "essay_student_11_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "DRAFT says she recalculated the list three times during one visit; OUTPUT says she made 'at least three trips' to the store, altering what happened and the number of visits."
+  }
+ },
+ {
+  "case": "essay_student_11_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Draft's fact 'prices had stopped climbing as fast' becomes hedged 'seemed to slow down'; October 2022 cost shifted to present tense 'now costs nearly $240', reducing certainty."
+  }
+ },
+ {
+  "case": "essay_student_13_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'pressure to persuade their parents' becomes 'peer pressure,' implying pressure from peers; 'financial independence' loses its 'financial' qualifier."
+  }
+ },
+ {
+  "case": "essay_student_13_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Impose strong penalties for violations' becomes 'strictly enforce transgressions,' dropping the concrete penalty element; also 'unhealthy food during children's programming' loosened to 'junk food ads on kids' media.'"
+  }
+ },
+ {
+  "case": "essay_student_15_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Drops attribution 'Critics rightly note' (critics' observation becomes narrator's own claim) and loses concrete details: 'momentarily' washed clean and Jim seeing Huck 'alive'."
+  }
+ },
+ {
+  "case": "essay_student_15_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Changed concrete actions: 'tears the paper in two' becomes 'crumples the note'; Jim 'slapped' 'Lizabeth becomes 'punched'; dropped 'not doctrine'; 'fixed compass' becomes 'god-given compass'."
+  }
+ },
+ {
+  "case": "essay_student_17_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Compelled ordinary citizens across the North' becomes 'required all citizens in the North,' slightly strengthening who was legally bound."
+  }
+ },
+ {
+  "case": "essay_student_17_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "DRAFT says Tubman 'is credited with' leading ~70 people; OUTPUT says 'She personally claimed to have led,' shifting attribution from historians to Tubman herself."
+  }
+ },
+ {
+  "case": "essay_student_19_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "essay_student_19_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Output adds an endorsement 'Kant is right to be very strict about lying' absent from DRAFT, and shifts 'accepts responsibility for the consequences' to 'responsibility for the lie', dropping the consequences."
+  }
+ },
+ {
+  "case": "forum_answer_01_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_01_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Warranty claim weakened: draft states Moen's lifetime warranty may cover; output says 'if moen offers a lifetime warranty', making the warranty's existence uncertain."
+  }
+ },
+ {
+  "case": "forum_answer_03_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_03_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_05_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_05_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped 'halfway through' from the flipping instruction; output says only 'Flip once', losing when to flip."
+  }
+ },
+ {
+  "case": "forum_answer_07_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_07_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_09_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Invented '[Edit: Edited on 26-Sep-2024, at 12:52 AM]' metadata not in draft; also '5 large ones' became '5 extra large bananas'."
+  }
+ },
+ {
+  "case": "forum_answer_09_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "\"instant-read thermometer\" becomes \"IR thermometer\" — a different device; an IR thermometer cannot measure internal temp, so a reader would be misled on what to buy/use."
+  }
+ },
+ {
+  "case": "forum_answer_11_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_11_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_13_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "critical",
+   "evidence": "Draft says verify PSLF eligibility before making extra payments; output says 'check...qualify for PSLF and THEN do extra payments,' reversing the advice to make extra payments, contradicting the next sentence's guidance."
+  }
+ },
+ {
+  "case": "forum_answer_13_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_15_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_15_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "forum_answer_17_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": false,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "DRAFT's 'generally safe' becomes unqualified 'safe', dropping a certainty hedge; also bulleted list collapsed into plain paragraphs."
+  }
+ },
+ {
+  "case": "forum_answer_17_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped details: 'in some cases' for 3200mg/day prescription, and 'without checking labels' advice on adding a third product; main facts intact."
+  }
+ },
+ {
+  "case": "memo_policy_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Projected to save $1.8M' becomes 'will yield $1.8M savings' — the projection qualifier is dropped, making the savings claim certain rather than estimated."
+  }
+ },
+ {
+  "case": "memo_policy_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "memo_policy_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'average energy cost per mile' becomes 'average energy per mile' (drops cost); 'For Q4, leadership approved' becomes 'approval was given in Q4', shifting approval timing."
+  }
+ },
+ {
+  "case": "memo_policy_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "memo_policy_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Pending litigation with Bergmann Logistics' becomes 'potential litigation', downgrading an ongoing case to a hypothetical; table flattened to plain lines."
+  }
+ },
+ {
+  "case": "memo_policy_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "Action table flattened into one run-on line (deadlines/owners all present, but tabular formatting lost); all facts, numbers and deadlines preserved."
+  }
+ },
+ {
+  "case": "memo_policy_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "memo_policy_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "memo_policy_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Dropped specifics: 'contractual notification requirements' loses 'contractual', 'qualification milestones' becomes 'qualification status', and 'rare-earth components' becomes 'rare earth elements'."
+  }
+ },
+ {
+  "case": "memo_policy_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Hedges 'manageable' into 'not necessarily unmanageable', upgrades risk to 'significant', changes 'change-control documentation' to 'engineering change documentation'; stray 'Summary' header added."
+  }
+ },
+ {
+  "case": "memo_policy_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Remediation item 1: draft says direct supervisors ISSUE written notices; output says notices are SENT TO direct managers, reversing who acts and who receives."
+  }
+ },
+ {
+  "case": "memo_policy_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'access suspended' softened to 'access restricted'; also 'escalation procedures' diluted to 'processes for addressing stragglers', weakening the mandated action."
+  }
+ },
+ {
+  "case": "paper_section_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped details: 'kinetic analysis indicated' (source of Vmax conclusion) removed; 'top ten predicted off-target loci' becomes '10 predicted off-target loci'."
+  }
+ },
+ {
+  "case": "paper_section_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Six 'weekly' sessions recast as 'six 50-minute sessions over 7 weeks' (added/shifted timing); 'through May 2023' became 'as of May 2023'; duplicated age/SD parenthetical."
+  }
+ },
+ {
+  "case": "paper_section_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Eligibility drops 'untreated': draft excludes only untreated psychosis, output excludes psychosis entirely, changing the inclusion criterion; also 'sleep parameters' adds unspecified outcome detail."
+  }
+ },
+ {
+  "case": "paper_section_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Draft says flexible analyses produce estimates 'unlikely to recur'; output drops the negation ('making unstable, repeatable estimates'), slightly reversing that claim."
+  }
+ },
+ {
+  "case": "paper_section_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "\"one of the most consequential\" strengthened to \"the most important\"; \"roughly four months\" becomes exact \"in four months\"; unmatched parenthesis in contribution (ii)."
+  }
+ },
+ {
+  "case": "paper_section_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Timing boundary shifted: 'raised from 8.5% to 40% within six months' becomes 'in six months'; also adds unsupported detail 'new Governor'."
+  }
+ },
+ {
+  "case": "paper_section_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Concentrated near the fracture initiation site' becomes 'distributed around the area of crack initiation', weakening the spatial localization claim slightly."
+  }
+ },
+ {
+  "case": "paper_section_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": false,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Evidence suggests' becomes 'we find... has caused', a stronger causal claim; caveat 'should not be interpreted as identifying' weakened to 'not necessarily attributable'; a title is added absent in draft."
+  }
+ },
+ {
+  "case": "paper_section_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Drops qualifier 'broader' from 'broader economic conditions', losing a concrete control detail; rest of facts, numbers, and hedges preserved."
+  }
+ },
+ {
+  "case": "paper_section_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Dropped 'three experimental sessions' — only 'different experimental sessions (March–May 2024)' remains; a concrete number of sessions is lost."
+  }
+ },
+ {
+  "case": "paper_section_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "DRAFT says '3 sites experienced dropout during at least one round'; OUTPUT says 'at least 3 hospitals dropped out', shifting the site count to a lower-bound claim."
+  }
+ },
+ {
+  "case": "paper_section_16_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Added 'Introduction' header absent from DRAFT; strengthens 'more precisely than bulk RNA-seq' to 'granularity previously unattainable'; adds 'at their headquarters'."
+  }
+ },
+ {
+  "case": "paper_section_16_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Claims strengthened: 'addressed' becomes 'overcome'; bulk comparison becomes 'cannot be directly measured'; 'investigating disease mechanisms' truncated to 'disease'."
+  }
+ },
+ {
+  "case": "paper_section_18_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "paper_section_18_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'suggesting that aggregation attenuated spurious feature reliance' becomes 'perhaps reducing attention to spurious features' — a stated inference softened to speculation; 'limits power' dropped."
+  }
+ },
+ {
+  "case": "paper_section_20_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped statistical qualifier: 'transferred a significantly greater proportion' becomes 'enhanced the share', and 'preliminary' weakens claims; main facts, numbers and p-values are otherwise intact."
+  }
+ },
+ {
+  "case": "paper_section_20_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Specific instrument name 'Interpersonal Trust Scale' dropped, replaced by generic 'self-report scale'; concrete detail lost without breaking main facts."
+  }
+ },
+ {
+  "case": "reddit_post_00_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Twins are Lily and Noah but output claims 'two girls'; quote 'selfish' altered to 'selfish b!tch', inventing stronger language."
+  }
+ },
+ {
+  "case": "reddit_post_00_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_02_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Output adds 'Ohio' after Columbus, a detail not stated in DRAFT; otherwise all facts, quotes, numbers and requests are faithfully preserved."
+  }
+ },
+ {
+  "case": "reddit_post_02_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Direct quote altered ('Let's revisit in the new year' -> 'let's talk about it next year') and 'partly because of this' -> 'due to this' drops the qualifier, strengthening the causation."
+  }
+ },
+ {
+  "case": "reddit_post_04_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Adds 'as needed' to the 5k oil-change schedule, and softens 'actually a dealbreaker at this mileage' to 'a problem for that high mileage'."
+  }
+ },
+ {
+  "case": "reddit_post_04_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_06_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_06_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Back pain 'mostly gone' weakened to 'much more manageable'; 'sitting all day' becomes 'sitting 8 hours/day', a number not tied to sitting."
+  }
+ },
+ {
+  "case": "reddit_post_08_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_08_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "Prose paragraphs of personal finances converted into a bullet list draft didn't have; all facts, numbers, and requests otherwise preserved faithfully."
+  }
+ },
+ {
+  "case": "reddit_post_10_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_10_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_12_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped/altered specifics: 'row of herbs' becomes 'bed of herbs', 'gap in the fence' becomes 'hole in my fence' implying ownership, 'on our street' becomes 'in our neighborhood'."
+  }
+ },
+ {
+  "case": "reddit_post_12_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped concrete detail: 'gap in the fence' becomes just 'through the fence'; main fact (dog entered yard) intact."
+  }
+ },
+ {
+  "case": "reddit_post_14_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "reddit_post_14_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Output says 'sleepovers' and plural 'squishmallows', inventing a detail and dropping 'playdates'; also softens 'nothing seems to have changed' to 'idk if anything has changed'."
+  }
+ },
+ {
+  "case": "reddit_post_16_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Direct quotes altered ('going to bed now' → 'going to sleep now', 'staying on this with me' → 'working with me on this'); minor concrete detail loss in quoted messages."
+  }
+ },
+ {
+  "case": "reddit_post_16_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Third draft was untitled in DRAFT; OUTPUT invents a quoted campaign name \"Loyalty Rewards,\" adding a fact not present."
+  }
+ },
+ {
+  "case": "report_work_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Zero security breaches' becomes '0 security incidents', a broader claim that arguably conflicts with the 27 phishing attempts later described."
+  }
+ },
+ {
+  "case": "report_work_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Draft says Logistics is 'reviewing staffing levels'; output says it is looking into 'potential staff shortages', adding an inferred fact not stated."
+  }
+ },
+ {
+  "case": "report_work_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Next meeting labeled 'next week' though March 17 is two weeks after March 3; bullet lists also collapsed to plain lines, but all facts/dates/numbers are preserved."
+  }
+ },
+ {
+  "case": "report_work_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_16_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "report_work_16_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "'Monitor through the end of the month' becomes 'at the end of the month'; 'largest increase' weakened to 'much of that growth'; 'more prominent contact information' becomes vague 'more contact-focused'."
+  }
+ },
+ {
+  "case": "report_work_18_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Recommendation 2 softened from 'Expand the live auction to 8 items' to 'Consider 8 items'; also To/From/Date/Re header lines collapsed into one run-on block."
+  }
+ },
+ {
+  "case": "report_work_18_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "DRAFT's '125% achievement rate' becomes 'exceeded our target by 125%', which is numerically wrong (a 25% overage); also 'prior plan' becomes a completed allocation and 'roof repairs' drops 'repairs'."
+  }
+ },
+ {
+  "case": "review_product_00_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Dropped count 'two clear caveats'; 'blown a few up to 11x14' became 'a couple'; 'no visible softness' strengthened to 'no softness'."
+  }
+ },
+ {
+  "case": "review_product_00_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'a couple of drops' becomes 'a few drops', slightly loosening the stated quantity; otherwise faithful."
+  }
+ },
+ {
+  "case": "review_product_02_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Drops 'increasingly haunted by the consequences of his work,' reducing it to 'very troubled,' losing the cause of Oppenheimer's torment."
+  }
+ },
+ {
+  "case": "review_product_02_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Drops 'increasingly haunted by the consequences of his work' cause of torment; 'lingers after credits' becomes 'stays with you for days', adding an unsupported duration."
+  }
+ },
+ {
+  "case": "review_product_04_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Dropped the Lae'zel bug example (refused to follow for an entire session, needed fast travel to unstick); all other facts, numbers and patch details retained."
+  }
+ },
+ {
+  "case": "review_product_04_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "severity": "critical",
+   "evidence": "Dame Aylin misspelled 'Dame Alyn'; 'stuck hovering for three in-game days last week' becomes '3 in-game days ago' — duration turned into timing, 'last week' dropped."
+  }
+ },
+ {
+  "case": "review_product_06_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Comped us a round of soju' becomes just 'free soju', dropping the concrete quantity detail of one round."
+  }
+ },
+ {
+  "case": "review_product_06_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"around for a decade\" changed to \"decades\" and hedge \"maybe six other parties\" dropped to \"6 other parties\"; both shift quantified details without breaking main facts."
+  }
+ },
+ {
+  "case": "review_product_08_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Quantified boundary shifted: 'I could freeze almost any frame' becomes 'You could probably freeze any frame', dropping the 'almost' hedge."
+  }
+ },
+ {
+  "case": "review_product_08_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "\"Freeze almost any frame\" becomes \"take any frame\", dropping the 'almost' quantifier; \"hacked together\" becomes \"brutally edited\", altering the stated crafting detail."
+  }
+ },
+ {
+  "case": "review_product_10_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "review_product_10_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "'Probably' weakened to 'Maybe', 'fell asleep to the sound of waves every night' loses 'every night', 'mixed bag' becomes vague 'very interesting experience'."
+  }
+ },
+ {
+  "case": "review_product_12_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": true,
+   "reads_like_person": 3,
+   "severity": "minor",
+   "evidence": "Concrete detail 'a few more weeks' on the starter weakened to 'a little bit longer'; also draft's prose paragraphs were converted to a bullet list, changing format."
+  }
+ },
+ {
+  "case": "review_product_12_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "DRAFT's completed action 'I ended up watching a YouTube tutorial... before it worked' is reduced to generic advice; 'skip the enriched doughs' softened to 'be wary about'."
+  }
+ },
+ {
+  "case": "social_post_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Quantified boundary shift: 'live in 45 countries' becomes '45+ countries', slightly strengthening the claim."
+  }
+ },
+ {
+  "case": "social_post_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "social_post_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "Trivial additions only: 'random search result' became 'random Google result' and 'a little janky' became 'a lot of janky'; location info redundantly repeated but nothing misleading."
+  }
+ },
+ {
+  "case": "social_post_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Ending reverses who-does-what: DRAFT asks readers to drop a name and number below or DM the author; OUTPUT says 'I can post below or DM', mangling the request."
+  }
+ },
+ {
+  "case": "social_post_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Point 3 shifts past actions to imperative advice ('Save $1k... invest everything else'), turning what the writer did into instructions; all numbers and facts otherwise preserved."
+  }
+ },
+ {
+  "case": "social_post_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "social_post_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "social_post_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Small detail shifts: 'coffee is cold more often than not' becomes 'usually lukewarm'; 'eleven cases before lunch' becomes 'before noon'; dropped 'not a weakness' qualifier."
+  }
+ },
+ {
+  "case": "social_post_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "minor",
+   "evidence": "Dropped concrete details: 'solid' wood dresser, 'tools' after Yard/Outdoor, and 'Kitchen items' narrowed; bullets removed but content intact."
+  }
+ },
+ {
+  "case": "social_post_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "\"A few bikes\" becomes \"a couple bikes\" (quantity shifted); \"priced to move\" becomes \"reasonably priced\"; \"Nice\" added to dresser."
+  }
+ },
+ {
+  "case": "social_post_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "severity": "critical",
+   "evidence": "Maya's direct quote altered from \"I made that!\" to \"I did it!\", changing her exact words; also \"hours are longer\" became ambiguous \"More time\"."
+  }
+ },
+ {
+  "case": "social_post_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "Maya's quote reworded from 'I made that!' to 'I did it!', losing the exact wording while preserving the fact."
+  }
+ },
+ {
+  "case": "social_post_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "none",
+   "evidence": "none"
+  }
+ },
+ {
+  "case": "social_post_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "\"They taught me more than I taught them\" becomes \"they made a fool out of me\" — a different claim about the mentoring relationship; other facts intact."
+  }
+ },
+ {
+  "case": "social_post_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 5,
+   "severity": "minor",
+   "evidence": "\"room to add a second session\" becomes vague \"could do more\"; also drops the request for \"any sense of what's typical\" regarding rates."
+  }
+ },
+ {
+  "case": "social_post_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "meaning_changed": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": true,
+   "reads_like_person": 4,
+   "severity": "none",
+   "evidence": "none"
+  }
+ }
+]

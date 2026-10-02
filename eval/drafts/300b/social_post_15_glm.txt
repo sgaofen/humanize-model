@@ -1,0 +1,19 @@
+At 43, I left a 19-year civil engineering career to become a data analyst. Here's what I learned.
+
+Last March, after finishing the stormwater drainage project for the city of Mesa, I realized something uncomfortable: the part of my job I loved most wasn't designing infrastructure — it was building the Excel models and dashboards that tracked our project budgets.
+
+So I made a plan. Evenings and weekends for 14 months: Google Data Analytics Certificate, then SQL on DataCamp, then Python. I completed three portfolio projects, including one analyzing 12 years of Arizona rainfall data to predict maintenance schedules for drainage systems — a project that combined my old domain knowledge with my new skills.
+
+In May, I accepted a data analyst position at a Phoenix-based logistics company. I took a 12% pay cut for the first year. Six months later, I'm earning more than I did as a senior civil engineer.
+
+Here's what nobody tells career changers:
+
+1. Your "old" expertise is an asset, not baggage. My engineering background made me better at querying and interpreting operational data than a bootcamp grad with no industry context.
+
+2. Age is leverage. Two decades of communicating with stakeholders, managing deadlines, and understanding how businesses actually work? That can't be taught in a bootcamp.
+
+3. It's never too late, but it's never free either. I gave up 14 months of weekends. That's the price.
+
+If you're sitting on the fence like I was for three years, this is your sign.
+
+#CareerChange #DataAnalytics #CareerPivot #NeverTooLate

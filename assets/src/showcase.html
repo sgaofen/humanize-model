@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · app showcase</title>
+<link rel="stylesheet" href="base.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+<style>
+  /* App 主展示图:真 12B 模型实拍截图(app/docs/screenshots-real/,llama.cpp Q8_0 + Metal,M5 Max)。
+     前面一张是 README 语言的界面,后面错开一张另一种语言/主题,底部一行说明。 */
+  main { position: relative; width: 1280px; height: 836px; overflow: hidden;
+         background: radial-gradient(640px 360px at 34% 62%, rgba(205,245,75,.07), transparent 70%); }
+  .shot { position: absolute; border-radius: 16px; overflow: hidden; display: block;
+          box-shadow: 0 0 0 1px rgba(255,255,255,.07), 0 40px 90px -30px rgba(0,0,0,.95), 0 18px 40px -24px rgba(0,0,0,.8); }
+  .shot img { display: block; width: 100%; }
+  .back { width: 800px; right: 44px; top: 38px; }
+  .back::after { content: ""; position: absolute; inset: 0; background: rgba(10,11,13,.18); }
+  .front { width: 1000px; left: 44px; top: 112px; }
+  .cap { position: absolute; left: 44px; right: 44px; bottom: 26px; display: flex; justify-content: space-between; align-items: center; }
+  .cap .l { display: flex; align-items: center; gap: 10px; }
+  .cap .brand svg { width: 30px; height: 18px; color: var(--lime); }
+  .cap .brand b { font-size: 18px; }
+  .cap .chips { display: flex; gap: 8px; }
+  .cap .chips span { font-size: 12.5px; color: var(--ink); border: 1px solid var(--line); background: rgba(18,20,24,.9); border-radius: 999px; padding: 5px 12px 4px; }
+  .cap .r { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); letter-spacing: .02em; }
+  .cap .r i { font-style: normal; color: var(--lime); }
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { lang, markSvg, done } from './common.js';
+const zh = lang === 'zh';
+const dir = '../../app/docs/screenshots-real/';
+const front = dir + (zh ? 'editor-zh-light.png' : 'editor-en-dark.png');
+const back = dir + (zh ? 'editor-en-dark.png' : 'editor-zh-light.png');
+const chips = zh ? ['中文 / English 界面', '浅色 / 深色', '数字核对'] : ['English / 中文 UI', 'light & dark', 'numbers check'];
+const right = zh ? '<i>●</i> 真机实拍 · 12B · llama.cpp Q8_0 · Metal · M5 Max' : '<i>●</i> real screenshots · 12B · llama.cpp Q8_0 · Metal · M5 Max';
+document.getElementById('m').innerHTML = `
+  <div class="shot back"><img src="${back}" alt=""></div>
+  <div class="shot front"><img src="${front}" alt=""></div>
+  <div class="cap"><div class="l"><span class="brand">${markSvg(3.2)}<b>humanizer</b></span><span class="chips">${chips.map((c) => `<span>${c}</span>`).join('')}</span></div><span class="r">${right}</span></div>`;
+await Promise.all([...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; })));
+await done();
+</script>
+</body>
+</html>

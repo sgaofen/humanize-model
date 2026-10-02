@@ -1,0 +1,27 @@
+**SAFETY INSPECTION SUMMARY — LAKEWOOD PLANT**
+Inspection Date: October 9, 2025
+Inspector: M. Delgado, Safety Coordinator
+Report Date: October 13, 2025
+
+**Scope of Inspection**
+A scheduled monthly fire extinguisher inspection was completed at the Lakewood Plant covering all 14 portable extinguishers across Production Floors A and B, the warehouse, maintenance shop, break room, and main office corridor.
+
+**Results**
+- 12 of 14 extinguishers passed inspection. All passing units had current inspection tags, adequate pressure gauge readings, unobstructed access, and intact safety pins and hoses.
+- 2 units were flagged as recalled models: an Amerex B382 (serial AMX-4471902) mounted near the weld station in bay 3, and a second Amerex B382 (serial AMX-4471955) in the warehouse near loading dock 2. Both are subject to the manufacturer recall issued in July 2025 due to a defective valve assembly that may prevent discharge.
+
+**Corrective Actions Taken**
+1. Both recalled units were removed from service, tagged "DO NOT USE," and secured in the maintenance shop quarantine cage pending return to the supplier.
+2. Temporary replacement extinguishers (2 x Kidilite 10ABC) were borrowed from the Riverside facility and installed at the affected locations by 3:00 PM on October 9.
+3. Replacement units were ordered through Fastenal (PO #55821-LW) at a cost of $312.40, with expected delivery by October 17.
+4. Riverside facility was notified of the loan so their inspection records can be updated.
+
+**Follow-Up Items**
+- Verify delivery and installation of replacement extinguishers by October 17; return loaner units to Riverside.
+- Confirm recall return credit from Amerex (estimated $180) is received by end of month.
+- Check remaining extinguishers at Lakewood against the full Amerex recall list to confirm no other units are affected; preliminary check shows none.
+- Next scheduled inspection: November 6, 2025.
+
+No injuries, discharge events, or related incidents have occurred involving the flagged units. Overall fire suppression coverage at the plant remains fully compliant.
+
+Questions regarding this report can be directed to M. Delgado, ext. 214.

@@ -1,0 +1,13 @@
+Subject: Possible Typo in Problem Set 5, Question 2
+
+Dear Dr. Bhatt,
+
+I’m working through Problem Set 5 and noticed what may be a typo in the posted solution to Question 2. In the solution uploaded to Canvas on September 18, the equation in part (b) uses \(x = 4\) when substituting into the final expression. However, based on the value given in the question and the calculation in part (a), I believe the substitution should be \(x = 6\).
+
+Using \(x = 6\) gives a final result of 18.4, while using \(x = 4\) gives 12.3. I also checked my work against the lecture notes from September 16, which seem to support the \(x = 6\) value. Could you please confirm whether the posted solution contains a typo, or let me know if I am misunderstanding an earlier step?
+
+I wanted to check before submitting the assignment on September 23. Thank you for your help.
+
+Best,  
+Maya Chen  
+CHEM 101, Section B

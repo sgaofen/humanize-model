@@ -1,0 +1,18 @@
+Subject: Apology for Yesterday's Message
+
+Hi Marcus,
+
+I want to apologize for the tone of my Slack message yesterday about the Q3 budget slip. Reading it back, I can see it came across as sharp and accusatory, and that wasn't fair to you — especially not in a public channel in front of the whole team.
+
+The $47K variance on the Hendricks project caught me off guard, and I reacted from frustration instead of taking a breath and asking questions first. I know how much work you and Priya put into keeping that budget on track, and the slip was driven by the vendor price increase on the middleware licenses — something outside your control. You'd already flagged that risk in your June 12 status note, which I should have reread before firing off a message.
+
+I'd also like to make it right with the team. I'll post a brief note in #proj-hendricks clarifying that my message was out of line and that the revised forecast you submitted is solid. I'm supportive of the approach you outlined — the phased vendor payments starting in August make sense given the circumstances.
+
+More broadly, I don't want yesterday's exchange to color our working relationship. Your ownership of the budget process has been one of the reasons this program has run as smoothly as it has, and I value that.
+
+If you're open to it, let's grab coffee Thursday morning and talk through how we flag risks to each other going forward so it doesn't get to that point again.
+
+Thanks for your patience with me.
+
+Best,
+Dana

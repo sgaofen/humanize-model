@@ -1,0 +1,19 @@
+Grant Progress Report — NSF Award #2145987
+Reporting Period: Year 2, Q3 (July 1 – September 21, 2026)
+PI: Dr. Rachel Ostrander, Department of Materials Science, Purdue University
+
+Summary: Year 2 of the award ("Scalable Synthesis of Anisotropic Nanocomposites for Low-Energy Thermal Regulation") targeted five milestones. Three are now complete.
+
+Milestone 1 — Reactor scale-up (completed May 2026): The 5-liter continuous-flow reactor was commissioned in the West Lafayette lab, achieving 92% yield consistency across 40 batch runs, exceeding the 85% target.
+
+Milestone 2 — Anisotropic alignment protocol (completed July 2026): Graduate student Wei Chen developed a magnetic-field-assisted alignment method achieving 0.87 order parameter, published in Advanced Materials Interfaces (August 2026 issue).
+
+Milestone 3 — Thermal conductivity benchmarking (completed September 15, 2026): Postdoc Dr. Amara Osei completed benchmarking against 12 commercial composites at Argonne National Laboratory's CNM facility, confirming a 34% reduction in cross-plane thermal conductivity versus the isotropic baseline.
+
+Remaining milestones: Milestone 4 (durability testing under 500 thermal cycles) is 60% complete, with full data expected by December 2026. Milestone 5 (integration into a prototype thermal barrier device) has not yet started; fabrication partner Sandia National Laboratories confirmed device housing availability for January 2027.
+
+Budget: $412,000 of the $580,000 Year 2 allocation has been expended (71%), on track with the approved spend plan.
+
+Personnel: The team added one undergraduate researcher, Marcus Devine, in June 2026, supported through the REU supplement.
+
+Next reporting period: Complete Milestone 4 cycling data and begin Milestone 5 device integration ahead of the Year 2 annual report due March 1, 2027.

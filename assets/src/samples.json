@@ -1,0 +1,162 @@
+[
+ {
+  "id": "en-email",
+  "lang": "en",
+  "case": "email_work_00_luna",
+  "genre": "Work email",
+  "model": "GPT-5.6 luna",
+  "facts": [
+   [
+    "Nadia"
+   ],
+   [
+    "Meridian Bank"
+   ],
+   [
+    "88 files"
+   ],
+   [
+    "12 files remaining",
+    "12 remaining"
+   ],
+   [
+    "Friday, March 14"
+   ],
+   [
+    "MB-2047 · MB-2091 · MB-2110"
+   ],
+   [
+    "Wednesday afternoon"
+   ]
+  ],
+  "half": "b",
+  "draft": "Hi Nadia,\n\nI’m handing off the Meridian Bank loan audit to you. We’ve completed the review of 88 files, with 12 files remaining. The outstanding files are in the “Pending Review” folder in the Meridian Bank audit workspace, organized by borrower name.\n\nThe remaining items are primarily commercial real estate loans and include several files requiring confirmation of updated income statements, collateral valuations, and covenant documentation. I’ve flagged the missing items in the audit tracker and added notes for the files that may need follow-up with Meridian Bank’s loan operations team.\n\nThe deadline is Friday, March 14. Please prioritize the files marked “High” in the tracker, especially MB-2047, MB-2091, and MB-2110, since those are scheduled for management review first. I’ll be available through Wednesday afternoon to answer questions or provide context on any earlier decisions.\n\nThanks for taking this over.",
+  "output": "Hi Nadia,\n\nI am turning the audit of the loans for Meridian Bank over to you. We have reviewed 88 files and have 12 remaining. The files we have left are in the \"Pending Review\" folder of the Meridian Bank audit workspace (sorted by borrower name).\n\nWe have mostly commercial real estate loans left to review. We have a few where we need to make sure we have up to date income statements, valuations of the collateral, documentation of covenants, etc. I have marked where we are missing things in the audit tracker and provided some notes on the files where we may need to touch base with loan ops at Meridian Bank.\n\nThe cutoff is Friday, March 14. Please focus on the \"High\" items in the tracker, particularly MB-2047, MB-2091 and MB-2110, as these will be reviewed by management first. I'll be around until Wednesday afternoon to help with questions or provide some background on prior decisions.\n\nThanks for taking this on."
+ },
+ {
+  "id": "en-reddit",
+  "lang": "en",
+  "case": "reddit_post_10_sonnet",
+  "genre": "Reddit post",
+  "model": "Claude Sonnet",
+  "facts": [
+   [
+    "Commercial 1750"
+   ],
+   [
+    "Salt Lake City",
+    "SLC"
+   ],
+   [
+    "$1,899",
+    "$1899"
+   ],
+   [
+    "above 5%"
+   ],
+   [
+    "three weeks and four phone calls",
+    "3 weeks and 4 phone calls"
+   ],
+   [
+    "6 mph",
+    "6mph"
+   ],
+   [
+    "September 16th",
+    "9/16"
+   ],
+   [
+    "month 13"
+   ]
+  ],
+  "half": "a",
+  "draft": "Bought the NordicTrack Commercial 1750 in January from the NordicTrack outlet store in Salt Lake City ($1,899 after their \"New Year\" discount). Nine months in, I'm on repair number two and I need to vent.\n\nFirst issue hit in March: the incline motor started grinding on any setting above 5%, then just stopped responding. Took three weeks and four phone calls to get a tech out. He replaced the incline motor assembly under warranty, no charge, but I lost almost a month of my training block for a half marathon I was building toward.\n\nSecond issue started about two weeks ago — the belt started drifting to the left every time I ran past 6 mph, badly enough that my foot was clipping the side rail. Tech came out this past Tuesday (September 16th), re-centered and re-tensioned the belt, and told me the rear roller bearings were already showing wear \"for a machine this age,\" which is not a sentence you want to hear nine months in.\n\nThe console, the iFit integration, the touchscreen — all genuinely great when the machine is working. That's the frustrating part. When it runs, it's a really good treadmill. But two hardware failures before the one-year warranty mark makes me nervous about what happens in month 13 when I'm paying out of pocket for parts and labor.\n\nAnyone else have reliability issues with the Commercial series, or did I just get a lemon? Trying to decide if I push for a replacement unit or just ride out the warranty and hope for the best.",
+  "output": "Purchased the Nordictrack Commercial 1750 in January from the NordicTrack outlet in SLC ($1899 after the \"New Year\" sale). It's been 9 months now, and I'm on my 2nd repair. Need to vent. \n 1. March- Started having problems with incline motor grinding at incline above 5%. Stopped working all together. Had to schedule tech to come out after 3 weeks and 4 phone calls. Tech came out and replaced incline motor assembly under warranty (no cost). However, it cost me almost 1 month of training for half-marathon I was preparing for. \n 2. ~2 weeks ago- Belt was starting to pull to the left when I ran above 6mph. Enough to where my foot was catching the side rail. Tech came out last Tuesday (9/16). Tech re-centered and re-tensioned the belt. Told me rear roller bearings were showing wear \"for a machine this age\" (9 months). Yikes.... \n I love the console. I love integration with iFit. I love the touch screen. It is all awesome when it works. And that's the rub. It's a pretty damn good treadmill when it works. But to have 2 hardware failures before year 1 of warranty. It makes me wonder how month 13 is going to go when I am having to pay for parts and labor. \n Anyone else have any reliability issues with Commercial series? Or just a lemon?? Deciding to ask for new unit or just cross my fingers till warranty is out."
+ },
+ {
+  "id": "zh-email",
+  "lang": "zh",
+  "case": "zh_email_15_sonnet",
+  "genre": "工作邮件",
+  "model": "Claude Sonnet",
+  "facts": [
+   [
+    "王涛总监"
+   ],
+   [
+    "订单中心"
+   ],
+   [
+    "赵敏"
+   ],
+   [
+    "9月25日（周五）下午3点"
+   ],
+   [
+    "3楼B会议室"
+   ],
+   [
+    "预计时长1小时",
+    "1小时左右"
+   ],
+   [
+    "15 · 25 · 15 · 5 分钟"
+   ],
+   [
+    "每两周一次，暂定周三下午",
+    "两周一次，暂定周三下午"
+   ],
+   [
+    "Stephen"
+   ]
+  ],
+  "half": "b",
+  "draft": "林晓，你好：\n\n近期产品部计划针对新版本迭代前的设计质量把控，成立\"产品设计评审小组\"，负责对各条线的原型稿、交互流程及视觉规范进行统一评审。经和王涛总监商量，我们都觉得你在用户体验和交互细节上的把控一直很到位，特别是上个月\"订单中心\"改版时提出的几处优化建议非常关键，所以想邀请你正式加入这个小组，一起把关后续的设计输出。\n\n小组目前初定成员为你、我、以及来自研发侧的赵敏，后续视情况再补充人手。第一次会议安排在9月25日（周五）下午3点，在3楼B会议室进行，预计时长1小时，议程如下：\n\n1. 小组职责与评审流程说明（15分钟）\n2. 现行\"消息中心\"模块原型评审，收集初步反馈（25分钟）\n3. 确定后续评审排期（每两周一次，暂定周三下午）与责任分工（15分钟）\n4. 其他事项与答疑（5分钟）\n\n麻烦你提前看一下附件中的\"消息中心\"原型稿（我稍后单独发你），会上会请你重点谈谈交互层面的看法。如果9月25日下午不方便，也请提前告诉我，我们再协调时间。\n\n期待你的加入，谢谢！\n\nStephen",
+  "output": "林晓：\n\n最近为了新版本迭代之前的设计质量控制，产品部准备组建一个“产品设计评审小组”，对各条线原型稿/交互流程/视觉规范等进行统一的评审。综合考虑后，与王涛总监探讨，认为你对用户体验及交互的控制一直非常到位，特别是上个月“订单中心”改版，你的一些优化建议至关重要，所以希望正式邀请你一起加入我们的“产品设计评审小组”，来把控一下后面的设计输出。\n\n这个小组的人员初步包括你，我，研发侧的赵敏（暂定），后续人手再行调整。第一次会议定在9月25日（周五）下午3点，3楼B会议室，1小时左右，安排如下：\n\n1、小组说明/评审流程说明（15分钟）\n2、“消息中心”目前现状原型评审，初步讨论意见反馈（25分钟）\n3、后续评审的计划/时间周期（两周一次，暂定周三下午）及人员分工等（15分钟）\n4、其他及解答（5分钟）\n\n请你提前看一下附件里的消息中心原型（单独发给你，稍后），在会上请你重点说说交互方面的意见。如9月25日，下午你没有时间，请提前告知，调整时间。\n\n期待你的加入，谢谢！\n\nStephen"
+ },
+ {
+  "id": "zh-zhihu",
+  "lang": "zh",
+  "case": "zh_zhihu_08_sonnet",
+  "genre": "知乎回答",
+  "model": "Claude Sonnet",
+  "excerpt": 4,
+  "facts": [
+   [
+    "天猫 · 京东 · 抖音 · 线下经销商"
+   ],
+   [
+    "6-7个小时"
+   ],
+   [
+    "40分钟以内"
+   ],
+   [
+    "4个后台"
+   ],
+   [
+    "TM-001 · JD_001"
+   ],
+   [
+    "2小时"
+   ],
+   [
+    "3小时起步"
+   ],
+   [
+    "Python + pandas + openpyxl"
+   ],
+   [
+    "pd.read_excel · dict · merge · map"
+   ]
+  ],
+  "paras_total": [
+   8,
+   8
+  ],
+  "half": "a",
+  "draft": "我在一家消费品公司做运营分析,团队每周要处理各渠道(天猫、京东、抖音、线下经销商)的销售数据,合并、清洗、对账、出周报,以前这套流程雷打不动要花我6-7个小时,现在压缩到40分钟以内。分享一下具体怎么做的。\n\n先说清楚痛点:每周一早上,我要从4个后台各导一份Excel,格式还都不一样——天猫的SKU编码是\"TM-001\",京东是\"JD_001\",抖音干脆用商品名。人工对照、改列名、删重复行、核对总金额,光这一步就要2小时。然后要按品类汇总、算环比、标红异常波动,再贴进PPT模板,又是3小时起步。\n\n我用的方案是Python + pandas + openpyxl,分三层:\n\n第一层,数据清洗脚本。用pandas读取4份Excel(pd.read_excel),写了一个映射表(dict)把不同渠道的SKU编码统一到公司内部编码,再用merge把品类主表拼进去。这一步以前靠人眼对照,现在map函数一秒钟跑完,而且不会看错行。",
+  "output": "做消费品运营分析。我们公司每周都需要对接各渠道（天猫，京东，抖音，线下经销商）的销售数据，进行数据合并、数据清洗、数据对账、制作周报。之前全流程下来固定6-7个小时，现在优化后控制在40分钟以内。这里说下我们具体如何优化。\n\n先说下痛点：每周一早上。我需要从4个后台分别导出1份EXCEL。且Excel格式各不相同，比如天猫SKU编码\"TM-001\"，京东SKU编码\"JD_001\"，抖音就用商品名。手动匹配，列名修改，删除重复行，对账总金额。这个步骤需要2小时。接下来按品类汇总，计算环比，标记异常波动。粘贴到PPT模板中，这步最快也得3小时起步。\n\n怎么解决：Python + pandas + openpyxl 三层方案：\n\n第一层：数据清洗脚本。利用pandas读取4个EXCEL（pd.read_excel）。编写一个映射表（dict）将各渠道的SKU编码统一为公司内部SKU编码。merge品类主表。以前人工比对。现在利用map函数秒级跑完。且不容易错行"
+ }
+]

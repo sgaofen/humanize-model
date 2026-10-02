@@ -1,0 +1,13 @@
+Yes, this combination is generally safe and is actually a well-studied strategy for migraine relief — ibuprofen and acetaminophen work through different mechanisms (ibuprofen is an NSAID that reduces inflammation; acetaminophen's mechanism is still debated but it acts more centrally), so they don't compete for the same pathway and can be taken at the same time.
+
+For an average adult with no contraindications, a common approach is 400mg ibuprofen plus 500mg-1000mg acetaminophen taken together at the onset of migraine symptoms. Some OTC combination products (like Excedrin Migraine, which pairs 250mg acetaminophen and 250mg aspirin with 65mg caffeine) are built on this same "combine mechanisms" logic, though that one uses aspirin rather than ibuprofen.
+
+A few numbers worth keeping in mind:
+
+- Acetaminophen max daily dose is 3000-4000mg for a healthy adult (many clinicians now recommend staying under 3000mg/day if you take it regularly). A single 500mg dose is well within range even if you take a second dose 6-8 hours later.
+- Ibuprofen max OTC daily dose is typically 1200mg/day (400mg every 6 hours), though a doctor can prescribe up to 3200mg/day in some cases.
+- Don't add a third product without checking labels — a lot of "migraine" or "sinus" combo pills already contain acetaminophen, and it's easy to accidentally double up and exceed the daily max.
+
+Who should be cautious: anyone with liver disease or who drinks alcohol heavily (acetaminophen), and anyone with kidney disease, stomach ulcers, GERD, or who's on blood thinners like warfarin (ibuprofen). If you're pregnant, over 65, or taking other daily medications, run this by your pharmacist first — it takes two minutes at the counter and they'll flag any interaction specific to your other prescriptions.
+
+If migraines are frequent enough that you're reaching for this combo more than 2-3 times a week, that's a sign to talk to a doctor about preventive treatment rather than relying on OTC combos long-term (frequent use itself can cause medication-overuse headache).

@@ -1,0 +1,18 @@
+Subject: Q2 Landing Page Copy — Review by Thursday, May 8
+
+Hi Tomás,
+
+Could you review the Q2 landing page copy before Thursday, May 8? Dev is planning to start implementation on Friday, May 9, so we need your sign-off before then to stay on track for the June 1 launch.
+
+The doc is in the shared Drive folder: "Q2 Launch/Landing Page Copy - Draft 3." It covers the hero section, the three feature blocks, and the pricing callout — about 450 words total. A few things I'd specifically like your eyes on:
+
+- The headline ("Built for Teams That Move Fast") — want to confirm it still aligns with the brand voice guidelines from the March refresh
+- Pricing language in the callout box — legal flagged one line last week and I've revised it, but want your read before it goes live
+- CTA button copy ("Start Free Trial" vs. "Get Started") — we're leaning toward the first but haven't locked it in
+
+If you can leave comments directly in the doc, that'd be easiest for me to track. If Thursday doesn't work given the product launch review you mentioned is happening this week, just let me know by Wednesday afternoon so I can loop in Priya as backup — she's reviewed copy for us before and is familiar with the Q2 messaging.
+
+Thanks for turning this around quickly — I know your team's stretched this sprint. Happy to hop on a quick call if it's faster to talk through any of the pricing language.
+
+Best,
+Stephen

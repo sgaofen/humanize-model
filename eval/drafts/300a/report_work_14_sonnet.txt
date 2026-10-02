@@ -1,0 +1,21 @@
+PRODUCT RECALL STATUS UPDATE — Model X-200 Thermostat
+Prepared by: S. Yu, Product Safety & Compliance
+Date: September 21, 2026
+
+Recall Summary: The Model X-200 smart thermostat recall (initiated August 4, 2026, per CPSC filing #26-417) remains active due to a wiring defect in the R-terminal connector that can cause overheating under sustained HVAC load. Of the 5,000 units shipped between January 15 and June 30, 2026, 1,800 units (36%) have been recovered as of today.
+
+Recovery Breakdown:
+- Retail returns (Home Depot, Lowe's, and authorized dealers): 1,120 units
+- Direct mail-back kits processed by our Reno, NV service center: 480 units
+- Field technician swaps for units installed via professional installers: 200 units
+
+Outstanding: 3,200 units remain unaccounted for. Regional distribution suggests the largest concentration of unrecovered units is in the Southeast (est. 1,100 units, largely tied to a bulk order fulfilled through Coastal Home Builders in March), followed by the Midwest (est. 900 units).
+
+Actions in Progress:
+- A second-wave email and SMS notification campaign launches September 25, targeting the 3,200 registered owners who have not responded to the first two outreach attempts (August 6 and August 20).
+- Coastal Home Builders has agreed to provide site access logs for the 340 homes in its March order by September 30 to enable direct technician outreach.
+- Customer support (ext. 4420) is fielding an average of 45 recall-related calls per day; average case resolution time is 6.2 days.
+
+Next Milestone: Target 3,000 units recovered by October 31, 2026. Weekly recovery rate has averaged 210 units over the past four weeks; at current pace we project reaching that target by November 3, roughly three days behind schedule.
+
+Please direct questions to the Product Safety team before the October 1 leadership review.

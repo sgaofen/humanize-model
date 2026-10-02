@@ -1,0 +1,37 @@
+**MEMORANDUM**
+
+**To:** Maria Delgado, Chief Financial Officer
+**From:** James Okonkwo, Chief Information Security Officer
+**Date:** March 14, 2025
+**Re:** FY2026 Cybersecurity Budget Request — Increase from $4.2M to $4.7M
+
+**Purpose**
+
+I am requesting a 12% budget increase for the Cybersecurity Department in FY2026, raising our allocation from $4.2 million to $4.7 million. This memo summarizes the justification, allocation, and expected outcomes.
+
+**Justification**
+
+Three factors drive this request:
+
+1. **Regulatory pressure.** Our audit readiness obligations under SOC 2 Type II and the upcoming state privacy law effective January 1, 2026, require expanded monitoring and documentation. Estimated incremental compliance cost: $180,000.
+
+2. **Threat environment.** We experienced 14 targeted phishing campaigns in FY2025, up from 6 the prior year, and two near-miss ransomware incidents in Q3 2025. Our current SIEM licensing and 24/7 monitoring contract with SentinelWatch expire in August 2025 and require renewal at a 9% premium.
+
+3. **Business growth.** With the Denver office opening in October 2025 and headcount reaching 850, our attack surface has grown roughly 20% since the FY2024 budget was set.
+
+**Proposed Allocation of the $500K Increase**
+
+- SIEM renewal and expanded monitoring coverage: $220,000
+- Additional security engineer (1 FTE, fully loaded): $165,000
+- Multi-factor authentication upgrade and endpoint detection tooling: $75,000
+- Employee security awareness training program (all offices): $40,000
+
+**Alternatives Considered**
+
+Deferring the SIEM renewal is not viable — a coverage gap would violate our cyber insurance policy terms and expose us to an estimated $2M in uninsured liability. We evaluated outsourcing the additional engineer role; managed services quotes came in 30% higher than an in-house hire over three years.
+
+**Expected Outcomes**
+
+With this investment, we project: full audit compliance by Q2 FY2026, mean time to detect threats reduced from 6 hours to under 90 minutes, and completion of the zero-trust rollout by June 2026.
+
+I'm available to walk through the details at your convenience and can present to the Finance Committee at the April 22 meeting if helpful.

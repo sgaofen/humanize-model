@@ -1,0 +1,34 @@
+**Project Status Report: Meridian App Redesign**
+
+**Date:** March 28, 2025
+**Prepared by:** Jordan Ellis, Product Lead
+**Audience:** Product Development Team & Stakeholders
+
+**Overall Status: 65% Complete — Beta Launch Moved to April 20**
+
+This week we made solid progress on the Meridian redesign, though we've officially pushed the beta launch from April 10 to April 20 to accommodate the extended QA cycle discussed below.
+
+**Completed this week:**
+- Onboarding flow redesign is finished and tested with 12 internal users. Average setup time dropped from 4.5 minutes to 2.8 minutes.
+- The new dashboard layout passed accessibility review (WCAG 2.1 AA) on March 26, thanks to Priya Nair's work on the color contrast system.
+- Backend migration of user preferences to the v2 API wrapped up two days ahead of schedule.
+
+**In progress:**
+- Settings module refactoring is roughly 70% done; Marcus Chen estimates completion by April 3.
+- Push notification system redesign enters development sprint 14 on Monday.
+- Design QA on the messaging screens continues; 38 of 61 open tickets closed this week.
+
+**Key blockers:**
+Third-party payment SDK compatibility issues are consuming more time than expected. The vendor (NexPay) released a patch on March 25, but integration testing revealed two new conflicts. If unresolved by April 8, we will ship beta with the legacy payment module and migrate post-launch.
+
+**Budget & hours:**
+We've used 1,240 of 1,800 budgeted hours. Remaining hours should cover the beta phase, but the April 8 payment decision point may require reallocating 40–60 hours from the notification feature.
+
+**Timeline ahead:**
+- April 3: Settings module complete
+- April 8: Payment SDK go/no-go decision
+- April 14: Feature freeze for beta
+- April 20: Beta launch to the 200-user pilot group
+- May 12: Target public release
+
+Questions or concerns before the April 8 decision point should go to me directly or be raised at Tuesday's standup. Thanks to everyone for the extra effort on accessibility this week — it showed.

@@ -1,0 +1,14 @@
+Subject: Interest in Joining Your Machine Learning Research Lab This Fall
+
+Dear Dr. Ramirez,
+
+My name is Maya Chen, and I am a junior majoring in Computer Science at Westbridge University. I am writing to ask whether you might have space for an undergraduate research assistant in your machine learning lab during the Fall 2026 semester.
+
+I became interested in your work after attending your April 18 seminar on reliable machine learning for medical imaging. For my CPSC 341 project this spring, I trained a convolutional neural network in Python and PyTorch to classify 3,200 chest X-ray images, achieving 87% validation accuracy. I especially enjoyed analyzing false positives and considering how model performance can vary across patient groups.
+
+I would be excited to contribute to your lab’s research on interpretable and equitable machine learning. I can commit approximately 8–10 hours per week and am available Tuesday and Thursday afternoons. I have attached my résumé and unofficial transcript, and I would be grateful for the opportunity to discuss whether my background could be a good fit for your team.
+
+Thank you for your time and consideration. I look forward to hearing from you.
+
+Best,  
+Maya Chen

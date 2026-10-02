@@ -1,0 +1,17 @@
+**Weekly Lab Update — Molecular Biology Lab, Week of March 3**
+
+**PCR Contamination Resolved**
+The PCR contamination issue first detected on February 25 has been resolved. After systematically decontaminating workstations with DNA Away and 10% bleach solution, replacing all reagent aliquots, and instituting fresh master mix preparations, control amplifications have come back clean for three consecutive runs (March 3, 4, and 5). Root cause was traced to aerosol contamination from the gel electrophoresis area; as a corrective measure, pre- and post-PCR workflows are now physically separated, with dedicated pipettes and filtered tips assigned to station B2. Thanks to Priya Nair for running the validation series.
+
+**Cell Cultures On Schedule**
+All cell culture work remains on track. The HEK293 passage series (n=14 flasks) is proceeding on the standard 48-hour split cycle with viability holding at 96–98%. The MCF-7 differentiation assay initiated February 26 is at day 9 of 14, with morphology consistent with expected milestones. The 3T3 backup line has been revived from liquid nitrogen stock (vials LN2-0451 and LN2-0452) and both show healthy attachment and growth. No mycoplasma flags from the February 28 screening; next scheduled screen is March 14.
+
+**Personnel Note**
+Dr. Reyes will be away at the Gordon Conference in Palm Springs until March 14. In her absence, direct questions about experimental design to Marcus Liu; equipment and ordering issues go to Dana Okafor, our lab manager. Dr. Reyes will not be available for the March 10 lab meeting, which Marcus will chair. Please submit any items for her review before she returns, as her first week back is heavily booked.
+
+**Upcoming**
+- Mycoplasma screening: March 14
+- Liquid nitrogen tank level check: March 11 (Dana)
+- Inventory order deadline: March 12 for the quarterly restock
+
+Overall, a productive week with the contamination setback fully behind us and all timelines intact.

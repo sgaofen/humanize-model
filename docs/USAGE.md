@@ -1,0 +1,548 @@
+# Using humanizer without the app
+
+[中文](USAGE.zh.md) · [README](https://github.com/sgaofen/humanize-model#readme) · [AGENTS.md (for AI agents)](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md) · [Model files on Hugging Face](https://huggingface.co/jialinyyzz/humanizer/tree/main)
+
+This guide is for people who want to run humanizer from their own code or the command line instead of the [desktop app](https://github.com/sgaofen/humanize-model/releases/latest). Every block can be copied as is.
+
+**Contents:** [1. What makes this model different](#1-what-makes-this-model-different) · [2. Pick a file](#2-pick-a-file) · [3. llama.cpp](#3-llamacpp-recommended) · [4. MLX](#4-mlx-apple-silicon) · [5. transformers](#5-transformers-cuda) · [6. vLLM](#6-vllm) · [7. Ollama](#7-ollama) · [8. LM Studio](#8-lm-studio) · [9. Rewrite a whole folder](#9-rewrite-a-whole-folder) · [10. Long documents](#10-long-documents) · [11. Chinese](#11-chinese) · [12. Quality checklist](#12-quality-checklist) · [13. Troubleshooting](#13-troubleshooting)
+
+## 1. What makes this model different
+
+humanizer is a 12B **text-completion** model fine-tuned from `google/gemma-4-12B`. It takes one AI-written draft and writes the rewrite. Four rules apply to every runtime below. Get them right and it behaves as in our evaluation; get one wrong and the output gets noticeably worse.
+
+| Rule | Why |
+|---|---|
+| **It is not a chat model.** Send one plain string. No chat template, no system prompt, no turn markers, no `/v1/chat/completions`. | It was trained on raw text in exactly the shape below. A chat template wraps the draft in tokens it never saw during training. |
+| **The prompt must match byte for byte.** | A reworded instruction, a translated instruction or a missing blank line all make it worse. |
+| **Stop at EOS only.** No stop strings, and especially not `###`. | The model ends by itself. A few legitimate outputs contain `###` and would be cut off. |
+| **Sampling: temperature 1.0, top-p 0.95, and nothing else.** top-k off (0), min-p off (0), repetition penalty 1.0. | That is how the evaluation was run. Several runtimes switch on other samplers by default: llama.cpp uses top-k 40 and min-p 0.05, and transformers reads top-k 64 from the bundled `generation_config.json`. |
+
+### The prompt
+
+```
+prompt = INSTR + "\n\n" + draft.strip() + "\n\n### Rewritten:\n\n"
+```
+
+`INSTR` is exactly this text (lines joined with `\n`, blank lines included, no trailing newline):
+
+```
+Rewrite the text below so it reads like a person wrote it, not a language model.
+
+Reorganize it as you see fit. Vary sentence length on purpose. Cut hedging,
+throat-clearing, and any sentence that only announces what comes next.
+Prefer the concrete word over the abstract one. It is fine to sound uneven.
+
+Every fact, number, unit, date, name and quotation must survive unchanged.
+```
+
+- `draft.strip()` removes leading and trailing whitespace.
+- The separator `\n\n### Rewritten:\n\n` ends with a blank line; the model starts writing right after it.
+- Use the same English instruction for Chinese drafts. Don't translate it.
+- Both strings ship with the weights in `prompt_format.json` (fields `instr` and `sep`).
+
+A prompt builder you can paste anywhere, with its self-check:
+
+```python
+import hashlib
+
+INSTR = (
+    "Rewrite the text below so it reads like a person wrote it, not a language model.\n"
+    "\n"
+    "Reorganize it as you see fit. Vary sentence length on purpose. Cut hedging,\n"
+    "throat-clearing, and any sentence that only announces what comes next.\n"
+    "Prefer the concrete word over the abstract one. It is fine to sound uneven.\n"
+    "\n"
+    "Every fact, number, unit, date, name and quotation must survive unchanged."
+)
+SEP = "\n\n### Rewritten:\n\n"
+
+def build_prompt(draft: str) -> str:
+    return INSTR + "\n\n" + draft.strip() + SEP
+
+# Fingerprint: if this fails, the prompt is wrong.
+assert hashlib.sha256(build_prompt("X").encode("utf-8")).hexdigest()[:16] == "cc51d66b4c593fbe"
+```
+
+**Output length.** A rewrite is usually about as long as the draft. Allow about 2.5 times the draft's token count; the app uses `min(2048, max(256, 2.5 × draft tokens))`. The context is 8192 tokens for the instruction, the draft and the rewrite together; see [Long documents](#10-long-documents).
+
+## 2. Pick a file
+
+All files are in [`jialinyyzz/humanizer`](https://huggingface.co/jialinyyzz/humanizer/tree/main):
+
+| Your memory | File | Size |
+|---|---|---|
+| 32 GB or more | `humanizer-12b-Q8_0.gguf` | 12,669,627,840 bytes (about 12.7 GB) |
+| 16 GB | `humanizer-12b-Q6_K.gguf` | 10,029,797,088 bytes (about 10.0 GB) |
+| 8 GB | `lite/humanizer-lite-Q6_K.gguf`, the previous, smaller E4B release | about 6.2 GB |
+| (not yet) | `humanizer-12b-Q4_K_M.gguf` | about 7.6 GB, *coming soon*: released only after it passes the fact judge |
+
+Also in the repo:
+
+- `model.safetensors` (bf16, about 24 GB) with `config.json`, `generation_config.json`, `tokenizer.json`, `tokenizer_config.json` and `prompt_format.json` at the root: what transformers, vLLM and the MLX converter use.
+- `lite/` (previous E4B release): `humanizer-lite-Q8_0.gguf` (about 8.0 GB), `humanizer-lite-Q6_K.gguf` (about 6.2 GB), `humanizer-lite-bf16.gguf` (about 14.9 GB), and four safetensors shards (about 15.9 GB) with config, tokenizer and `prompt_format.json`. Same prompt format.
+
+**How much the quantised files differ from bf16.** We measured on 104 drafts and their rewrites from the evaluation set (no overlap with the calibration data). Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embeddings and output layer kept at 8-bit.
+
+| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity |
+|---|---|---|---|
+| Q8_0 | 0.0017 | 98.4% | +0.2% |
+| Q6_K | 0.0033 | 97.8% | +0.5% |
+| Q4_K_M | 0.0214 | 93.9% | +2.3% |
+
+The Q4_K_M loss is clearly larger, which is why it waits for the fact judge before release.
+
+**Download:**
+
+```bash
+pip install -U "huggingface_hub[cli]"
+hf download jialinyyzz/humanizer humanizer-12b-Q8_0.gguf prompt_format.json --local-dir ./humanizer-model
+# 16 GB machine: humanizer-12b-Q6_K.gguf instead of humanizer-12b-Q8_0.gguf
+# Slow from mainland China: put HF_ENDPOINT=https://hf-mirror.com in front of the command
+wc -c ./humanizer-model/*.gguf     # Q8_0: 12669627840 bytes, Q6_K: 10029797088 bytes
+```
+
+<!-- TBD: sha256 of each GGUF, after upload -->
+sha256 checksums: *coming soon*.
+
+## 3. llama.cpp (recommended)
+
+Works on macOS (Metal), Windows and Linux (CUDA, Vulkan or CPU). The app itself runs llama.cpp build `b11335`; that build or a newer one is fine.
+
+### Install
+
+| System | Command |
+|---|---|
+| macOS | `brew install llama.cpp` |
+| Windows | `winget install llama.cpp`, or a zip from [llama.cpp releases](https://github.com/ggml-org/llama.cpp/releases) (CUDA build for NVIDIA, Vulkan build for other GPUs) |
+| Linux | a zip from [llama.cpp releases](https://github.com/ggml-org/llama.cpp/releases), or build it: `cmake -B build -DGGML_CUDA=ON && cmake --build build --config Release -j` (leave out `-DGGML_CUDA=ON` without an NVIDIA GPU) |
+
+### Start a server
+
+```bash
+llama-server -m ./humanizer-model/humanizer-12b-Q8_0.gguf -c 8192 -np 1 -ngl 99 --host 127.0.0.1 --port 8080
+```
+
+- `-c 8192`: context for instruction + draft + rewrite.
+- `-np 1`: one request at a time, so the whole context goes to it (newer builds otherwise split the context across parallel slots).
+- `-ngl 99`: put every layer on the GPU. Lower it if you run out of GPU memory. The log line `offloaded N/N layers` tells you where it runs.
+- Without a local file: `--hf-repo jialinyyzz/humanizer --hf-file humanizer-12b-Q8_0.gguf` instead of `-m …` downloads it for you.
+
+Ready when `curl -s http://127.0.0.1:8080/health` returns `{"status":"ok"}`.
+
+Use the `/completion` endpoint. Don't use `/v1/chat/completions`: it applies the chat template.
+
+### Call it from Python (standard library only)
+
+```python
+import json, urllib.request
+
+PF = json.load(open("humanizer-model/prompt_format.json", encoding="utf-8"))
+
+def humanize(draft: str, url: str = "http://127.0.0.1:8080") -> str:
+    body = {
+        "prompt": PF["instr"] + "\n\n" + draft.strip() + PF["sep"],
+        "temperature": 1.0, "top_p": 0.95, "top_k": 0, "min_p": 0, "repeat_penalty": 1.0,
+        "n_predict": 2048,                       # no "stop": the model ends at EOS
+    }
+    req = urllib.request.Request(url + "/completion", json.dumps(body).encode("utf-8"),
+                                 {"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=900) as r:
+        return json.load(r)["content"].strip()
+
+print(humanize(open("draft.txt", encoding="utf-8").read()))
+```
+
+For streaming, add `"stream": true` and read the server-sent events; each event's `content` is the next piece of text.
+
+### Call it with curl (macOS and Linux, needs jq)
+
+```bash
+jq -n --rawfile d draft.txt --slurpfile f humanizer-model/prompt_format.json \
+  '{prompt: ($f[0].instr + "\n\n" + ($d | sub("^\\s+"; "") | sub("\\s+$"; "")) + $f[0].sep),
+    temperature: 1.0, top_p: 0.95, top_k: 0, min_p: 0, repeat_penalty: 1.0, n_predict: 2048}' \
+| curl -s http://127.0.0.1:8080/completion -d @- | jq -r .content
+```
+
+### One-shot, without a server
+
+Newer llama.cpp builds call the plain text-completion tool `llama-completion`; in older builds the same flags work with `llama-cli`. `-no-cnv` keeps it out of chat mode.
+
+```bash
+# 1) write the exact prompt to a file. The extra "\n" at the end is deliberate:
+#    llama.cpp's -f drops exactly one trailing newline when it reads the file.
+python3 - <<'EOF'
+import json
+pf = json.load(open("humanizer-model/prompt_format.json", encoding="utf-8"))
+draft = open("draft.txt", encoding="utf-8").read()
+with open("prompt.txt", "w", encoding="utf-8", newline="") as f:
+    f.write(pf["instr"] + "\n\n" + draft.strip() + pf["sep"] + "\n")
+EOF
+
+# 2) run once and print only the rewrite
+llama-completion -m ./humanizer-model/humanizer-12b-Q8_0.gguf -f prompt.txt -c 8192 -n 2048 -ngl 99 \
+  -no-cnv --no-display-prompt --temp 1.0 --top-p 0.95 --top-k 0 --min-p 0 --repeat-penalty 1.0
+```
+
+We use llama-server ourselves and have not tested this one-shot path. Add `--verbose-prompt` once to see the tokenised prompt: it must end with `Rewritten`, `:` and a blank line, with nothing after that.
+
+## 4. MLX (Apple silicon)
+
+Needs mlx-lm 0.32 or newer. The 12B has no ready-made MLX files; convert the bf16 weights to 8-bit once. This reads the 24 GB bf16 download; a Mac with 32 GB or more is the comfortable size. We have only measured the 8-bit conversion. On an M5 Max it runs at about 30 tokens/s in English and 38 in Chinese.
+
+```bash
+pip install -U "mlx-lm>=0.32" huggingface_hub
+mlx_lm.convert --hf-path jialinyyzz/humanizer --mlx-path humanizer-mlx-8bit -q --q-bits 8 --q-group-size 64
+```
+
+```python
+import json
+from huggingface_hub import hf_hub_download
+from mlx_lm import load, generate
+from mlx_lm.sample_utils import make_sampler
+
+PF = json.load(open(hf_hub_download("jialinyyzz/humanizer", "prompt_format.json"), encoding="utf-8"))
+model, tok = load("humanizer-mlx-8bit")
+sampler = make_sampler(temp=1.0, top_p=0.95)          # top-k and min-p stay off (their defaults)
+
+def humanize(draft: str) -> str:
+    prompt = PF["instr"] + "\n\n" + draft.strip() + PF["sep"]
+    return generate(model, tok, prompt=prompt, max_tokens=2048, sampler=sampler).strip()
+
+print(humanize(open("draft.txt", encoding="utf-8").read()))
+```
+
+Pass a plain string to `generate()` and never call `tok.apply_chat_template`. The `mlx_lm.generate` command-line tool applies the chat template unless you add `--ignore-chat-template`; the Python API above does not. For the lite (E4B) model on a Mac, use its GGUF with llama.cpp instead.
+
+## 5. transformers (CUDA)
+
+The bf16 weights are about 24 GB, so you need more GPU memory than that, or `device_map="auto"` to spread the model over several GPUs. You need a transformers version with Gemma 4 support; the weights were saved with 5.14.1.
+
+```bash
+pip install -U torch transformers accelerate huggingface_hub
+```
+
+```python
+import json, torch
+from huggingface_hub import hf_hub_download
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+repo = "jialinyyzz/humanizer"
+PF = json.load(open(hf_hub_download(repo, "prompt_format.json"), encoding="utf-8"))
+tok = AutoTokenizer.from_pretrained(repo)
+model = AutoModelForCausalLM.from_pretrained(repo, dtype=torch.bfloat16, device_map="auto")
+
+def humanize(draft: str) -> str:
+    ids = tok(PF["instr"] + "\n\n" + draft.strip() + PF["sep"], return_tensors="pt").to(model.device)
+    out = model.generate(**ids, do_sample=True, temperature=1.0, top_p=0.95,
+                         top_k=0,                # switches off the top-k 64 in generation_config.json
+                         max_new_tokens=2048)
+    return tok.decode(out[0, ids["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+
+print(humanize(open("draft.txt", encoding="utf-8").read()))
+```
+
+On transformers 4.x, write `torch_dtype=` instead of `dtype=`. `top_k=0` matters: without it you sample with top-k 64.
+
+## 6. vLLM
+
+The offline API below mirrors how our evaluation outputs were generated (vLLM, bf16, temperature 1.0, top-p 0.95); the evaluation additionally used its anti-copy resample.
+
+```python
+import json
+from huggingface_hub import hf_hub_download
+from vllm import LLM, SamplingParams
+
+repo = "jialinyyzz/humanizer"
+PF = json.load(open(hf_hub_download(repo, "prompt_format.json"), encoding="utf-8"))
+llm = LLM(model=repo, dtype="bfloat16", max_model_len=8192,
+          limit_mm_per_prompt={"image": 0, "audio": 0, "video": 0})   # text only
+params = SamplingParams(temperature=1.0, top_p=0.95, top_k=-1, min_p=0.0,
+                        repetition_penalty=1.0, max_tokens=2048)      # top_k=-1: off
+
+drafts = [open(p, encoding="utf-8").read() for p in ["draft1.txt", "draft2.txt"]]
+prompts = [PF["instr"] + "\n\n" + d.strip() + PF["sep"] for d in drafts]
+for result in llm.generate(prompts, params):
+    print(result.outputs[0].text.strip(), "\n---")
+```
+
+As a server (OpenAI-compatible). `--generation-config vllm` stops vLLM from taking top-k 64 from `generation_config.json` as the default:
+
+```bash
+vllm serve jialinyyzz/humanizer --dtype bfloat16 --max-model-len 8192 --generation-config vllm
+```
+
+```bash
+jq -n --rawfile d draft.txt --slurpfile f humanizer-model/prompt_format.json \
+  '{model: "jialinyyzz/humanizer",
+    prompt: ($f[0].instr + "\n\n" + ($d | sub("^\\s+"; "") | sub("\\s+$"; "")) + $f[0].sep),
+    temperature: 1.0, top_p: 0.95, top_k: -1, min_p: 0, repetition_penalty: 1.0, max_tokens: 2048}' \
+| curl -s http://127.0.0.1:8000/v1/completions -H "Content-Type: application/json" -d @- \
+| jq -r '.choices[0].text'
+```
+
+Use `/v1/completions`, never `/v1/chat/completions`. We have not tested the server path ourselves.
+
+## 7. Ollama
+
+Ollama applies a chat template unless you tell it not to. Create a model whose template passes the prompt through unchanged, and call the API in raw mode. You need an Ollama version whose engine supports Gemma 4 models. We have not tested Ollama ourselves.
+
+`Modelfile`, next to the GGUF:
+
+```
+FROM ./humanizer-12b-Q8_0.gguf
+TEMPLATE """{{ .Prompt }}"""
+PARAMETER temperature 1.0
+PARAMETER top_p 0.95
+PARAMETER top_k 0
+PARAMETER min_p 0
+PARAMETER repeat_penalty 1.0
+PARAMETER num_ctx 8192
+PARAMETER num_predict 2048
+```
+
+```bash
+ollama create humanizer -f Modelfile
+ollama show humanizer --modelfile      # check that no "PARAMETER stop" lines were added
+```
+
+Call `/api/generate` with `"raw": true` and the full prompt (instruction + draft + separator):
+
+```bash
+jq -n --rawfile d draft.txt --slurpfile f humanizer-model/prompt_format.json \
+  '{model: "humanizer", raw: true, stream: false,
+    prompt: ($f[0].instr + "\n\n" + ($d | sub("^\\s+"; "") | sub("\\s+$"; "")) + $f[0].sep),
+    options: {temperature: 1.0, top_p: 0.95, top_k: 0, min_p: 0, repeat_penalty: 1.0,
+              num_ctx: 8192, num_predict: 2048}}' \
+| curl -s http://127.0.0.1:11434/api/generate -d @- | jq -r .response
+```
+
+Python:
+
+```python
+import json, urllib.request
+
+PF = json.load(open("humanizer-model/prompt_format.json", encoding="utf-8"))
+draft = open("draft.txt", encoding="utf-8").read()
+body = {"model": "humanizer", "raw": True, "stream": False,
+        "prompt": PF["instr"] + "\n\n" + draft.strip() + PF["sep"],
+        "options": {"temperature": 1.0, "top_p": 0.95, "top_k": 0, "min_p": 0, "repeat_penalty": 1.0,
+                    "num_ctx": 8192, "num_predict": 2048}}
+req = urllib.request.Request("http://127.0.0.1:11434/api/generate", json.dumps(body).encode("utf-8"),
+                             {"Content-Type": "application/json"})
+print(json.load(urllib.request.urlopen(req, timeout=900))["response"].strip())
+```
+
+Don't use `ollama run` interactively or `/api/chat`: both go through chat formatting.
+
+## 8. LM Studio
+
+We have not tested LM Studio ourselves.
+
+1. Load `humanizer-12b-Q8_0.gguf` (or Q6_K). Set the context length to 8192 when loading.
+2. In the model's sampling settings, set **Temperature 1.0, Top P 0.95, Top K 0, Min P 0, Repeat Penalty 1.0** and remove any stop strings.
+3. Start the local server (Developer tab) and send the full prompt (instruction + draft + separator) to the **text-completion endpoint `/v1/completions`**:
+
+```python
+import json, urllib.request
+
+PF = json.load(open("humanizer-model/prompt_format.json", encoding="utf-8"))
+draft = open("draft.txt", encoding="utf-8").read()
+body = {"model": "humanizer-12b-q8_0",         # replace with the model id shown in LM Studio
+        "prompt": PF["instr"] + "\n\n" + draft.strip() + PF["sep"],
+        "temperature": 1.0, "top_p": 0.95, "top_k": 0, "min_p": 0, "repeat_penalty": 1.0,
+        "max_tokens": 2048}
+req = urllib.request.Request("http://127.0.0.1:1234/v1/completions", json.dumps(body).encode("utf-8"),
+                             {"Content-Type": "application/json"})
+print(json.load(urllib.request.urlopen(req, timeout=900))["choices"][0]["text"].strip())
+```
+
+Don't use the Chat tab or `/v1/chat/completions`: both apply a chat template. If your LM Studio version ignores `top_k`, `min_p` or `repeat_penalty` in the request, the settings from step 2 apply.
+
+## 9. Rewrite a whole folder
+
+`humanize_folder.py` rewrites every `.txt` in one folder into another folder through a running llama-server ([section 3](#start-a-server)). Standard library only.
+
+- Long files are split at blank lines into pieces of at most `--max-tokens` draft tokens; the pieces are rewritten one by one and joined with a blank line.
+- If a rewrite copies more than `--max-copy` (default 0.35) of a piece, the piece is sampled once more and the less-copied version is kept.
+- Numbers that appear in a draft but not in its rewrite go into `report.tsv` for you to check.
+- Files already in the output folder are skipped, so you can stop and resume.
+
+```bash
+python3 humanize_folder.py drafts/ rewrites/
+python3 humanize_folder.py drafts/ rewrites/ --url http://127.0.0.1:8080 --max-tokens 1500
+```
+
+```python
+#!/usr/bin/env python3
+"""Rewrite every .txt file in a folder with humanizer, through a running llama-server.
+
+    python3 humanize_folder.py drafts/ rewrites/
+    python3 humanize_folder.py drafts/ rewrites/ --url http://127.0.0.1:8080 --max-tokens 1500
+
+Standard library only. Long files are split at blank lines into pieces of at most --max-tokens
+draft tokens; each piece is rewritten on its own and the pieces are joined with a blank line.
+A piece whose rewrite copies more than --max-copy of the draft is sampled once more and the
+less-copied version is kept. Numbers that appear in a draft but not in its rewrite are listed in
+report.tsv so you can check them by hand. Files already in the output folder are skipped.
+"""
+import argparse, hashlib, json, math, os, re, sys, urllib.request
+
+INSTR = (
+    "Rewrite the text below so it reads like a person wrote it, not a language model.\n"
+    "\n"
+    "Reorganize it as you see fit. Vary sentence length on purpose. Cut hedging,\n"
+    "throat-clearing, and any sentence that only announces what comes next.\n"
+    "Prefer the concrete word over the abstract one. It is fine to sound uneven.\n"
+    "\n"
+    "Every fact, number, unit, date, name and quotation must survive unchanged."
+)
+SEP = "\n\n### Rewritten:\n\n"
+
+
+def build_prompt(draft):
+    return INSTR + "\n\n" + draft.strip() + SEP
+
+
+assert hashlib.sha256(build_prompt("X").encode("utf-8")).hexdigest()[:16] == "cc51d66b4c593fbe"
+
+
+def post(url, path, body, timeout=1800):
+    req = urllib.request.Request(url.rstrip("/") + path, json.dumps(body).encode("utf-8"),
+                                 {"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.load(r)
+
+
+def n_tokens(url, text):
+    return len(post(url, "/tokenize", {"content": text})["tokens"])
+
+
+def split_long(url, text, max_tokens):
+    """Group paragraphs (split at blank lines) into pieces of at most max_tokens tokens."""
+    paras = [p.strip() for p in re.split(r"\n\s*\n", text.strip()) if p.strip()]
+    pieces, cur = [], []
+    for p in paras:
+        if cur and n_tokens(url, "\n\n".join(cur + [p])) > max_tokens:
+            pieces.append("\n\n".join(cur))
+            cur = []
+        cur.append(p)
+    if cur:
+        pieces.append("\n\n".join(cur))
+    return pieces
+
+
+def rewrite(url, draft, ctx):
+    prompt = build_prompt(draft)
+    room = ctx - n_tokens(url, prompt) - 16
+    n_predict = max(256, min(math.ceil(n_tokens(url, draft) * 2.5), room))
+    body = {"prompt": prompt, "n_predict": n_predict, "temperature": 1.0, "top_p": 0.95,
+            "top_k": 0, "min_p": 0, "repeat_penalty": 1.0}            # no "stop": ends at EOS
+    return post(url, "/completion", body)["content"].strip()
+
+
+# Rough copy ratio: share of the rewrite's 5-grams (words; single CJK characters) found in the draft.
+UNIT = re.compile(r"[㐀-鿿]|[^\W_㐀-鿿]+|[^\w\s]")
+
+
+def copy_ratio(draft, out, n=5):
+    a = [t.lower() for t in UNIT.findall(draft)]
+    b = [t.lower() for t in UNIT.findall(out)]
+    seen = {tuple(a[i:i + n]) for i in range(len(a) - n + 1)}
+    grams = [tuple(b[i:i + n]) for i in range(len(b) - n + 1)]
+    return sum(g in seen for g in grams) / len(grams) if grams else 0.0
+
+
+NUM = re.compile(r"\d+(?:[.,:/]\d+)*")
+
+
+def missing_numbers(draft, out):
+    have = {m.replace(",", "") for m in NUM.findall(out)} | set(re.findall(r"\d+", out))
+    return sorted({m.replace(",", "") for m in NUM.findall(draft)} - have)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("src"); ap.add_argument("dst")
+    ap.add_argument("--url", default="http://127.0.0.1:8080")
+    ap.add_argument("--ctx", type=int, default=8192, help="the -c you gave llama-server")
+    ap.add_argument("--max-tokens", type=int, default=1500, help="max draft tokens per piece")
+    ap.add_argument("--max-copy", type=float, default=0.35, help="resample a piece once above this")
+    a = ap.parse_args()
+    os.makedirs(a.dst, exist_ok=True)
+    files = sorted(f for f in os.listdir(a.src) if f.lower().endswith(".txt"))
+    report = open(os.path.join(a.dst, "report.tsv"), "a", encoding="utf-8")
+    for i, name in enumerate(files, 1):
+        out_path = os.path.join(a.dst, name)
+        if os.path.exists(out_path):
+            print(f"[{i}/{len(files)}] {name}: already done, skipped"); continue
+        draft = open(os.path.join(a.src, name), encoding="utf-8").read()
+        if not draft.strip():
+            continue
+        parts = []
+        for piece in split_long(a.url, draft, a.max_tokens):
+            out = rewrite(a.url, piece, a.ctx)
+            c = copy_ratio(piece, out)
+            if c > a.max_copy:
+                out2 = rewrite(a.url, piece, a.ctx)
+                c2 = copy_ratio(piece, out2)
+                if c2 < c:
+                    out, c = out2, c2
+            parts.append(out)
+        text = "\n\n".join(parts)
+        with open(out_path, "w", encoding="utf-8", newline="") as f:
+            f.write(text + "\n")
+        miss = missing_numbers(draft, text)
+        report.write(f"{name}\t{len(parts)} piece(s)\tcopy {copy_ratio(draft, text):.2f}\tcheck numbers: {' '.join(miss) or '-'}\n")
+        report.flush()
+        print(f"[{i}/{len(files)}] {name}: {len(parts)} piece(s), copy {copy_ratio(draft, text):.2f}"
+              + (f", check numbers {miss}" if miss else ""))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-character runs found in the draft), not the exact metric from our evaluation, and the second sample has no anti-copy penalty, unlike the evaluation's resample.
+
+## 10. Long documents
+
+- The context is **8192 tokens** for the instruction, the draft and the rewrite together. Since a rewrite is about as long as its draft, keep each draft piece well under half of that.
+- Split at **paragraph boundaries** (blank lines), never mid-sentence, and rewrite the pieces separately. The batch script above does this; its default piece size is 1,500 tokens.
+- The model was trained and evaluated on single emails, posts, essays and report sections of a few hundred words. Pieces of that size work best.
+- Each piece is rewritten without seeing the others, so tone can shift a little between pieces and a fact can't move from one piece to another. Read the joined result once from top to bottom.
+- Headings, code blocks and bullet lists are often dropped or turned into prose. Rewrite only the prose and keep headings and code yourself; [`humanizer/markdown_guard.py`](https://github.com/sgaofen/humanize-model/blob/main/humanizer/markdown_guard.py) does this block by block.
+
+## 11. Chinese
+
+- Use **the same English instruction**; don't translate it.
+- Chinese is **weaker than English**: our fact judge passed 135 of 204 Chinese outputs (66%).
+- Chinese rewrites copy the draft more often. In the evaluation, the anti-copy resample (triggered above 35% copying) fired for 17 of 204 Chinese outputs and 0 of 420 English ones. If a rewrite looks too close to the draft, sample again; the batch script does this automatically.
+- **Numbers change form** more often in Chinese: Chinese numerals become digits (三 → 3) and dates get reformatted (6月14日 → 6.14). Digit-only checks, like the one in the app and in the batch script, can't see this. Check the numbers by reading.
+- Full-width and half-width punctuation may switch, and greeting, body and sign-off lines are sometimes merged into one paragraph. Fix the layout before sending.
+- Speed is similar to English. With llama.cpp Q8_0 on an M5 Max, a Chinese email of about 300 characters takes about 8.5 seconds.
+
+## 12. Quality checklist
+
+- **Read the rewrite once.** Check every number, date, unit and name, and the direction of every claim (who did what, more or less, before or after). On our evaluation set, 51 of 420 English outputs (12%) had a severe fact error, usually a single number or word.
+- **Restore formatting** you need: subject lines, lists, headings and sign-offs are sometimes dropped (35 of 420 outputs).
+- **Too close to the draft? Sample again.** Each run is a fresh sample.
+- **Casual genres can drift in register.** In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft; edit it out.
+- **No detector guarantee.** Our detector numbers are one measurement on one date with one detector; templated genres (emoji or hashtag social posts, policy memos) are still often flagged. Nothing here promises any detector outcome.
+- It is a writing tool for your own drafts. Where a school, employer or publication has rules about AI assistance, follow them.
+
+## 13. Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Output starts with "Sure", "Here is…", or repeats the instruction | A chat template or a chat endpoint is in use | Use a completion endpoint (`/completion`, `/v1/completions`, Ollama `raw: true`) and the exact prompt from [section 1](#1-what-makes-this-model-different) |
+| Output contains `<start_of_turn>`, `<end_of_turn>` or similar markers | Same: chat formatting | Same fix |
+| Output stops at `###` or very early | A stop string is set | Remove all stop strings; rely on EOS |
+| Output is almost the same as the draft | Sampling luck, or temperature too low | Check temperature 1.0 and sample again |
+| Rambling, odd word choices, or repeated phrases | Wrong samplers (llama.cpp's default top-k 40 / min-p 0.05, the top-k 64 from `generation_config.json`, or a repetition penalty) | Set top-k 0, min-p 0, repetition penalty 1.0 explicitly |
+| Rewrite cut off mid-sentence | Output limit or context too small | Raise `n_predict` / `max_tokens`; give llama-server `-c 8192 -np 1`; split long drafts |
+| Out of memory while loading | File too large for your RAM or VRAM | Use Q6_K (16 GB) or the lite model (8 GB); lower `-ngl` |
+| Very slow | Running on the CPU | Look for `offloaded N/N layers` in the llama.cpp log; install the Metal, CUDA or Vulkan build |
+| 404 when downloading | Wrong file name, or a file that isn't published yet (Q4_K_M) | Use the names in [section 2](#2-pick-a-file) |
+| Self-test fingerprint fails | The prompt builder differs from training | Copy `build_prompt` from [section 1](#the-prompt) |
+
+**Self-test.** [AGENTS.md, section 8](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md#8-self-test-verify-the-install) has a standard-library script that sends a real draft from the evaluation set to llama-server and checks the prompt format, the endpoint, chat-template leaks and copying. It prints `PASS` when the setup is right.

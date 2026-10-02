@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · training pipeline</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="chart.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+<style>
+  .loop { position: relative; margin-top: 26px; border: 1.5px dashed #3A4049; border-radius: 26px; padding: 34px 22px 22px; }
+  .loop > .tag { position: absolute; top: -12px; left: 24px; background: var(--bg); padding: 0 10px; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+  .loop > .tag b { color: var(--lime); font-weight: 600; }
+  .base { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; font-family: var(--f-mono); font-size: 12.5px; color: var(--ink-2); }
+  .base span { border: 1px solid var(--line); background: var(--sheet); border-radius: 999px; padding: 5px 12px 4px; color: var(--ink); }
+  .flow { display: grid; grid-template-columns: 1fr 26px 1fr 26px 1.25fr; align-items: stretch; }
+  .arr { display: grid; place-items: center; color: var(--ink-3); }
+  .arr svg { width: 20px; height: 20px; }
+  .st { padding: 16px 18px 18px; display: flex; flex-direction: column; }
+  .st .n { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
+  .st h3 { margin: 6px 0 2px; font-family: var(--f-display); font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  :root[lang="zh-CN"] .st h3 { font-family: var(--f-ui); font-weight: 600; letter-spacing: 0; font-size: 20px; }
+  .st .what { color: var(--ink-3); font-size: 12.5px; }
+  .st .big { margin: 12px 0 8px; font-size: 26px; font-weight: 600; letter-spacing: -.015em; color: var(--lime); line-height: 1.1; }
+  .st .big small { display: block; font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0; margin-top: 5px; }
+  .st p { margin: 6px 0 0; font-size: 12.8px; line-height: 1.5; color: var(--ink-2); }
+  .st p b { color: var(--ink); font-weight: 600; }
+  .sub2 { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 8px; }
+  .sub2 + .sub2 { margin-top: 6px; }
+  .sub2 .k { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: .06em; }
+  .rel { display: flex; justify-content: flex-end; margin-top: 14px; }
+  .rel span { display: inline-flex; align-items: center; gap: 9px; background: var(--lime); color: var(--lime-ink); border-radius: 999px; padding: 7px 14px 6px; font-weight: 600; font-size: 13.5px; }
+  .rel span svg { width: 22px; height: 13px; }
+  .sig { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-2); align-items: center; }
+  .sig .k { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+  .sig span.c { font-size: 12.5px; color: var(--ink); border: 1px solid var(--line); background: var(--sheet); border-radius: 8px; padding: 4px 10px; }
+  .below { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .box { padding: 16px 20px; display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: start; }
+  .box .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--sunk); border: 1px solid var(--line); }
+  .box .ic svg { width: 26px; height: 26px; }
+  .box h4 { margin: 2px 0 4px; font-size: 15px; }
+  .box p { margin: 0; font-size: 12.8px; line-height: 1.5; color: var(--ink-2); }
+  .box.no { border-color: rgba(255, 97, 89, .35); }
+  .box.no h4 { color: #FF8A84; }
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { lang, markSvg, esc, done } from './common.js';
+const zh = lang === 'zh';
+// 数字全部来自 release_facts.md「怎么训的」「评测集」两节。
+const T = zh ? {
+  eye: '怎么训的', h: '三段训练，检测器从不进训练环',
+  sub: '模型只从两样东西里学：真人怎么写，以及事实有没有保住。',
+  tag: '<b>训练环</b> · 里面只有这些信号', base: '底座', from: 'google/gemma-4-12B',
+  s1n: '第 1 段', s1: '监督微调 SFT', s1w: '学“人是怎么写的”', s1b: '28,598 对', s1bs: 'AI 草稿 → 真人原文',
+  s1p: '<b>人写一侧全是真人文本</b>：论文摘要、政府报告、学生作文、公司/邮件列表邮件、Reddit、Hacker News、知乎等。AI 一侧是前沿模型从真人原文反写出的草稿。',
+  s2n: '第 2 段', s2: '偏好优化 DPO', s2w: '学“别改错、别照抄”', s2b: '约 4,100 对', s2bs: '偏好对',
+  s2p: '只按<b>事实忠实度</b>和<b>照抄程度</b>挑选好坏样本（LLM 判官 GLM-5.3）。风格和检测分数都不参与挑选。',
+  s3n: '第 3 段', s3: '强化学习 GRPO', s3w: '两段：200 + 150 步', s3a: '先 200 步', s3ap: '单票从严的事实判官。',
+  s3b: '再 150 步 · RLRt', s3bp: '每步 16 篇草稿 × 8 发，采样温度 1.0。奖励 = LLM 判官通读核对事实（严重错 / 编造 / 改义 / 丢格式扣分）+ 照抄惩罚（5-gram 原词与句法骨架复用，.22 以下不罚，之后线性加重）。',
+  rel: '发布版本 = RLRt 终版',
+  sigk: '信号', sig: ['真人文本', '事实判官 GLM-5.3', '照抄惩罚'],
+  nh: 'AI 检测器：从不进入训练', np: '不当奖励、不当过滤条件、不用来挑检查点。',
+  eh: '训练结束后才评测', ep: '312 篇自建草稿（未参与训练）：事实判官 + Originality.ai。检测器只做外部核对。',
+} : {
+  eye: 'How it was trained', h: 'Three stages. No detector anywhere in the loop.',
+  sub: 'The model learns from two things only: how people actually write, and whether the facts survived.',
+  tag: '<b>Training loop</b> · the only signals inside', base: 'base', from: 'google/gemma-4-12B',
+  s1n: 'Stage 1', s1: 'SFT', s1w: 'learn how people write', s1b: '28,598 pairs', s1bs: 'AI draft → real human original',
+  s1p: '<b>The human side is always real human writing</b>: paper abstracts, government reports, student essays, company and mailing-list email, Reddit, Hacker News, Zhihu… The AI side is a draft a frontier model wrote back from the human text.',
+  s2n: 'Stage 2', s2: 'DPO', s2w: 'learn not to break facts or copy', s2b: '≈4,100 pairs', s2bs: 'preference pairs',
+  s2p: 'Chosen and rejected samples are picked <b>only on fact fidelity and copying</b> (LLM judge GLM-5.3). Style and detector scores play no part.',
+  s3n: 'Stage 3', s3: 'RL (GRPO)', s3w: 'two runs: 200 + 150 steps', s3a: 'first 200 steps', s3ap: 'strict single-vote fact judge.',
+  s3b: 'then 150 steps · RLRt', s3bp: '16 drafts × 8 samples per step, temperature 1.0. Reward = an LLM judge reads the whole rewrite against the draft (severe errors, invented content, changed meaning, dropped format all cost) + a copy penalty (verbatim 5-gram and syntactic-skeleton reuse; free below .22, then linear).',
+  rel: 'Release = final RLRt checkpoint',
+  sigk: 'signals', sig: ['real human text', 'fact judge GLM-5.3', 'copy penalty'],
+  nh: 'AI detectors: never in training', np: 'Not a reward, not a filter, not used to pick a checkpoint.',
+  eh: 'Evaluation, after training', ep: '312 held-out drafts (never trained on): fact judge + Originality.ai. The detector is an external check only.',
+};
+const arrow = '<svg viewBox="0 0 24 24"><path d="M4 12h14M12.5 5.5 19 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const noDet = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="#8A919C" stroke-width="1.6"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#8A919C" stroke-width="1.6"/><path d="M4.5 4.5 19.5 19.5" stroke="#FF6159" stroke-width="2.2" stroke-linecap="round"/></svg>';
+const evalIc = '<svg viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="2.5" fill="none" stroke="#AEB4BD" stroke-width="1.6"/><path d="m8.5 12.3 2.4 2.4 4.6-5" fill="none" stroke="#CDF54B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+document.getElementById('m').innerHTML = `
+  <header class="hd"><span class="brand">${markSvg()}<b>humanizer</b></span><span class="eyebrow">${esc(T.eye)}</span></header>
+  <h2>${esc(T.h)}</h2><p class="sub">${esc(T.sub)}</p>
+  <div class="loop"><span class="tag">${T.tag}</span>
+    <div class="base">${esc(T.base)} <span>${esc(T.from)}</span> ${arrow.replace('<svg', '<svg style="width:16px;height:16px"')}</div>
+    <div class="flow">
+      <section class="st sheet"><span class="n">${T.s1n}</span><h3>${T.s1}</h3><span class="what">${T.s1w}</span><div class="big">${T.s1b}<small>${T.s1bs}</small></div><p>${T.s1p}</p></section>
+      <div class="arr">${arrow}</div>
+      <section class="st sheet"><span class="n">${T.s2n}</span><h3>${T.s2}</h3><span class="what">${T.s2w}</span><div class="big">${T.s2b}<small>${T.s2bs}</small></div><p>${T.s2p}</p></section>
+      <div class="arr">${arrow}</div>
+      <section class="st sheet"><span class="n">${T.s3n}</span><h3>${T.s3}</h3><span class="what">${T.s3w}</span>
+        <div class="sub2"><span class="k">${T.s3a}</span><p>${T.s3ap}</p></div>
+        <div class="sub2"><span class="k">${T.s3b}</span><p>${T.s3bp}</p></div></section>
+    </div>
+    <div class="rel"><span>${markSvg(3.4)}${T.rel}</span></div>
+    <div class="sig"><span class="k">${T.sigk}</span>${T.sig.map((x) => `<span class="c">${x}</span>`).join('')}</div>
+  </div>
+  <div class="below">
+    <section class="box sheet no"><span class="ic">${noDet}</span><div><h4>${T.nh}</h4><p>${T.np}</p></div></section>
+    <section class="box sheet"><span class="ic">${evalIc}</span><div><h4>${T.eh}</h4><p>${T.ep}</p></div></section>
+  </div>`;
+await done();
+</script>
+</body>
+</html>

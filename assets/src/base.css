@@ -1,0 +1,64 @@
+/* humanizer README 配图的公共样式。和 App(app/web/css/app.css)同一套:墨黑台面 + 点阵 + 荧光青柠绿。
+ * 字体直接引用 App 自带的 woff2(拉丁子集),中文回落到系统黑体。
+ * 这些页面由 render.sh 起一个本地 http 服务后用无头 Chrome 截图,不要直接用 file:// 打开(ES module 会被拦)。 */
+
+@font-face { font-family: "Instrument Sans"; src: url("../../app/web/fonts/InstrumentSans-Variable.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("../../app/web/fonts/BricolageGrotesque-Variable.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "JetBrains Mono"; src: url("../../app/web/fonts/JetBrainsMono-Variable.woff2") format("woff2"); font-weight: 100 800; }
+
+:root {
+  --cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC";
+  --f-ui: "Instrument Sans", var(--cjk), system-ui, sans-serif;
+  --f-display: "Bricolage Grotesque", "Instrument Sans", var(--cjk), system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, var(--cjk), monospace;
+
+  --bg: #0A0B0D;
+  --dot: #1E2126;
+  --sheet: #121418;
+  --sheet-2: #171A1E;
+  --sunk: #0E1013;
+  --ink: #ECEEF1;
+  --ink-2: #AEB4BD;
+  --ink-3: #6F7682;
+  --ink-4: #454B54;
+  --line: #24282E;
+  --line-2: #1C1F24;
+  --lime: #CDF54B;
+  --lime-ink: #0A0B0D;
+  --hl: rgba(205, 245, 75, .17);
+  --hl-ink: #F1FFC6;
+  --hl-edge: rgba(205, 245, 75, .55);
+  --del: #FF6159;
+  --ok: #3DD68C;
+  --grid: #1F2328;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.1px, transparent 1.4px);
+  background-size: 18px 18px;
+  background-position: -9px -9px;
+  color: var(--ink);
+  font: 15px/1.5 var(--f-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.sheet { background: var(--sheet); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 0 0 1px rgba(255,255,255,.02), 0 24px 48px -28px rgba(0,0,0,.9); }
+
+/* 荧光笔(新写的)和删除线(被改掉的),与 App 一致 */
+.ins {
+  background: var(--hl); color: var(--hl-ink); border-radius: .3em .14em .34em .16em;
+  padding: .05em .14em; margin: 0 -.14em; box-shadow: inset 0 -2px 0 var(--hl-edge);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.del { color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--del); text-decoration-thickness: 1.5px; }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; }
+.brand svg { width: 34px; height: 20px; color: var(--ink); }
+.brand b { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.035em; line-height: 1; }
+.brand i { font-style: normal; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .14em; color: var(--ink-3); padding-left: 12px; margin-left: 2px; border-left: 1px solid var(--line); line-height: 16px; }

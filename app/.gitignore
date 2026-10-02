@@ -1,0 +1,9 @@
+# 便携工具链(Go、llama.cpp 解包等),只在本机开发用
+.tools/
+# 本地测试数据、缓存
+.cache/
+# 构建产物(二进制、.app、.dmg、安装包、引擎)
+dist/
+*.gguf
+*.gguf.part
+.DS_Store

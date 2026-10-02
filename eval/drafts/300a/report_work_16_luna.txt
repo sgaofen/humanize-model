@@ -1,0 +1,7 @@
+Website analytics for September 15–21 show a positive response to the newsletter redesign launched on September 8. Total website traffic increased 23% compared with the previous week, rising from 18,420 to 22,657 sessions. The largest increase came from newsletter referrals, which generated 6,184 sessions—up 41% from the prior period.
+
+Engagement also improved. The sitewide bounce rate fell from 44% to 38%, indicating that more visitors explored additional pages after arriving. The “Programs and Services” page received the most traffic, with 7,920 views, while the redesigned “Member Resources” page recorded a 62% increase in visits. Average session duration increased from 1 minute 48 seconds to 2 minutes 16 seconds.
+
+The strongest-performing newsletter was the September 15 issue, which featured a shorter subject line, clearer section headings, and a single primary call-to-action button. It achieved a 46% open rate and a 12.8% click-through rate, compared with 39% and 8.9%, respectively, for the September 1 issue. Mobile users accounted for 68% of newsletter traffic, confirming the value of the responsive layout changes.
+
+Traffic from social media remained stable, while direct traffic increased modestly by 7%. The analytics team, led by Priya Shah, will continue monitoring conversion rates and page-level engagement through the end of the month. Recommended next steps are to retain the simplified newsletter format, test alternative call-to-action language, and update the “Member Resources” page with more prominent contact information.

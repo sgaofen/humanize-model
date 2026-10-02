@@ -10,7 +10,7 @@ guards the model was evaluated with:
     the NoCopy logits penalty (digits are exempt so numbers/dates survive)
 
 Usage:
-    python humanize.py --model-dir ./humanizer-gemma-4-e4b-mlx-4bit --port 8104 draft.txt
+    python humanize.py --model-dir ./humanizer-mlx-8bit --port 8104 draft.txt
     cat draft.txt | python humanize.py --model-dir ... --port 8104
     python humanize.py --model-dir ... --keep-markdown draft.md   # headings / code fences survive (issue #1)
 """
@@ -25,9 +25,9 @@ def load_format(model_dir):
     return lambda draft: pf['instr'] + '\n\n' + draft.strip() + pf['sep']
 
 
-def complete(port, prompt, draft, temperature=0.85, penalty=None, copy_n=5, timeout=900):
+def complete(port, prompt, draft, temperature=1.0, penalty=None, copy_n=5, timeout=900):
     body = {'prompt': prompt, 'max_tokens': max(700, int(len(draft.split()) * 2.2) + 200),
-            'stop': ['\n\n\n\n'], 'temperature': temperature, 'top_p': 0.95}
+            'stop': ['\n\n\n\n'], 'temperature': temperature, 'top_p': 0.95, 'top_k': 0}
     if penalty:
         body.update({'copy_penalty': penalty, 'copy_n': copy_n, 'draft': draft})
     req = urllib.request.Request(f'http://127.0.0.1:{port}/v1/completions', json.dumps(body).encode(),
@@ -36,7 +36,7 @@ def complete(port, prompt, draft, temperature=0.85, penalty=None, copy_n=5, time
         return json.load(r)['choices'][0]['text'].strip()
 
 
-def humanize(draft, model_dir, port, thr=0.35, penalty=2.0, copy_n=5, temperature=0.85, keep_markdown=False):
+def humanize(draft, model_dir, port, thr=0.35, penalty=2.0, copy_n=5, temperature=1.0, keep_markdown=False):
     if keep_markdown:   # issue #1: rewrite prose block by block, headings and code fences pass through verbatim
         txt = rewrite_keeping_markdown(draft, lambda block: humanize(block, model_dir, port, thr, penalty, copy_n, temperature)[0])
         c = copy_rate(draft, txt)['copy_5gram']

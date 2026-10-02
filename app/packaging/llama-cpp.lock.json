@@ -1,0 +1,13 @@
+{
+  "_note": "llama.cpp 官方发布二进制,钉死版本 + sha256。升级:改 tag/commit,用 `gh api repos/ggml-org/llama.cpp/releases/tags/<tag>` 拿新的 digest 填进来。",
+  "tag": "b11335",
+  "commit": "42d958167",
+  "base_url": "https://github.com/ggml-org/llama.cpp/releases/download/b11335",
+  "assets": {
+    "macos-arm64":         { "file": "llama-b11335-bin-macos-arm64.tar.gz",       "sha256": "bb4f90555fa1facad5c26993021264d9199490216c6d6906b98dc6ac522b3b57" },
+    "win-cpu-x64":         { "file": "llama-b11335-bin-win-cpu-x64.zip",          "sha256": "a15d8fac29ddbdc5ddfa9bb2b60a97e5b7f7332f6e9eead71d69a9f04dd3611f" },
+    "win-vulkan-x64":      { "file": "llama-b11335-bin-win-vulkan-x64.zip",       "sha256": "190320fa5a676a6053751fce4f31748f98d57e717a2d531c66c7298b9aa77434" },
+    "win-cuda-12.4-x64":   { "file": "llama-b11335-bin-win-cuda-12.4-x64.zip",    "sha256": "95c11f1371a81a3f2807e5827e72961850b395dc8bcc0112601fed9eb2f979b1" },
+    "win-cudart-12.4-x64": { "file": "cudart-llama-bin-win-cuda-12.4-x64.zip",    "sha256": "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6" }
+  }
+}

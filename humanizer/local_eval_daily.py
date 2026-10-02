@@ -17,13 +17,13 @@ ap = argparse.ArgumentParser()
 ap.add_argument('--port', type=int, required=True); ap.add_argument('--model-dir', required=True); ap.add_argument('--tag', required=True)
 ap.add_argument('--n', type=int, default=2); ap.add_argument('--thr', type=float, default=0.35)
 ap.add_argument('--penalty', type=float, default=2.0); ap.add_argument('--copy-n', type=int, default=5)
-ap.add_argument('--cases', default=f'{ROOT}/eval/ood_cases_daily'); ap.add_argument('--temp', type=float, default=0.85)
+ap.add_argument('--cases', default=f'{ROOT}/eval/ood_cases_daily'); ap.add_argument('--temp', type=float, default=1.0)
 a = ap.parse_args()
 build, style = load_for_model(a.model_dir); print('格式', style, flush=True)
 
 def call(prompt, draft, penalty=False):
     body = {'prompt': prompt, 'max_tokens': max(700, int(len(draft.split()) * 2.2) + 200), 'stop': ['\n\n\n\n'],
-            'temperature': a.temp, 'top_p': 0.95}
+            'temperature': a.temp, 'top_p': 0.95, 'top_k': 0}
     if penalty:
         body.update({'copy_penalty': a.penalty, 'copy_n': a.copy_n, 'draft': draft})
     r = urllib.request.urlopen(urllib.request.Request(f'http://127.0.0.1:{a.port}/v1/completions', json.dumps(body).encode(),

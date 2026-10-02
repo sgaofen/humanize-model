@@ -1,0 +1,42 @@
+**INTERNAL MEMORANDUM**
+
+**To:** Executive Leadership Team and Board Audit & Risk Committee
+**From:** Dana Whitfield, Chief Compliance Officer
+**Date:** June 14, 2025
+**Re:** Q2 2025 AML Training Compliance Report and Remediation Plan
+
+**Summary**
+
+As of June 10, 2025, 94% of employees (1,872 of 1,991) have completed the mandatory annual Anti-Money Laundering training. While this exceeds our 90% internal target, 119 employees remain outstanding. A remediation plan is now underway to reach full compliance by July 31, 2025.
+
+**Completion Breakdown**
+
+- Corporate & Shared Services: 98% (outstanding: 6)
+- Retail Banking Operations: 96% (outstanding: 41)
+- Commercial Lending: 93% (outstanding: 22)
+- Wealth Management: 89% (outstanding: 38)
+- International (Singapore and London offices): 91% (outstanding: 12)
+
+All 63 licensed relationship managers in Wealth Management completed the enhanced KYC module; the gap there is concentrated in support staff.
+
+**Key Findings**
+
+The primary drivers of non-completion are (1) extended medical or parental leave (27 employees) and (2) delayed onboarding for Q2 hires (44 employees). Only 48 employees have no documented reason for non-completion. The Singapore office lag stems from a scheduling conflict with the May system migration; make-up sessions were held June 3–5.
+
+**Remediation Plan**
+
+1. **June 16–20:** Direct supervisors of the 48 unexplained non-completers issue written notices; employees enrolled in mandatory live sessions on June 24 and July 8.
+2. **June 30:** Leave-returnees auto-enrolled in training within five business days of return; HR to verify via payroll reactivation flags.
+3. **July 15:** Q2 hires to complete onboarding curriculum; completion now a condition of probationary review.
+4. **July 31:** Any remaining non-completers escalated to division heads; access to customer-facing systems suspended per Section 4.3 of the AML Policy.
+5. **August 5:** Final attestation report to the Board Audit & Risk Committee.
+
+**Regulatory Context**
+
+Our regulator requires annual AML refresher training for all staff. Last year's examination noted a 91% completion rate as satisfactory but recommended escalation procedures for laggards — procedures now embedded in this plan.
+
+**Budget Impact**
+
+Remediation costs are estimated at $18,500 (live session facilitation and LMS licensing), absorbed within the existing FY2025 compliance training budget of $420,000.
+
+No further action is requested from leadership at this time; the next status update will follow on August 5.

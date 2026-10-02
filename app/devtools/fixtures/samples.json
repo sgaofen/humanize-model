@@ -1,0 +1,17 @@
+{
+ "_note": "草稿来自 humantune/eval/ood_cases_300a,输出是 12B 模型在 cases_RLRt_300a.json 里的真实第一条输出(vLLM, T=1.0, top_p=0.95)。只给假 llama-server 用。",
+ "samples": [
+  {
+   "id": "en-social",
+   "source_case": "social_post_10_luna",
+   "draft": "1/ In June 2024, I walked away from a $180K software engineering job at a FAANG company in San Francisco.\n\nOn paper, it looked like the dream: great salary, smart colleagues, free meals, and a polished office overlooking the Bay. But most days, I couldn’t explain why my work mattered.\n\n2/ That September, I started teaching computer science at Roosevelt High School in Sacramento.\n\nMy classroom has 32 students, six working laptops, and a budget that makes “cloud computing” sound like science fiction. But when Maya’s Python program finally ran after three days of debugging, she jumped out of her chair and yelled, “I made that!”\n\nI felt more useful in that moment than I had in years.\n\n3/ I didn’t leave because tech was bad. I left because I wanted my work to reach people, not just dashboards.\n\nTeaching is harder than engineering in ways I never expected: the hours are longer, the resources are tighter, and the wins are often invisible.\n\nBut every day, I get to help young people see themselves as builders—not just consumers of technology.\n\nThat feels worth more than $180K.",
+   "output": "1/ I quit my software engineer job ($180K) at a San Francisco FAANG in June 2024. \n\nIt was a dream job: the pay, the smart people, the free food, the fancy office facing the Bay. But most days, I didn't really know why I was doing what I was doing. \n\n2/ In September 2024, I began teaching computer science at Roosevelt High School in Sacramento. \n\nMy class has 32 kids, 6 functional laptops, and a budget where 'cloud computing' is fantasy. Yet, when Maya finally got her Python program to work after 3 days of debugging, she leapt from her chair and screamed \"I did it!\" \n\nI felt more productive than I have in a long time. \n\n3/ I didn't quit because of the tech industry. I quit because I wanted to make an impact, not just update dashboards. \n\nTeaching is far more challenging than programming in ways I didn't anticipate. More time, fewer resources, often less tangible results. \n\nHowever, I get to empower kids everyday to be creators, not just consumers, of technology. \n\nWorth more than $180K."
+  },
+  {
+   "id": "zh-social",
+   "source_case": "zh_social_04_luna",
+   "draft": "2025年3月，我在上海参加雅思考试，总分5.5：听力5.5、阅读6、写作5、口语5。那天走出考场，我决定给自己3个月，目标7分。\n\n我的方法很笨，但每天都执行。工作日早上6:40起床，听20分钟BBC，通勤时复盘生词；晚上8点到10点半学习，周末去徐汇图书馆完成整套模考。前4周重点补基础：用《剑桥雅思18》整理听力错题，把不会的词按场景分类。阅读限时60分钟，每篇文章只允许查3个词。\n\n第5周开始，我每周写4篇大作文和2篇小作文，请教老师Lily逐句修改。她反复提醒我：不要堆高级词，先保证逻辑清楚。口语则找同事陈浩每天练30分钟，录音后标记停顿、重复和语法错误。\n\n6月14日二刷，我拿到听力7.5、阅读7.5、写作6.5、口语6.5，总分7分。最有用的不是“学得多”，而是把错题真正改掉。建议大家固定时间、固定材料，每周记录一次分数，别被短期波动影响。",
+   "output": "2025年3月，上海考雅思，5.5分。听力5.5，阅读6，写作5，口语5。\n\n考完步出考场就给自己定了3个月时间要考7分。\n\n很低效，但每天都很死板：工作日6:40起床，听20分钟bbc，路上复习生词。晚上8点到10:30复习。周六日跑徐汇图书馆做一套完整的mock。\n\n前4周主要是把基础打好，用《剑桥18雅思》把听力错题整理好，生词会的不确定分类场景。阅读规定1个小时，每篇文章最多查3个单词。\n\n到第5周开始我每周写4个大作文，2个小作文，请教Lily老师一个字一个字的给我改。她总是说别硬上大词，先把逻辑捋清楚。口语请教我的同事陈浩，每天半小时，录音，标注停顿/重复/语法错误。\n\n6月14号二战，听力7.5，阅读7.5，写作6.5，口语6.5，总分7。\n\n最重要的不是你学多，是把错误改正。建议给自己固定时间固定素材，一周统计一次分数，别为短期浮动扰乱。"
+  }
+ ]
+}

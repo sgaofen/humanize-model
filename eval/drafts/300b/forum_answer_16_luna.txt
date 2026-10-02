@@ -1,0 +1,64 @@
+For a table named `users` with an `email` column, group by the email address and keep groups with more than one row:
+
+```sql
+SELECT
+    email,
+    COUNT(*) AS duplicate_count
+FROM users
+WHERE email IS NOT NULL
+GROUP BY email
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC, email;
+```
+
+This returns each duplicated address and the number of times it appears. For example, if `alex@example.com` appears 3 times, the result includes:
+
+```text
+alex@example.com | 3
+```
+
+If email addresses should be considered duplicates regardless of capitalization or surrounding spaces, normalize them in the query:
+
+```sql
+SELECT
+    LOWER(TRIM(email)) AS normalized_email,
+    COUNT(*) AS duplicate_count
+FROM users
+WHERE email IS NOT NULL
+GROUP BY LOWER(TRIM(email))
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC;
+```
+
+To retrieve the actual user records involved, use a derived table:
+
+```sql
+SELECT u.*
+FROM users AS u
+JOIN (
+    SELECT LOWER(TRIM(email)) AS normalized_email
+    FROM users
+    WHERE email IS NOT NULL
+    GROUP BY LOWER(TRIM(email))
+    HAVING COUNT(*) > 1
+) AS d
+  ON LOWER(TRIM(u.email)) = d.normalized_email
+ORDER BY d.normalized_email, u.id;
+```
+
+With 2 million rows, this is still a normal aggregation query, but an index can help. If your database supports it, create an index on the normalized value. For PostgreSQL:
+
+```sql
+CREATE INDEX users_email_normalized_idx
+ON users (LOWER(TRIM(email)));
+```
+
+For future inserts, enforce uniqueness if duplicates are not allowed. In PostgreSQL, for example:
+
+```sql
+CREATE UNIQUE INDEX users_email_unique_idx
+ON users (LOWER(TRIM(email)))
+WHERE email IS NOT NULL;
+```
+
+Clean or decide how to handle the existing duplicates before adding that constraint, because the index creation will fail while duplicate normalized addresses remain.

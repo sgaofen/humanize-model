@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>                <string>Humanizer</string>
+  <key>CFBundleDisplayName</key>         <string>Humanizer</string>
+  <key>CFBundleIdentifier</key>          <string>__BUNDLE_ID__</string>
+  <key>CFBundleExecutable</key>          <string>Humanizer</string>
+  <key>CFBundleIconFile</key>            <string>Humanizer</string>
+  <key>CFBundlePackageType</key>         <string>APPL</string>
+  <key>CFBundleShortVersionString</key>  <string>__VERSION__</string>
+  <key>CFBundleVersion</key>             <string>__VERSION__</string>
+  <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+  <key>CFBundleDevelopmentRegion</key>   <string>en</string>
+  <key>CFBundleLocalizations</key>       <array><string>en</string><string>zh-Hans</string></array>
+  <key>LSMinimumSystemVersion</key>      <string>13.3</string>
+  <key>LSArchitecturePriority</key>      <array><string>arm64</string></array>
+  <!-- 没有窗口:双击后在浏览器里打开,Dock 里不出图标;退出在网页右上角菜单里 -->
+  <key>LSUIElement</key>                 <true/>
+  <key>NSHighResolutionCapable</key>     <true/>
+  <key>NSHumanReadableCopyright</key>    <string>Apache-2.0 · runs llama.cpp (MIT)</string>
+</dict>
+</plist>

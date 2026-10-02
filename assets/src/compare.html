@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · before / after</title>
+<link rel="stylesheet" href="base.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+<style>
+  main { width: 1080px; padding: 30px 32px 30px; }
+  .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .top .left { display: flex; align-items: center; gap: 16px; }
+  .pill { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--lime-ink); background: var(--lime); padding: 5px 10px 4px; border-radius: 999px; font-weight: 600; }
+  .meta { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: .02em; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
+  .panel { display: flex; flex-direction: column; overflow: hidden; }
+  .ph { display: flex; align-items: baseline; gap: 10px; padding: 16px 22px 14px; border-bottom: 1px solid var(--line); }
+  .ph .n { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); }
+  .ph b { font-family: var(--f-display); font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
+  .ph span { color: var(--ink-3); font-size: 13.5px; }
+  .ph .who { margin-left: auto; font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); }
+  .body { padding: 18px 22px 22px; white-space: pre-line; font-size: 15.5px; line-height: 1.62; color: var(--ink); overflow-wrap: anywhere; }
+  :root[lang="zh-CN"] .body { font-size: 15px; line-height: 1.78; }
+  .body.draft { color: var(--ink-2); }
+  .foot { margin-top: 16px; display: flex; gap: 16px; align-items: flex-start; }
+  .foot .label { flex: none; display: flex; align-items: center; gap: 7px; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); padding-top: 6px; }
+  .foot .label svg { width: 15px; height: 15px; color: var(--lime); }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-family: var(--f-mono); font-size: 12px; color: var(--ink); background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 4px 9px; white-space: nowrap; }
+  :root[lang="zh-CN"] .chip { font-family: var(--f-ui); font-size: 12.5px; }
+  .chip .ar { color: var(--ink-3); margin: 0 5px; }
+  .chip .to { color: var(--hl-ink); }
+  .legend { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--ink-3); }
+  .legend .k { display: flex; gap: 18px; align-items: center; }
+  .legend .k span { display: inline-flex; align-items: center; gap: 7px; }
+  .sw-ins { display: inline-block; width: 22px; height: 11px; border-radius: 3px; background: var(--hl); box-shadow: inset 0 -2px 0 var(--hl-edge); }
+  .sw-del { display: inline-block; width: 22px; height: 2px; background: var(--del); }
+  .legend .src { font-family: var(--f-mono); font-size: 11px; }
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { tokenize, diffTokens, renderMarked } from '../../app/web/js/diff.js';
+import { params, markSvg, esc, done } from './common.js';
+
+const samples = await (await fetch('samples.json')).json();
+const s = samples.find((x) => x.id === params.get('id')) || samples[0];
+const zh = s.lang === 'zh';
+document.documentElement.lang = zh ? 'zh-CN' : 'en';
+
+const T = zh ? {
+  lang: '中文', meta: '留出评测集草稿 · 第一发 · 未经修改', excerpt: (a) => `节选:全文 ${a} 段中的前 ${s.excerpt} 段`,
+  d: '草稿', ds: 'AI 写的原稿', r: '改写', rs: '像人写的', by: `${s.model} 写`, me: 'humanizer 12B',
+  kept: '保住的事实', ins: '新写的', del: '被改掉的', src: `case ${s.case}`,
+} : {
+  lang: 'English', meta: 'held-out eval draft · first sample · unedited', excerpt: (a) => `excerpt: first ${s.excerpt} of ${a} paragraphs`,
+  d: 'Draft', ds: 'what the AI wrote', r: 'Rewrite', rs: 'reads like a person', by: `by ${s.model}`, me: 'humanizer 12B',
+  kept: 'Facts kept', ins: 'new wording', del: 'replaced', src: `case ${s.case}`,
+};
+const check = '<svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+document.getElementById('m').innerHTML = `
+  <div class="top">
+    <div class="left"><span class="brand">${markSvg()}<b>humanizer</b></span><span class="pill">${esc(s.genre)} · ${T.lang}</span></div>
+    <div class="meta">${T.meta}${s.excerpt ? ' · ' + T.excerpt(s.paras_total[0]) : ''}</div>
+  </div>
+  <div class="cols">
+    <section class="panel sheet"><div class="ph"><span class="n">01</span><b>${T.d}</b><span>${T.ds}</span><span class="who">${esc(T.by)}</span></div><div class="body draft" id="a"></div></section>
+    <section class="panel sheet"><div class="ph"><span class="n">02</span><b>${T.r}</b><span>${T.rs}</span><span class="who">${T.me}</span></div><div class="body" id="b"></div></section>
+  </div>
+  <div class="foot"><div class="label">${check}${T.kept}</div><div class="chips">${s.facts.map((f) =>
+    f.length > 1 ? `<span class="chip">${esc(f[0])}<span class="ar">→</span><span class="to">${esc(f[1])}</span></span>` : `<span class="chip">${esc(f[0])}</span>`).join('')}</div></div>
+  <div class="legend"><div class="k"><span><i class="sw-ins"></i>${T.ins}</span><span><i class="sw-del"></i>${T.del}</span></div><span class="src">${esc(T.src)}</span></div>`;
+
+const ta = tokenize(s.draft), tb = tokenize(s.output);
+const d = diffTokens(ta, tb);
+renderMarked(document.getElementById('a'), ta, d.a, 'del');
+renderMarked(document.getElementById('b'), tb, d.b, 'ins');
+await done();
+</script>
+</body>
+</html>

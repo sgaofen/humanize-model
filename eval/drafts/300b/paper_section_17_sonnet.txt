@@ -1,0 +1,11 @@
+**Methods**
+
+We estimate the employment effects of Seattle's 2014 minimum wage ordinance using a difference-in-differences design comparing Seattle to a synthetic control constructed from neighboring King County ZIP codes and comparable labor markets in Washington State outside the Seattle-Tacoma-Bellevue metropolitan statistical area. The ordinance, passed by the Seattle City Council on June 2, 2014, raised the minimum wage in phased steps beginning April 1, 2015, from the state floor of $9.47 to $11.00 for large employers (500+ employees), reaching $15.00 by January 1, 2017 for large employers without medical benefits and by January 1, 2019 for small employers.
+
+Our primary data source is the Washington State Employment Security Department's quarterly Unemployment Insurance (UI) wage records, covering 2005Q1–2018Q4, restricted to hourly workers in food service (NAICS 722) and retail trade (NAICS 44-45), the sectors with the highest concentration of minimum-wage-bound jobs. We construct a balanced panel of 2,847 establishments observed continuously across the sample period, matched to comparison establishments via propensity score weighting on pre-period (2005Q1–2014Q2) trends in hours, headcount, and average hourly wage.
+
+The baseline specification is:
+
+Y_it = β(Seattle_i × Post_t) + α_i + γ_t + X_it'δ + ε_it
+
+where Y_it is log employment or log hours at establishment i in quarter t, Seattle_i indicates treated establishments, Post_t indicates quarters after April 2015, α_i and γ_t are establishment and quarter fixed effects, and X_it includes establishment size and single-site status. Standard errors are clustered at the ZIP code level (94 clusters). We assess the parallel-trends assumption via event-study coefficients estimated separately for each quarter from 2013Q1 through 2018Q4, with 2015Q1 as the omitted reference period, and report results separately by wage-tier bin ($9.47–$11, $11–$13, above $13) to capture heterogeneous bite across the wage distribution.

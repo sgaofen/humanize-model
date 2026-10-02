@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """hf_infer.py — reference inference with 🤗 transformers (CUDA), same guards as the MLX path.
 
-    python hf_infer.py --model jialinyyzz/humanizer-gemma-4-e4b draft.txt
+    python hf_infer.py --model jialinyyzz/humanizer draft.txt
 
 Requires transformers >= 5.x with Gemma 4 support. The model card explains the prompt format;
 this script reads it from prompt_format.json shipped with the weights.
@@ -44,7 +44,7 @@ class NoCopyProcessor(LogitsProcessor):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('draft', nargs='?'); ap.add_argument('--model', default='jialinyyzz/humanizer-gemma-4-e4b')
+    ap.add_argument('draft', nargs='?'); ap.add_argument('--model', default='jialinyyzz/humanizer')
     ap.add_argument('--thr', type=float, default=0.35); ap.add_argument('--penalty', type=float, default=2.0)
     ap.add_argument('--keep-markdown', action='store_true', help='keep #-headings and ``` code blocks verbatim; prose rewritten block by block')
     a = ap.parse_args()
@@ -59,7 +59,7 @@ def main():
         ids = tok(prompt, return_tensors='pt').to('cuda')
         lp = LogitsProcessorList([NoCopyProcessor(tok(draft, return_tensors='pt')['input_ids'][0], n=5, penalty=a.penalty, tok=tok)]) if penalty else None
         out = model.generate(**ids, max_new_tokens=max(700, int(len(draft.split()) * 2.2) + 200), do_sample=True,
-                             temperature=0.85, top_p=0.95, logits_processor=lp)
+                             temperature=1.0, top_p=0.95, top_k=0, logits_processor=lp)   # top_k=0 overrides generation_config's 64
         return tok.decode(out[0][ids['input_ids'].shape[1]:], skip_special_tokens=True).strip()
 
     def one(draft):

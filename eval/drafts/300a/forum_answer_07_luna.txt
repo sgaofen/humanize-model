@@ -1,0 +1,25 @@
+The best fix is to reduce how often two people edit the same lines, not to rely on Git’s conflict resolution.
+
+For example, in our `checkout-web` repository, Maya owns the `CartSummary.jsx` layout and Jordan owns the tax-calculation hook. We split the component into smaller files:
+
+```text
+CartSummary/
+  CartSummary.jsx
+  useCartTotals.js
+  CartLineItem.jsx
+  CartSummary.test.jsx
+```
+
+Each person works on a short-lived branch such as `maya/cart-layout` or `jordan/tax-hook`, and branches from `main` immediately before starting. We open pull requests within one or two days instead of keeping branches for weeks. Before opening a PR, we run:
+
+```bash
+git fetch origin
+git rebase origin/main
+npm test -- CartSummary
+```
+
+The component should also receive data through props rather than having multiple developers modify shared internal logic. For instance, `CartSummary.jsx` can render `subtotal`, `tax`, and `total`, while `useCartTotals.js` calculates those values. That lets Jordan change calculations without touching Maya’s JSX.
+
+If two changes genuinely must affect the same lines, agree on the integration order. On September 21, 2026, for example, Maya’s structural refactor should merge first; Jordan can then rebase onto it and update the hook’s interface. Avoid resolving the conflict independently in both branches.
+
+Finally, make commits small and focused. A commit named `Extract CartLineItem` is much easier to review and rebase than one containing formatting changes, dependency upgrades, and business logic. Enable branch protection and require a successful CI check so the second PR is tested against the current `main` before merging.

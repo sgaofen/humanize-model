@@ -1,0 +1,21 @@
+This is actually expected behavior, and here's why.
+
+A standard 15-amp circuit at 120 volts can handle a maximum of 1,800 watts. But the National Electrical Code says you should only load a circuit continuously to 80% of its rating, so realistically you're working with about 1,440 watts of safe capacity.
+
+Now look at your appliances:
+- Microwave: typically 1,000–1,500 watts (a 1,200W microwave actually draws around 1,500W from the wall because it's not 100% efficient)
+- Toaster: 800–1,500 watts (a typical 2-slice runs around 900–1,200W)
+
+So running a 1,200W microwave and a 1,000W toaster together pulls roughly 2,200 watts — well over your 1,800W maximum. The breaker is tripping because it's doing exactly what it's designed to do: protecting the wiring from overheating.
+
+**What you can do:**
+
+1. **Just don't run them simultaneously.** Toast first, then microwave. It's annoying but free.
+
+2. **Plug one into a different circuit.** In most kitchens built after the mid-1990s, code requires at least two 20-amp small-appliance circuits at the countertop. If your kitchen only has one 15-amp circuit serving everything, that's a red flag that your wiring predates modern code. Try plugging the toaster into an outlet on a different wall — it may be on a separate breaker. You can verify this by plugging a lamp into each outlet and flipping breakers off one at a time to map which outlets go where.
+
+3. **Consider an upgrade.** If your kitchen is served by a single 15-amp circuit, having an electrician add a 20-amp small-appliance circuit typically runs $300–$600 and is worth it if you cook regularly.
+
+**What you should NOT do:** Don't replace the 15-amp breaker with a 20-amp one. Breakers are sized to protect the wire gauge behind them — 15-amp breakers protect 14-gauge wire, and putting a bigger breaker on it can let the wire overheat inside your walls without ever tripping. That's how electrical fires start.
+
+TL;DR: Your microwave and toaster together simply draw more than the circuit can supply. The breaker isn't faulty — it's saving your house.

@@ -1,0 +1,17 @@
+Subject: Question on My Capstone Research Question — Urban Heat Islands
+
+Dear Professor Whitfield,
+
+I hope you're doing well. I'm writing to ask for your feedback on the research question I've drafted for my GEOG 480 capstone, which is due for committee review on October 6.
+
+My current draft is: "How does tree canopy coverage below 15% correlate with surface temperature differentials exceeding 5°F in Riverside County census tracts during the July–August heat period?" I'm using Landsat 8 thermal imagery from summer 2025 alongside the county's 2023 tree canopy assessment data, focusing on eight tracts in the Eastvale and Jurupa Valley areas where I've noticed canopy coverage varies widely block to block.
+
+I'm unsure whether the 5°F threshold is too narrow given the instrument resolution (30m per pixel), and whether I should widen the scope to include impervious surface percentage as a second variable, since canopy and pavement are likely correlated. I read your 2019 paper on Sacramento heat mapping and noticed you used a regression approach rather than threshold-based correlation — I'd welcome your thoughts on whether that method would serve this dataset better.
+
+Would you have 15–20 minutes during office hours this Thursday, September 24 (2–4pm), or could I send a one-page draft ahead of time for written comments?
+
+Thank you for your time and guidance.
+
+Best regards,
+Maya Torres
+GEOG 480, Student ID 8834021

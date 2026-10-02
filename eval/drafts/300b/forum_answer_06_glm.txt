@@ -1,0 +1,19 @@
+Could be a few things, but grinding on a 2009 Civic specifically points to a handful of likely culprits.
+
+**Most likely: worn brake pads.** Civics of that era (2006–2011) commonly go through front pads around 40,000–60,000 miles. If the pads are worn down to the metal backing plate, you'll hear grinding, and it's often worse downhill because you're braking harder and longer, generating more heat and pressure. If it grinds when you brake, this is the first thing to check. Pop a wheel off or look through the spokes—the pad friction material should be at least 3mm thick. If you see a scored, grooved rotor face, the pads have been metal-on-metal for a while and you'll need rotors too. Expect roughly $150–$250 per axle at an independent shop for pads and rotors.
+
+**Why downhill specifically?** A couple of reasons:
+
+1. **Heat buildup.** Sustained downhill braking (like a long grade) heats the rotors. If they're warped or have uneven deposits, you'll feel pulsing and sometimes hear groaning or grinding. Warped rotors are common if the pads were neglected at some point in the car's life.
+
+2. **Weight transfer.** Braking downhill loads the front brakes harder, amplifying any existing pad or rotor wear noise.
+
+**Other possibilities:**
+
+- **Glazed pads.** If the previous owner rode the brakes, the pad surface can harden and make a grinding/growling sound under load.
+- **Sticking caliper.** A seized caliper slide pin on eighth-gen Civics isn't rare; it drags the pad against the rotor and grinds, especially when hot. Check if one wheel is dustier or hotter than the others after a drive.
+- **Rust on the rotors.** If the car sits for days, surface rust makes noise that usually disappears after a few stops—but if it grinds continuously, that's not it.
+
+Don't sit on this. Grinding means metal contact, and every week you wait chews up the rotors and can escalate into caliper damage. If you're handy, pads and rotors on a Civic are a very doable DIY job—about 2 hours with basic tools. If not, get it to a shop this week.
+
+One quick test: does it grind only when braking, or also when coasting downhill with your foot off the pedal? Coasting noise points to a wheel bearing or dragging caliper instead of the pads. That distinction will tell your mechanic a lot.

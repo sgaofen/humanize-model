@@ -1,0 +1,15 @@
+We started the four-day trial last October, mostly because our operations manager, Priya, wouldn't stop forwarding us articles about it. Twenty-two of us at a logistics software company in Leeds, and we'd been bleeding people — three resignations that summer alone. So on a gray Tuesday, the directors announced we'd close the office every Friday for six months and see what happened.
+
+I expected chaos. What I got instead was something quieter and stranger: the death of the performative meeting.
+
+Here's what nobody tells you about a four-day week. The fifth day wasn't the hard part. The hard part was realizing how much of our four days had been theater. The Monday status meeting that ran ninety minutes? Cut to twenty-five, because suddenly everyone had somewhere to be — namely, their lives. The endless "quick syncs" that were really just people avoiding written decisions? Gone. By November, our team chat had an unspoken rule: if it can be a message, it's a message.
+
+The numbers helped, too. Customer ticket response time dropped 14% — not because anyone worked harder, but because Tom finally had time to rebuild the ticket-routing system he'd been "meaning to get to" for two years. The Friday off gave people headroom for exactly that kind of work, except we didn't use Fridays. We used the guilt-free space that knowing Friday existed created.
+
+But the real change was cultural, and it happened slowly, like furniture rearranging itself. People started admitting when they were stuck. I think it's because the four-day week made an implicit promise: your time is valuable, so we won't waste it. Once that promise was on the table, wasting your own time felt sillier, too. Our junior developer, Marcus, asked for help on a problem in week two that he told me later he'd normally have hidden for a month.
+
+Not everything worked. Two clients initially hated losing Friday contact until we moved their support rotations. One colleague, Dillon, kept working Fridays from home out of habit, and it took a direct conversation to convince him the point wasn't to squeeze five days into four.
+
+When the trial ended in April, the vote to keep it was 21-1. Dillon voted yes.
+
+I've stopped thinking of it as a scheduling change. It was a honesty change. Compress the week and you compress the excuses — and it turns out most of what we called collaboration was just mutual avoidance with a calendar invite attached.

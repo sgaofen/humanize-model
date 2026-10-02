@@ -1,0 +1,24 @@
+INCIDENT REPORT
+
+Date/Time of Incident: February 8, 2026, approximately 2:15 PM
+Location: Warehouse B, Aisle 4, near the loading dock entrance
+Reported By: Stephen Yu, Warehouse Operations
+Injuries: None
+Property Damage: None
+
+Summary:
+At approximately 2:15 PM on February 8, 2026, a near-miss occurred in Warehouse B involving a forklift and a pedestrian employee. Forklift operator Marcus Diallo was transporting a pallet of packaged goods (approx. 800 lbs) from Aisle 4 toward Dock Door 3 when he made a turn around the end-cap shelving without sounding the horn. At the same moment, warehouse associate Priya Nair stepped out from between Racks 12 and 13 while checking inventory on a handheld scanner, not looking up from the device. The forklift stopped approximately 3 feet from Nair after Diallo braked hard upon spotting her. No contact was made and no injuries were sustained.
+
+Shift supervisor Dana Whitfield was notified within minutes and secured the area to review the incident with both parties. Floor visibility at the intersection is reduced due to the height of Rack 12's end-cap signage, and the mirror previously installed at that corner (removed during the January shelving reconfiguration) had not been replaced.
+
+Contributing Factors:
+1. Operator did not sound horn at blind intersection.
+2. Pedestrian was not attentive to surroundings (scanner use while walking).
+3. Convex mirror at Aisle 4/Rack 12 corner missing since January reconfiguration.
+
+Corrective Actions:
+1. Convex mirror to be reinstalled by Facilities by February 12, 2026 (assigned to Tom Reyes).
+2. Reminder briefing on horn-use policy at blind corners to be delivered at next safety huddle, February 10, 2026.
+3. Pedestrian walkway striping in Aisle 4 to be reviewed for adequacy by EHS Coordinator Lena Vogel by February 15, 2026.
+
+Status: Under review; follow-up scheduled for February 15, 2026.

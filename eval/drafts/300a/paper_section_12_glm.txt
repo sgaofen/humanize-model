@@ -1,0 +1,17 @@
+## Methods
+
+### In Situ TEM Cell Assembly
+
+Open-cell in situ TEM experiments were conducted using a FEI Titan 80-300 environmental TEM operated at 300 kV, equipped with a Gatan OneView camera for continuous image acquisition at 25 frames per second. Lithium dendrite growth was observed in a nanoscale electrochemical cell constructed inside a Hummingbird Scientific electrical biasing TEM holder. Half-cell geometry was adopted: a ~100 nm-thick Li₂O-coated lithium metal electrode was prepared by scratching metallic lithium foil (99.9%, Sigma-Aldrich) with a tungsten wire, allowing native Li₂O to serve as a solid electrolyte layer. The counter electrode was a sharp electrochemically polished copper wire (99.99%, Alfa Aesar, 250 μm diameter), brought into contact with the Li₂O surface using piezoerically controlled manipulation with sub-10 nm positioning resolution.
+
+### Electrochemical Protocol
+
+Galvanostatic charging was applied using a Keithley 2400 SourceMeter interfaced with the holder. Charging currents were calibrated to achieve an effective 1 C rate at the nanoscale contact area, corresponding to current densities of 10–50 A/cm² at the electrode–electrolyte interface; current density was estimated from the measured contact area of 0.01–0.05 μm² determined from TEM images. A constant bias of −2 V was simultaneously applied to assist nucleation, consistent with prior open-cell configurations.
+
+### Imaging Conditions
+
+Dendrite growth was recorded in bright-field mode at magnifications of 28,000–115,000×, with a total electron dose maintained below 50 e⁻/Å²/s to minimize beam-induced artifacts. Control experiments with the beam blanked confirmed that dendrite morphology was unaffected by electron irradiation. Each deposition cycle ran 60–180 s, and a minimum of twelve independent cells were imaged across three experimental sessions (March–May 2024) to ensure reproducibility.
+
+### Data Analysis
+
+Dendrite propagation velocity was extracted by frame-by-frame tracking of the growth front using ImageJ (v1.54k), and kymograph analysis yielded velocities of 5–40 nm/s. Structural characterization of dendrite tips was performed via selected-area electron diffraction, confirming single-crystalline Li with body-centered cubic structure along the ⟨111⟩ growth direction. All quantitative results are reported as mean ± standard deviation across cells.

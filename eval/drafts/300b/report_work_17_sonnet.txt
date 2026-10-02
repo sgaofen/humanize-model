@@ -1,0 +1,13 @@
+Maintenance Log Summary — Tower B, Elevator 3
+
+Elevator 3 (Tower B, serving floors 1–14) was taken out of service on Wednesday, Feb 12 at 7:45 AM after intermittent door-close faults and a hard stop reported by tenants on floor 9. Facilities technician Raymond Ortiz performed initial diagnostics that afternoon and identified worn door interlock contacts and a failing main drive sheave bearing as the likely causes.
+
+A service call was placed to Almeida Elevator Co. the same day. Their technician, Dana Whitfield, inspected the unit on Feb 13 and confirmed both findings, adding that the door operator belt showed excessive cracking and should be replaced proactively. Parts were ordered Feb 13 and arrived Feb 17: one drive sheave bearing assembly (part #SB-4471), one door interlock contact set (#DI-2209), and one door operator belt (#DB-118).
+
+Installation and replacement work took place Feb 18, requiring the car to be locked out from 8:00 AM to 4:30 PM. Post-installation testing, including full-run load tests and 50 door-cycle checks, was completed Feb 18–19 by Whitfield and Ortiz jointly. The elevator passed all safety checks and was returned to service on Thursday, Feb 19 at 11:00 AM, seven days after being taken offline.
+
+Total parts and labor cost was $3,240, covered under the building's existing service contract with Almeida Elevator Co.; no additional invoice was issued to the property.
+
+During the outage, signage was posted at all Tower B lobby entrances directing tenants to Elevators 1 and 2, and building management sent two tenant notices (Feb 12 and Feb 17) via the resident portal. No safety incidents or entrapments were reported during the outage period.
+
+Next scheduled preventive maintenance for Elevator 3 is set for May 2026 per the standard quarterly inspection cycle.

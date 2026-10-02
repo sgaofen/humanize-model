@@ -1,0 +1,33 @@
+**MEMORANDUM**
+
+**To:** Maria Kowalski, CEO; Jan Freitag, CTO
+**From:** Elena Rasmussen, Data Protection Officer
+**Date:** 12 May 2025
+**Re:** GDPR Retention Compliance — Kowalski Customer Database EU Expansion
+
+**Purpose.** Ahead of expanding the Kowalski customer database to our new EU markets (Germany, Netherlands, Poland) effective 1 September 2025, this memo summarizes our data retention obligations under GDPR and the actions required before go-live.
+
+**Key Requirements.**
+
+1. **Defined retention periods.** Article 5(1)(e) requires that personal data be kept no longer than necessary. Our current policy of retaining inactive customer records indefinitely is non-compliant. Proposed schedule: transactional data — 7 years (per Polish and German tax law); marketing preferences and consent records — duration of consent plus 3 years for audit evidence; abandoned-cart browsing data — 90 days maximum.
+
+2. **Automated deletion.** By 15 August 2025, Engineering (P. Nowak's team) must implement automated deletion and anonymization workflows in the CRM. Manual quarterly purges are insufficient for the projected 2.4 million new EU records.
+
+3. **Data minimization on migration.** Only fields necessary for order fulfillment and legal compliance may migrate. Legacy fields (e.g., scanned ID documents from 2016–2019 fraud checks) must be purged before migration, not after.
+
+4. **Records of processing (Art. 30).** The retention schedule must be embedded in our processing inventory, which will be reviewed by our supervisory authority — likely the Polish UODO, as our Warsaw entity will be lead establishment for EU processing.
+
+5. **Data subject rights.** Retention schedules must be reflected in privacy notices and in responses to access/erasure requests. Legal holds (e.g., pending litigation with Bergmann Logistics) exempt specific records, and must be logged.
+
+**Risks.** Non-compliant retention exposes us to fines up to €20 million or 4% of global turnover and undermines our lawful-basis position for marketing under Art. 6(1)(a).
+
+**Actions and Owners.**
+
+| Action | Owner | Deadline |
+|---|---|---|
+| Approve retention schedule | Executive Committee | 30 May 2025 |
+| Purge legacy ID scans | IT Ops (L. Hansen) | 20 June 2025 |
+| Automated deletion workflows | Engineering (P. Nowak) | 15 Aug 2025 |
+| Update privacy notices & Art. 30 records | DPO office | 22 Aug 2025 |
+
+I request 30 minutes at the 28 May leadership meeting to finalize the retention schedule. Budget impact is €85,000 for tooling and external counsel review, already scoped in the FY2025 compliance line.

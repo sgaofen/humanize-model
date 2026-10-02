@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>humanizer · fact fidelity</title>
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="chart.css">
+<script>addEventListener("error",e=>window.__err=e.message);addEventListener("unhandledrejection",e=>window.__err=String(e.reason))</script>
+<style>
+  .pq { display: grid; grid-template-columns: var(--name) 1fr var(--val); gap: var(--gap); align-items: center; padding: 10px 0; position: relative; }
+  .pq + .pq { border-top: 1px solid var(--line-2); }
+  .pq .q { font-size: 14.5px; color: var(--ink); line-height: 1.3; }
+  .pq .q span { display: block; color: var(--ink-3); font-size: 12.5px; margin-top: 3px; }
+  .pq .bars, .pq .vals { display: flex; flex-direction: column; gap: 7px; }
+  .pq .tr { position: relative; height: 13px; }
+  .pq .bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: #5B626C; }
+  .pq .bar.me { background: var(--lime); }
+  .pq .vals b { font-weight: 600; font-size: 14.5px; line-height: 13px; height: 13px; display: flex; align-items: center; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .pq .vals b.me { color: var(--lime); }
+  .legend { display: flex; gap: 20px; font-size: 12.5px; color: var(--ink-2); margin: 0 0 6px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend i { width: 18px; height: 10px; border-radius: 0 3px 3px 0; background: #5B626C; }
+  .legend i.me { background: var(--lime); }
+</style>
+</head>
+<body>
+<main id="m"></main>
+<script type="module">
+import { lang, markSvg, esc, done } from './common.js';
+import { barRows, axis } from './chart.js';
+const zh = lang === 'zh';
+
+// 全部数字来自 release_facts.md「事实忠实度」一节(英文 420 发,GLM-5.3 单票从严)。条长按分数算,轴 0–20%。
+const MAX = 0.20;
+const me = zh ? 'humanizer 12B（本版）' : 'humanizer 12B (this release)';
+const prev = zh ? '上一版 E4B（r7）' : 'previous E4B (r7)';
+const Q = zh ? [
+  ['严重事实错', '改了数字、事件或意思', [51 / 420, '51 / 420（12%）'], [68 / 409, '68 / 409（17%）']],
+  ['三档尺子判“严重”', '严重 / 轻微 / 可忽略 三档', [42 / 420, '42 / 420（10%）'], [71 / 420, '71 / 420']],
+  ['丢了格式要素', '如主题行、列表、落款', [35 / 420, '35 / 420'], [53 / 409, '53 / 409']],
+  ['照抄超过一半', '复用率 > 0.5 的输出', [0.010, '1.0%'], [0.055, '5.5%']],
+] : [
+  ['Severe fact error', 'changed a number, an event or the meaning', [51 / 420, '51 / 420 (12%)'], [68 / 409, '68 / 409 (17%)']],
+  ['“Severe” on a three-level scale', 'severe / minor / negligible', [42 / 420, '42 / 420 (10%)'], [71 / 420, '71 / 420']],
+  ['Dropped a format element', 'e.g. subject line, list, sign-off', [35 / 420, '35 / 420'], [53 / 409, '53 / 409']],
+  ['Copied more than half the draft', 'outputs with reuse > 0.5', [0.010, '1.0%'], [0.055, '5.5%']],
+];
+const T = zh ? {
+  eye: '事实忠实度 · 英文 210 篇 × 2 发 = 420 发', h: '比上一版更少改错事实、更少照抄',
+  sub: 'LLM 判官 GLM-5.3，每发一票、从严判 · 自建评测集（未参与训练）· 越低越好',
+  p: '出问题的输出占比', ax: '占全部输出',
+  t1k: '照抄程度中位数（复用率）', t1n: '与草稿重合的程度：逐字 5-gram 与句法骨架复用取大者。越低说明改得越深。',
+  t2k: '中文 204 发', t2n: '判官判“通过”的比例。中文明显弱于英文。这里不报上一版的对照数。', t2b: '135 / 204', t2s: '通过（66%）',
+  foot: '严重错多为单点失误（一个数字或一个词）。上一版部分指标的分母是 409（原数据如此）。',
+} : {
+  eye: 'Fact fidelity · English, 210 drafts × 2 samples = 420 outputs', h: 'Fewer changed facts and less copying than the previous release',
+  sub: 'LLM judge GLM-5.3, one strict vote per output · held-out eval set (not used in training) · lower is better',
+  p: 'Share of outputs with the problem', ax: 'of all outputs',
+  t1k: 'Median reuse', t1n: 'Overlap with the draft: the larger of verbatim 5-gram copy and syntactic-skeleton reuse. Lower means a deeper rewrite.',
+  t2k: 'Chinese, 204 outputs', t2n: 'Passed by the judge. Chinese is clearly weaker than English. No previous-release comparison is reported here.', t2b: '135 / 204', t2s: 'passed (66%)',
+  foot: 'Severe errors are mostly single slips (one number or one word). Some previous-release rows have 409 judged outputs, as recorded.',
+};
+
+const tk = ['0%', '5%', '10%', '15%', '20%'];
+document.getElementById('m').innerHTML = `
+  <header class="hd"><span class="brand">${markSvg()}<b>humanizer</b></span><span class="eyebrow">${esc(T.eye)}</span></header>
+  <h2>${esc(T.h)}</h2><p class="sub">${esc(T.sub)}</p>
+  <section class="panel sheet">
+    <div class="ptitle">${esc(T.p)}</div>
+    <div class="legend"><span><i class="me"></i>${esc(me)}</span><span><i></i>${esc(prev)}</span></div>
+    <div class="plot"><div class="gl">${[0, 25, 50, 75, 100].map((p) => `<i style="left:${p}%"></i>`).join('')}</div>${Q.map(([q, n, a, b]) => `
+      <div class="pq"><div class="q">${esc(q)}<span>${esc(n)}</span></div>
+        <div class="bars"><div class="tr"><div class="bar me" style="width:${(a[0] / MAX * 100).toFixed(2)}%"></div></div><div class="tr"><div class="bar" style="width:${(b[0] / MAX * 100).toFixed(2)}%"></div></div></div>
+        <div class="vals"><b class="me">${esc(a[1])}</b><b>${esc(b[1])}</b></div></div>`).join('')}</div>
+    ${axis(tk, T.ax)}
+  </section>
+  <div class="tiles">
+    <section class="tile sheet"><div class="k">${esc(T.t1k)}</div><div class="v"><b>0.19</b><span><em>0.31</em>${esc(prev)}</span></div><div class="n">${esc(T.t1n)}</div></section>
+    <section class="tile sheet"><div class="k">${esc(T.t2k)}</div><div class="v"><b>${T.t2b}</b><span>${esc(T.t2s)}</span></div><div class="n">${esc(T.t2n)}</div></section>
+  </div>
+  <p class="foot">${esc(T.foot)}</p>`;
+await done();
+</script>
+</body>
+</html>

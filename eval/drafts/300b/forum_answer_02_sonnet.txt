@@ -1,0 +1,24 @@
+`datetime.utcnow()` (and `utcfromtimestamp()`) return a **naive** datetime by design — it gives you UTC wall-clock values but strips the tzinfo, so nothing marks the object as UTC. That's exactly why it was deprecated in Python 3.12: it's too easy to take that naive object, assume it's local time, and get silently wrong results when you compare it against an aware datetime or convert it with `astimezone()`.
+
+The fix is to stop using `utcnow()` entirely and construct an aware datetime instead:
+
+```python
+from datetime import datetime, timezone
+
+now = datetime.now(timezone.utc)
+```
+
+`now` here carries `tzinfo=timezone.utc`, so `now.isoformat()` gives you `2026-09-21T14:32:07.512983+00:00` instead of a bare `2026-09-21T14:32:07.512983` that could mean anything. If you're on Python 3.11+, `datetime.UTC` is a shorthand for `timezone.utc`.
+
+A few other things worth doing in 2024+ code:
+
+- Never mix naive and aware datetimes in comparisons — Python raises `TypeError: can't compare offset-naive and offset-aware datetimes` rather than silently doing the wrong thing, which is good, but it means you need to be consistent everywhere.
+- For anything beyond plain UTC — say you need `America/Chicago` or `Asia/Tokyo` — use the standard library's `zoneinfo` (3.9+) instead of pulling in `pytz`:
+  ```python
+  from zoneinfo import ZoneInfo
+  chicago = datetime.now(ZoneInfo("America/Chicago"))
+  ```
+- Store timestamps in your database as UTC (aware or explicitly-UTC-naive, but be consistent), and only convert to a local zone at the display layer.
+- If you're on Django, `USE_TZ = True` plus `django.utils.timezone.now()` already does the right thing and matches this same pattern.
+
+Bottom line: `datetime.now(timezone.utc)` is the direct, non-deprecated replacement for `datetime.utcnow()`.

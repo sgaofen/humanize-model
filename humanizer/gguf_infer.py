@@ -4,7 +4,7 @@
 transformers/MLX paths (adaptive anti-copy resample using a logits processor; digits exempt).
 
     pip install llama-cpp-python            # add CMAKE_ARGS="-DGGML_CUDA=on" / "-DGGML_METAL=on" for GPU
-    python gguf_infer.py --gguf humanizer-gemma-4-e4b-Q8_0.gguf --format prompt_format.json draft.txt
+    python gguf_infer.py --gguf humanizer-12b-Q8_0.gguf --format prompt_format.json draft.txt
 
 Plain llama.cpp / Ollama / LM Studio can run the GGUF too, but they cannot apply the anti-copy penalty; there
 the fallback is: if the output copies > 35 % of the draft's 5-grams, simply sample again.
@@ -39,9 +39,10 @@ class NoCopy:
         return scores
 
 
-def humanize(llm, pf, draft, thr=0.35, penalty=2.0, temperature=0.85):
+def humanize(llm, pf, draft, thr=0.35, penalty=2.0, temperature=1.0):
     prompt = pf['instr'] + '\n\n' + draft.strip() + pf['sep']
-    kw = dict(max_tokens=max(700, int(len(draft.split()) * 2.2) + 200), temperature=temperature, top_p=0.95, stop=['\n\n\n\n'])
+    kw = dict(max_tokens=max(700, int(len(draft.split()) * 2.2) + 200), temperature=temperature, top_p=0.95,
+              top_k=0, min_p=0.0, repeat_penalty=1.0, stop=['\n\n\n\n'])   # 12B: T 1.0 / top-p 0.95, other samplers off
     txt = llm(prompt, **kw)['choices'][0]['text'].strip()
     c = copy_rate(draft, txt)['copy_5gram']; retried = False
     if c > thr:

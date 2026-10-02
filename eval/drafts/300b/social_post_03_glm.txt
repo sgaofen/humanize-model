@@ -1,0 +1,19 @@
+Just finished hiring 12 junior developers at Shopify — here's what actually got my attention in 400+ resumes.
+
+A thread? No, a few honest observations:
+
+**1. Projects that solved real problems.** I don't need your clone of Netflix. One candidate built a scheduling tool for her mom's dental clinic in Mississauga. It had auth, a real database, and actual users. That beat every todo app in the stack.
+
+**2. Evidence you can learn fast.** A 3-month bootcamp certificate matters less than a GitHub history showing steady commits over 12+ months, even on tiny projects. Consistency > intensity.
+
+**3. Writing that respects my time.** Short resumes won. Bullet points that said what you built, with what, and what happened ("cut page load from 4s to 1.2s"). One page was plenty — you're juniors, we expect that.
+
+**4. Any sign of curiosity.** Blog posts, Stack Overflow answers, a question in a PR description. Two hires came straight from strong code review comments on open-source repos.
+
+**5. What didn't matter:** brand-name schools (5 of 12 were self-taught), cover letter length (one paragraph was fine), or knowing our exact stack. We teach Rails internally in week one.
+
+The biggest surprise? Only 9 of 400 resumes mentioned accessibility or testing. If you're a junior looking for an edge in 2024 — start there.
+
+To the 12 who joined us in January: welcome to the team. To everyone else: keep building, keep shipping.
+
+We're opening the next cohort this fall. 👀

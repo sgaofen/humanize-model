@@ -1,0 +1,9 @@
+In March 2026, Customer Support received 63 customer complaint tickets. The largest issue was shipping delays linked to the Newark distribution hub, accounting for 41% of all complaints, or approximately 26 tickets. Customers most often reported that packages remained at the Newark hub for several days without tracking updates, causing missed delivery expectations and follow-up contacts.
+
+The pattern was most noticeable between March 10 and March 24, when multiple customers reported delays of three to seven business days. Complaints affected orders shipped to New York, New Jersey, Connecticut, and Pennsylvania. Several customers also noted that estimated delivery dates changed after checkout without a proactive notification from the company.
+
+The remaining 37 complaints involved damaged packages, incorrect items, billing questions, and delivery-address issues. Although these categories were individually smaller, the Newark-related delays created the greatest risk to customer satisfaction because they affected a concentrated geographic region and generated repeated contacts.
+
+Customer Support has begun tagging Newark-related tickets separately and escalating delayed shipments to the Logistics team each afternoon. Logistics is reviewing staffing levels, carrier pickup timing, and package-processing capacity at the Newark hub. Support representatives are also providing customers with clearer explanations of the delay and confirming the next expected tracking update.
+
+For April, the recommended priorities are to establish a daily Newark delay dashboard, notify customers proactively when shipments remain inactive for more than 48 hours, and review hub performance with the primary carrier each week. Progress should be reassessed on April 15 and at month-end, with the goal of reducing Newark-related complaints below 25% of total monthly tickets.

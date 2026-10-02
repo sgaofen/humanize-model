@@ -1,157 +1,178 @@
-# humanizer
+<img src="assets/banner-en.png" alt="humanizer: rewrites AI drafts so they read like a person wrote them" width="100%">
 
-[English](README.md) | [中文](README.zh.md)
+<p align="center">
+  <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache_2.0-CDF54B?style=flat-square&labelColor=101216"></a>
+  <a href="https://huggingface.co/jialinyyzz/humanizer"><img alt="Model on Hugging Face" src="https://img.shields.io/badge/model-jialinyyzz%2Fhumanizer-CDF54B?style=flat-square&labelColor=101216&logo=huggingface&logoColor=white"></a>
+  <a href="https://github.com/sgaofen/humanize-model/releases/latest"><img alt="App for macOS and Windows" src="https://img.shields.io/badge/app-macOS%20%7C%20Windows-CDF54B?style=flat-square&labelColor=101216"></a>
+  <img alt="Fine-tuned from google/gemma-4-12B" src="https://img.shields.io/badge/fine--tuned_from-google%2Fgemma--4--12B-ECEEF1?style=flat-square&labelColor=101216">
+  <img alt="Languages: English and Chinese" src="https://img.shields.io/badge/languages-English%20%7C%20%E4%B8%AD%E6%96%87-ECEEF1?style=flat-square&labelColor=101216">
+</p>
 
-A small model that rewrites AI-written drafts so they read like a person wrote them, while keeping every fact, number, name and date. Base: `google/gemma-4-E4B` (≈4B effective parameters). Runs locally on a Mac (MLX) or on a CUDA GPU (transformers).
+<p align="center"><b>English</b> · <a href="README.zh.md">中文</a> · <a href="docs/USAGE.md"><b>Usage without the app</b></a> · <a href="docs/INSTALL.md">Install guide</a> · <a href="AGENTS.md">AGENTS.md</a></p>
 
-**v2 (2026-09-14): SFT + DPO + reinforcement learning (GRPO) with a reward that only scores fidelity, register and reuse.** **No detector was used as a reward, a filter, a training signal, or a selection criterion at any stage** — including in the RL stage. The model was trained only on *how people write* and *whether the facts survived*; it passes AI detectors as a side effect, and we report detector numbers below purely as an external check.
+<img src="assets/app-showcase-en.png" alt="The humanizer app running the 12B model locally: draft on the left, rewrite on the right, new wording highlighted" width="100%">
 
-## What it does
+**humanizer** is a 12B model that rewrites AI-written drafts (emails, essays, reports, forum posts; English and Chinese) so they read like a person wrote them. It is trained to keep every number, unit, date, name and quote, and to add nothing. It runs on your own machine. No AI detector was used anywhere in training.
 
-Input: a draft written by a language model (email, essay, report, paper section, forum post, in English or Chinese).
-Output: the same content, rewritten. Facts, numbers, units, dates, names and quotations are meant to survive unchanged; structure, wording, rhythm and register change.
+> [!TIP]
+> **Setting this up with an AI agent?** Point it at **[AGENTS.md](AGENTS.md)** (also [llms.txt](llms.txt)). It has the exact files to download, the server command, the prompt byte for byte, and a self-test.
 
-It is a rewriter, not a generator: it will not add claims, examples or padding, and it is trained to keep greetings, sign-offs and subject lines.
+**Contents:** [Quick start](#quick-start) · [Before and after](#before-and-after) · [Results](#results) · [How it was trained](#how-it-was-trained) · [Usage](#usage) · [Limitations](#limitations) · [License](#license)
+
+## Quick start
+
+### Option 1: the app (easiest)
+
+| Your computer | Download |
+|---|---|
+| **Mac** with Apple silicon (M1 or newer) | `Humanizer-<version>-macos-arm64.dmg` from **[Releases](https://github.com/sgaofen/humanize-model/releases/latest)** |
+| **Windows** (x64) | `Humanizer-<version>-windows-x64-setup.exe` (or the portable `.zip`) from **[Releases](https://github.com/sgaofen/humanize-model/releases/latest)** |
+
+Double-click it and the app opens in your browser. On first run it looks at your memory, suggests a model size and downloads it once from Hugging Face. After that it works offline. Paste a draft on the left; the rewrite streams in on the right, with new wording highlighted and replaced wording struck through. On an M5 Max a hundred-word email takes about 3.6 seconds.
+
+The app is not code-signed yet, so macOS and Windows will warn you the first time. The one-time fix is in [docs/INSTALL.md](docs/INSTALL.md#first-launch-warnings).
+
+<img src="assets/app-en.png" alt="The humanizer app: draft on the left, rewrite on the right" width="100%">
+
+<sub>Real screenshots of the app running the 12B model (llama.cpp Q8_0, Metal, M5 Max). The speed in the bottom bar is real.</sub>
+
+### Option 2: one command (llama.cpp)
+
+```bash
+# 1) start a local server; the first run downloads humanizer-12b-Q8_0.gguf (about 12.7 GB)
+#    16 GB machine: use humanizer-12b-Q6_K.gguf (about 10.0 GB) instead
+llama-server --hf-repo jialinyyzz/humanizer --hf-file humanizer-12b-Q8_0.gguf -c 8192 -np 1 -ngl 99 --port 8080
+
+# 2) in another terminal: rewrite draft.txt (needs curl and jq)
+curl -sLO https://huggingface.co/jialinyyzz/humanizer/resolve/main/prompt_format.json
+jq -n --rawfile d draft.txt --slurpfile f prompt_format.json \
+  '{prompt: ($f[0].instr + "\n\n" + ($d | sub("^\\s+"; "") | sub("\\s+$"; "")) + $f[0].sep),
+    temperature: 1.0, top_p: 0.95, top_k: 0, min_p: 0, repeat_penalty: 1.0, n_predict: 2048}' \
+| curl -s http://127.0.0.1:8080/completion -d @- | jq -r .content
+```
+
+This is a plain text-completion model, not a chat model. Use `/completion`, not `/v1/chat/completions`. See [Prompt format](#prompt-format) before wiring it into anything else.
+
+> [!IMPORTANT]
+> **Not using the app? Read [docs/USAGE.md](docs/USAGE.md) (Usage without the app).** It has complete, copy-paste steps for llama.cpp (server and one-shot), MLX, transformers, vLLM, Ollama and LM Studio, a script that rewrites a whole folder, how to handle long documents and Chinese, and a troubleshooting table.
+
+## Before and after
+
+Four drafts from the held-out evaluation set (never seen in training). The right side is the model's **first sample, not edited**; only whitespace is normalised for display. Highlight = new wording, strikethrough = draft wording that was replaced. We picked these four by hand for readability and checked every number and name in them. Across the whole set the model does make fact errors; the rates are in [Results](#results).
+
+<img src="assets/compare-en-email.png" alt="Work email: draft and rewrite" width="100%">
+
+<img src="assets/compare-en-reddit.png" alt="Reddit post: draft and rewrite" width="100%">
+
+<details>
+<summary><b>Two Chinese examples</b> (work email, Zhihu answer)</summary>
+
+<img src="assets/compare-zh-email.png" alt="Chinese work email: draft and rewrite" width="100%">
+
+<img src="assets/compare-zh-zhihu.png" alt="Zhihu answer (excerpt): draft and rewrite" width="100%">
+
+The Zhihu example is an excerpt: the first 4 of 8 paragraphs, cut at the same paragraph on both sides.
+</details>
+
+## Results
+
+All numbers come from our own evaluation set: **312 drafts** (210 English, 102 Chinese) across 18 genres: emails, emails to professors, work reports, policy memos, paper sections, student essays, opinion essays, blog posts, Reddit posts, forum answers, product reviews and social posts; in Chinese, emails, Zhihu answers, personal essays, social posts, reports and paper sections. Three frontier models wrote the drafts from scratch, about a third each: GLM-5.3, GPT-5.6 luna and Claude Sonnet. None of them were used in training. Each draft was rewritten twice.
+
+### AI detection (an external check)
+
+<img src="assets/results-detector-en.png" alt="Originality.ai pass rates" width="100%">
+
+Originality.ai, API v3, **AI Allowance 0% (its strictest setting)**, measured **2026-10-01** on the **210 English drafts**, first sample of each.
+
+| Model | Flagged as AI | Judged human |
+|---|---|---|
+| **humanizer 12B (this release)** | **26 / 210 (12%)** | **88%** |
+| humanizer E4B (previous release, r7) | 26 / 210 (12%) | 88% |
+| Early checkpoint of the same 12B line (R12s12b, sampled at temperature 0.85) | 61 / 210 (29%) | 71% |
+
+**Public baseline.** [`blader/humanizer`](https://github.com/blader/humanizer) (v3.1.0, 53k stars) is the most popular de-AI skill on GitHub. We had Claude Sonnet rewrite the same 60 drafts following its rules: **60 / 60 were flagged as AI** (median AI score 100%). This release on the same 60 drafts: 10 / 60 flagged. The two are different kinds of tool (a rule list for a general model vs. a fine-tuned rewriter), so read this as a comparison of outcomes on the same inputs, not of methods.
+
+**Where it still fails.** Failures concentrate in the most templated genres:
+
+| Genre | Flagged as AI |
+|---|---|
+| Social posts with emoji, hashtags or "1/ 2/" threads | **8 / 16** |
+| Formal policy memos | **5 / 13** |
+| Blog posts | 3 / 16 |
+| Essays (student and opinion) | 4 / 38 |
+| Work reports | 2 / 20 |
+| Paper sections | 2 / 22 |
+| Reddit posts | 1 / 18 |
+| Emails (work and to professors) | 1 / 35 |
+| Forum answers | 0 / 18 |
+| Product reviews | 0 / 14 |
+| **All** | **26 / 210** |
+
+The detection rate is the same as the previous release. What the 12B improves is fidelity (next section). Detectors change over time; this is what one detector said on one date, not a promise about any other detector or date.
+
+### Fact fidelity
+
+<img src="assets/results-fidelity-en.png" alt="Fact fidelity compared with the previous release" width="100%">
+
+English, 420 outputs (210 drafts × 2), graded by an LLM judge (GLM-5.3), one strict vote per output. Lower is better.
+
+| | **humanizer 12B (this release)** | humanizer E4B (previous, r7) |
+|---|---|---|
+| Severe fact error (changed a number, an event or the meaning) | **51 / 420 (12%)** | 68 / 409 (17%) |
+| "Severe" on a three-level scale (severe / minor / negligible) | **42 / 420 (10%)** | 71 / 420 |
+| Dropped a format element (e.g. subject line, list, sign-off) | **35 / 420** | 53 / 409 |
+| Median reuse (overlap with the draft) | **0.19** | 0.31 |
+| Outputs that reuse more than half the draft (reuse > 0.5) | **1.0%** | 5.5% |
+
+*Reuse* is the larger of verbatim 5-gram copy and syntactic-skeleton reuse; lower means a deeper rewrite. Some previous-release rows have 409 judged outputs instead of 420; that is how they were recorded.
+
+**Chinese:** of 204 outputs, the judge passed **135 (66%)**. Chinese is clearly weaker than English.
+
+Most severe errors are a single slip: one number or one word. **Proofread numbers, dates, names and the direction of every claim before you send anything.** The app checks that every number in the draft also appears in the rewrite and flags the ones that don't (Arabic digits only).
+
+**Anti-copy resampling in the evaluation.** The evaluation pipeline resamples once, with a decoding-time penalty on copied 5-grams, when an output copies more than 35% of the draft. This happened for 0 of the 420 English outputs and 17 of the 204 Chinese outputs. The app never resamples automatically; if a rewrite copies too much, press *Regenerate*.
 
 ## How it was trained
 
-1. **Supervised fine-tuning (28.6k pairs).** Each pair is *(AI draft → human text)*. The human side is always real human writing (bioRxiv/PubMed abstracts, government reports, student essays, corporate and mailing-list email, Reddit and Hacker News posts, Zhihu answers, Chinese formal prose, …). The AI side is a draft of the same content written by a current frontier model (Claude Sonnet, GPT-5-class, GLM-5.3) from the human text, so the model learns the direction *machine → person* on identical content. Synthetic "human" text is never used.
-2. **Two rounds of preference optimisation (DPO, 1,898 pairs total).** The SFT model writes six candidates per draft (three plain, three under a decoding-time anti-copy penalty). A separate LLM judge (GLM-5.3) grades each candidate for fidelity only — facts kept, meaning unchanged, nothing added, greeting/sign-off kept, not a verbatim copy — with a severity tier. *Chosen* = a candidate with no fidelity issue and the lowest verbatim overlap with the draft; *rejected* = a candidate with a critical fidelity error or a near-verbatim copy. Nothing about style, length, sentence shape or detector score enters the selection.
-4. **Decoding-time guard (inference only).** If a first sample copies more than 35 % of the draft's 5-grams, it is resampled once with a logits penalty on tokens that would complete a 5-gram present in the draft (digit tokens exempt). This removes the "lazy identity copy" failure mode without touching fidelity.
+<img src="assets/training-en.png" alt="Training pipeline: SFT, DPO, RL; detectors never in the loop" width="100%">
 
-3. **Reinforcement learning (GRPO, 300 steps, v2).** On top of the merged SFT + DPO model, a LoRA is trained with TRL's GRPO: 8 samples per draft, 600 drafts from the same genres. The reward is a sum of fidelity terms only — an LLM judge (GLM-5.3) checks each sample against an atomic fact list of the draft (−3.0 per critical error, −0.15 per minor one, −2.0 for invented content, −2.0 for a reversed meaning, −1.5 for a dropped format element or greeting/sign-off), −1.0 if the draft's register was normalised (contractions expanded, slang formalised, deliberate lowercase/missing punctuation "fixed"), and a superlinear *reuse* ramp: reuse = max(verbatim 5-gram copy, syntactic-skeleton 5-gram recall with content words masked), free below 0.31, up to −4 at full copy. Errors are credited to the sentence that carries them (token-level advantage reweighting). Checkpoints are kept every 25 steps and the release checkpoint is chosen on the held-out set. Two things we learned and kept: without the register term, RL on fidelity alone makes the model write more "properly" and detector pass rates fall (81 % → 52 %); and training past the point where reuse stops falling only adds fact errors (a ramp weight of 8 instead of 4 gave 7/62 critical errors at step 300).
+**No AI detector was used anywhere in training:** not as a reward, not as a filter, not to pick a checkpoint. The model learns from how people actually write and from whether the facts survived. Detector numbers on this page are only an external check.
 
-Training scripts are in `training/` (LoRA SFT, DPO, GRPO with `rl_reward.py` + `textmetrics.py`, candidate generation, the judge prompts, the two-vote judge). Training data is not released because the human side comes from sources with mixed licences.
+1. **Supervised fine-tuning, 28,598 pairs** of *AI draft → real human original*. The human side is always real human writing: paper abstracts, government reports, student essays, company and mailing-list email, Reddit, Hacker News, Zhihu and more. The AI side is a draft that a frontier model wrote back from the human text.
+2. **DPO, about 4,100 preference pairs**, chosen only on fact fidelity and on how much the output copies the draft (LLM judge GLM-5.3).
+3. **Reinforcement learning (GRPO)** in two runs: first 200 steps with a strict single-vote fact judge, then 150 steps of **RLRt**: 16 drafts × 8 samples per step at temperature 1.0. The reward is an LLM judge that reads the whole rewrite against the draft and penalises severe errors, invented content, changed meaning and dropped formatting, plus a copy penalty on verbatim 5-gram and syntactic-skeleton reuse (free below .22, then linear).
+4. **The release is the final RLRt checkpoint.**
 
-## Evaluation
-
-39-case "daily use" set (`eval_daily/`): essays, reports, paper sections, emails, tweets/Reddit/LinkedIn posts, plus 8 Chinese cases; drafts written by Claude Sonnet. Two samples per case.
-
-Fidelity is graded by two independent judges (GLM-5.3 and gpt-5.6) and an error counts only if both report it; v1 is re-graded under the same protocol so the columns are comparable.
-
-| metric (62 English samples) | **v2 (SFT + DPO + GRPO)** | v1 (SFT + DPO) | production baseline (Qwen3.5-4B rewriter) |
-|---|---|---|---|
-| verbatim 5-gram copy, median | 0.14 | 0.15 | 0.12 |
-| reuse (verbatim ∨ syntactic skeleton), median | **0.29** | 0.34 | — |
-| samples copying > 35 % of draft | 0 | 1 | 33 / 93 |
-| **critical fidelity errors** (reversed meaning, changed number/event) | **0 / 62** | 3 / 62 | ≈ 30 % |
-| minor / none | 20 / 42 | 15 / 44 | — |
-| format element dropped (subject line, heading, list, sign-off) | **5 / 62** | 12 / 62 | — |
-| Chinese cases passing the judge | **13 / 16** | 11 / 16 | 4 / 16 |
-| Originality.ai "human" verdicts *(external check only, never optimised)* | **53 / 62 = 85 %** | 50 / 62 = 81 % | 53 / 93 = 57 % |
-
-Human-written originals from the training genres score 9/9 "human" on the same detector; the draft inputs score ≈ 0/62. v2's weakest genres are social posts (5/8), paper sections (4/6) and reports (6/8); email is 10/10.
-
-### Known failure modes (please read before relying on it)
-
-* **Meaning flips** (who recommends what, "received" → "ordered", a metric renamed, a comparison reversed) were the v1 failure mode (~1 in 10). v2 shows none on the 62-sample set, but the set is small: always proofread numbers, dates and the direction of every claim.
-* v2's remaining errors are **dropped qualifiers**: "an estimated 4.2 %" → "4.2 %", "these results suggest" → "we conclude", "12 hours or more" → "more than 12 hours". About 1 in 3 outputs has one such shift.
-* Rewrites are deeper than v1; very occasionally a sentence comes out garbled ("from thousands to thousands"). Resample if it reads wrong.
-* Chinese is weaker than English (13/16).
-* Drafts under ~120 words are rewritten less reliably.
-* **Markdown headings are dropped** (`#`…`####`; bold and tables usually survive). The training targets are human-written texts that almost never carry ATX headings, and detectors treat headings as a machine signal, so the model writes prose. Pass `--keep-markdown` (all three scripts) to keep headings, fenced code and list bullets verbatim: the prose between them is rewritten block by block. Expect a lower detector pass rate in that mode, and a little less flow across sections (each block is rewritten without seeing the others). See issue #1.
-
-## Samples
-
-One English and one Chinese example; more in [docs/samples.md](docs/samples.md).
-
-### Email to a professor / 给教授的邮件
-
-**Draft (Claude) / 草稿:**
-
-> Dear Professor Lin,
-> 
-> I'm following up on the dataset access request I submitted on October 14th. I understand these reviews take time, and I appreciate you looking into it.
-> 
-> To give a bit more context: my analysis only uses the 2019–2021 subset, and I'm interested purely in the temporal patterns, so I won't need any of the personally identifying fields. If it would help, I'm happy to send a more detailed methodology document, or to walk through the scope of the request in person at whatever time suits you.
-> 
-> Please let me know if there's anything else you need from me to move the approval along. Thank you again for your time.
-> 
-> Best regards,
-> Wei
-
-**Humanizer output / 改写:** *(5-gram copy 0.14)*
-
-> Dear Professor Lin,
-> 
-> Just following up on the access request for the data set that I submitted on October 14th. I know that the review process takes time and I appreciate the time you're taking to look into this.
-> 
-> To provide a little more context, I am only using the 2019-2021 subset for my analysis and I am only interested in the temporal patterns so I won't need any personally identifiable fields. If you would like, I can provide a more detailed methodology document or we can go through the scope of the request in person at your convenience.
-> 
-> Please let me know if there is anything else that I need to provide to help with the approval process. Thanks again for your time.
-> 
-> Best regards,
-> Wei
-
-### 中文邮件 / Chinese email
-
-**Draft (Claude) / 草稿:**
-
-> 李老师您好,
-> 
-> 关于上周提到的数据访问申请,我想再补充几点说明。
-> 
-> 首先,本次分析只涉及 2019 至 2021 年的时间序列子集,不需要任何身份识别字段,所以不会触及隐私数据。其次,考虑到审批通常需要两到三周,我已经把实验计划相应顺延,整体进度不会受影响。另外,如果您对数据的使用方式还有疑问,我可以提供一份更详细的方法说明,或者找个您方便的时间当面沟通。
-> 
-> 希望这件事能尽快推进。再次感谢您的时间和帮助。
-> 
-> 祝好
-> 小王
-
-**Humanizer output / 改写:** *(5-gram copy 0.31)*
-
-> 李老师您好，
-> 
-> 上周关于数据访问申请的事情补充说明一下。
-> 
-> 1、本次只使用2019-2021的时间序列子集，不涉及任何身份识别字段，所以不存在涉及隐私数据的问题；
-> 
-> 2、考虑到审批周期大概需要两到三周，所以已经将实验计划顺延，不影响整体进度；
-> 
-> 3、如果对数据的使用方法还有疑问，我可以再提供一个更详细的方法说明，或者找个时间见面沟通。
-> 
-> 希望能尽快推进。再次感谢您的时间和帮助！
-> 
-> 祝好
-> 小王
+Training code for the 12B will be added under `training/`; the scripts there now are from the previous E4B release.
 
 ## Usage
 
-### GGUF (llama.cpp, Ollama, LM Studio, llama-cpp-python) — recommended
+**The complete guide is [docs/USAGE.md](docs/USAGE.md)** (also on [Hugging Face](https://huggingface.co/jialinyyzz/humanizer/blob/main/USAGE.md)): every runtime step by step, a batch script, long documents, Chinese, troubleshooting. The essentials follow.
 
-Files in the `gguf/` folder of `jialinyyzz/humanizer-gemma-4-e4b`: `Q8_0` (8.0 GB), `Q6_K` (6.2 GB) and `bf16` (14.9 GB). Q8_0 and Q6_K are within judge noise of bf16 on fidelity (measured on v1; v2 quants use the same recipe). **Q5_K_M and Q4_K_M are not published**: Q5_K_M triples critical fidelity errors (17/62 vs 6) and Q4_K_M degenerates into gibberish on this model, like the MLX 4-bit builds (see `docs/QUALITY.md`).
+### Files on Hugging Face
 
-```bash
-pip install llama-cpp-python        # CMAKE_ARGS="-DGGML_METAL=on" (Mac) or "-DGGML_CUDA=on"
-python humanizer/gguf_infer.py --gguf humanizer-gemma-4-e4b-Q8_0.gguf --format prompt_format.json draft.txt
-```
+| File | Size | For |
+|---|---|---|
+| `humanizer-12b-Q8_0.gguf` | about 12.7 GB | 32 GB of memory or more. Recommended. |
+| `humanizer-12b-Q6_K.gguf` | about 10.0 GB | 16 GB of memory. |
+| `humanizer-12b-Q4_K_M.gguf` | about 7.6 GB | *Coming soon*: released only after it passes the fact judge. |
+| `model.safetensors` + `config.json`, `generation_config.json`, `tokenizer.json`, `tokenizer_config.json` | about 24 GB (bf16) | transformers, vLLM, converting to MLX. |
+| `prompt_format.json` | tiny | The instruction and separator, verbatim. |
+| `lite/` | `humanizer-lite-Q8_0.gguf` about 8.0 GB, `humanizer-lite-Q6_K.gguf` about 6.2 GB, `humanizer-lite-bf16.gguf` about 14.9 GB, safetensors (4 shards) about 15.9 GB | The previous E4B release, for 8 GB machines. Same prompt format. |
 
-`gguf_infer.py` applies the anti-copy guard through a logits processor. Plain `llama-cli`, Ollama and LM Studio run the same file but cannot apply the penalty; with them, resample if the output still copies more than about a third of the draft.
+Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embeddings and output layer kept at 8-bit. Difference from bf16, measured on 104 drafts and their rewrites from the evaluation set (no overlap with the calibration data):
 
-### transformers (CUDA), merged bf16
+| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity |
+|---|---|---|---|
+| Q8_0 | 0.0017 | 98.4% | +0.2% |
+| Q6_K | 0.0033 | 97.8% | +0.5% |
+| Q4_K_M | 0.0214 | 93.9% | +2.3% |
 
-```bash
-python humanizer/hf_infer.py --model jialinyyzz/humanizer-gemma-4-e4b draft.txt
-```
+The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums: <!-- TBD: sha256 after upload --> *coming soon*.
 
-### MLX (Apple silicon), bf16 only
+### Prompt format
 
-`humanizer/mlx_nocopy_server.py` + `humanizer/humanize.py` serve the merged bf16 weights with the guard. Note: mlx_lm's Gemma 4 loader rejects the 54 unused k/v tensors of the 18 shared-KV layers in the HF checkpoint; strip `layers.24–41.self_attn.(k_proj|v_proj|k_norm)` before loading. MLX 4-/6-bit quantisation of this model is not usable (see `docs/QUALITY.md`); use the GGUF quants instead.
-
-### Keeping Markdown (`--keep-markdown`)
-
-```bash
-python humanizer/gguf_infer.py --gguf humanizer-gemma-4-e4b-Q8_0.gguf --format prompt_format.json --keep-markdown notes.md
-python humanizer/hf_infer.py --model jialinyyzz/humanizer-gemma-4-e4b --keep-markdown notes.md
-python humanizer/humanize.py --model-dir ./humanizer-gemma-4-e4b-mlx --port 8104 --keep-markdown notes.md
-```
-
-`humanizer/markdown_guard.py` splits the draft at `#` headings, ``` fences and list items, rewrites each prose block on its own, and puts the headings, code and bullets back in place unchanged. The model and prompt are untouched; this is a wrapper. Off by default because a heading-heavy skeleton is exactly what detectors key on.
-
-### Prompt format — read this before anything else
-
-This is a **base-model completion, not a chat model.** There is no system prompt, no chat template,
-no `<start_of_turn>` turn markers. You hand it this exact text and let it continue:
+**This is a text-completion model, not a chat model.** There is no system prompt, no chat template and no turn markers. Send exactly this text and let the model continue:
 
 ```
 Rewrite the text below so it reads like a person wrote it, not a language model.
@@ -162,42 +183,130 @@ Prefer the concrete word over the abstract one. It is fine to sound uneven.
 
 Every fact, number, unit, date, name and quotation must survive unchanged.
 
-<YOUR DRAFT GOES HERE>
+<YOUR DRAFT, with leading and trailing whitespace removed>
 
 ### Rewritten:
 
 ```
 
-The instruction and the separator are shipped verbatim in `prompt_format.json` beside the weights
-(fields `instr` and `sep`; the separator is literally `\n\n### Rewritten:\n\n`, note the blank line after it).
-**Reproduce them byte for byte** — the model was trained on this exact wrapper, and a paraphrased
-instruction or a missing blank line measurably degrades it.
+In code: `prompt = INSTR + "\n\n" + draft.strip() + "\n\n### Rewritten:\n\n"`. `INSTR` is the first block above (ending at "unchanged.", no trailing newline). It is also in `prompt_format.json` (`instr`, `sep`) and in [`humanizer/promptfmt.py`](humanizer/promptfmt.py).
 
-Generation stops at EOS. Sampling: temperature 0.85, top-p 0.95, ~900 new tokens.
+- **Byte for byte.** The model was trained on this exact wrapper. A reworded instruction or a missing blank line makes it worse. To check your builder: the first 16 hex characters of `sha256(build_prompt("X"))` must be `cc51d66b4c593fbe`.
+- **Stop on EOS only.** Don't pass `"###"` as a stop string; it truncates the rare output that contains it.
+- **Sampling:** temperature 1.0, top-p 0.95, nothing else (top-k off, min-p off, repetition penalty 1.0). llama-server turns on top-k 40 and min-p 0.05 by default, so switch them off as in the example above.
+- Allow about 2.5× the draft's token count for the output (the app uses 256 to 2048 tokens).
 
-**Ollama / LM Studio users, read this:** both apply the base model's chat template by default, which
-wraps your text in turn markers and breaks the format. Turn it off. For Ollama, a Modelfile that
-passes the prompt through untouched:
+### llama.cpp
+
+Install llama.cpp ([releases](https://github.com/ggml-org/llama.cpp/releases), `brew install llama.cpp`, or `winget install llama.cpp`), start `llama-server` as in [Quick start](#option-2-one-command-llamacpp) (`-np 1` gives the whole 8192-token context to one request), then call it from any language. Python, standard library only:
+
+```python
+import json, urllib.request
+
+pf = json.load(open("prompt_format.json"))
+draft = open("draft.txt", encoding="utf-8").read()
+body = {"prompt": pf["instr"] + "\n\n" + draft.strip() + pf["sep"],
+        "temperature": 1.0, "top_p": 0.95, "top_k": 0, "min_p": 0, "repeat_penalty": 1.0,
+        "n_predict": 2048}
+req = urllib.request.Request("http://127.0.0.1:8080/completion", json.dumps(body).encode(),
+                             {"Content-Type": "application/json"})
+print(json.load(urllib.request.urlopen(req))["content"].strip())
+```
+
+The app ships llama.cpp build `b11335`.
+
+### MLX (Apple silicon)
+
+```bash
+pip install mlx-lm        # we used mlx-lm 0.32.0
+mlx_lm.convert --hf-path jialinyyzz/humanizer --mlx-path humanizer-mlx-8bit -q --q-bits 8 --q-group-size 64
+```
+
+```python
+import json
+from huggingface_hub import hf_hub_download
+from mlx_lm import load, generate
+from mlx_lm.sample_utils import make_sampler
+
+pf = json.load(open(hf_hub_download("jialinyyzz/humanizer", "prompt_format.json")))
+model, tok = load("humanizer-mlx-8bit")
+draft = open("draft.txt", encoding="utf-8").read()
+print(generate(model, tok, prompt=pf["instr"] + "\n\n" + draft.strip() + pf["sep"],
+               max_tokens=2048, sampler=make_sampler(temp=1.0, top_p=0.95)))
+```
+
+### transformers (CUDA)
+
+```python
+import json, torch
+from huggingface_hub import hf_hub_download
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+repo = "jialinyyzz/humanizer"
+pf = json.load(open(hf_hub_download(repo, "prompt_format.json")))
+tok = AutoTokenizer.from_pretrained(repo)
+model = AutoModelForCausalLM.from_pretrained(repo, dtype=torch.bfloat16, device_map="auto")
+
+draft = open("draft.txt", encoding="utf-8").read()
+ids = tok(pf["instr"] + "\n\n" + draft.strip() + pf["sep"], return_tensors="pt").to(model.device)
+out = model.generate(**ids, do_sample=True, temperature=1.0, top_p=0.95, top_k=0, max_new_tokens=2048)
+print(tok.decode(out[0, ids["input_ids"].shape[1]:], skip_special_tokens=True).strip())
+```
+
+The weights were saved with transformers 5.14.1. Keep `top_k=0`: it switches off the top-k 64 default in the bundled `generation_config.json`, matching the app, which samples without top-k.
+
+### vLLM, Ollama and LM Studio
+
+**vLLM:** see [docs/USAGE.md#6-vllm](docs/USAGE.md#6-vllm). Pass `top_k=-1` (off) in `SamplingParams`; for `vllm serve`, add `--generation-config vllm` so the top-k 64 in `generation_config.json` isn't used as a default.
+
+Ollama and LM Studio both wrap your text in a chat template by default, which breaks this model. **Use raw mode.** We have not tested either ourselves; full steps are in [docs/USAGE.md](docs/USAGE.md#7-ollama).
+
+**Ollama:** create a model whose template passes the prompt through untouched, then call `/api/generate` with `"raw": true` and the full prompt (instruction + draft + separator).
 
 ```
-FROM ./humanizer-gemma-4-e4b-Q8_0.gguf
+FROM ./humanizer-12b-Q8_0.gguf
 TEMPLATE """{{ .Prompt }}"""
-PARAMETER temperature 0.85
+PARAMETER temperature 1.0
 PARAMETER top_p 0.95
-PARAMETER num_predict 900
+PARAMETER top_k 0
+PARAMETER min_p 0
+PARAMETER repeat_penalty 1.0
+PARAMETER num_ctx 8192
+PARAMETER num_predict 2048
 ```
 
-then send the whole block above (instruction + draft + `### Rewritten:`) as one prompt. Our own
-llama.cpp path is `humanizer/gguf_infer.py`, which builds the prompt from `prompt_format.json` and
-also applies the anti-copy guard; the Modelfile above is the hand-rolled equivalent and we have not
-tested it ourselves.
+```bash
+ollama create humanizer -f Modelfile
+```
 
-## Weights
+**LM Studio:** load the GGUF, start the local server and send the full prompt to the text-completion endpoint `/v1/completions`. Don't use the chat tab or `/v1/chat/completions`.
 
-* `jialinyyzz/humanizer-gemma-4-e4b` — one repo holds every variant: merged bf16 in transformers format at the root (SFT + DPO + GRPO merged into the base), and llama.cpp GGUF files (Q8_0, Q6_K, bf16; Q5_K_M and Q4_K_M withheld — fidelity collapses below 6-bit) plus `prompt_format.json` under `gguf/`. The current files are **v2**; v1 (SFT + DPO only) remains available from the repo's commit history.
+### Speed
 
-Both derive from `google/gemma-4-E4B` and are provided under the Gemma Terms of Use (see `NOTICE`). Code in this repository is Apache-2.0.
+Measured on an M5 Max:
 
-## Reproducing
+| Runtime | Speed | Example |
+|---|---|---|
+| llama.cpp Q8_0, Metal (what the app uses) | about 36–38 tokens/s | an email of about a hundred words: about 3.6 s; a Chinese email of about 300 characters: about 8.5 s |
+| MLX 8-bit | about 30 tokens/s (English), 38 tokens/s (Chinese) | an email of about a hundred words: about 9 s |
 
-`training/train_sft2.py` (LoRA r=16 on the language tower, 1 epoch, effective batch 16), then `training/gen_candidates.py` → `training/build_prefs.py --tiers --identity-bad` (needs a GLM API key in `~/.config/zai_key`) → `training/train_dpo.py` (β=0.1, lr 5e-6, 1 epoch), then `training/train_grpo.py` (GRPO, 300 steps, 8 samples × 2 drafts per step, lr 5e-6, reward in `training/rl_reward.py` with `W_COPY=4`; keep every 25th checkpoint and pick on the held-out set). `training/export_merged_gguf.sbatch` merges the three LoRAs into the base and builds the GGUF files. Evaluation: `training/gen_cases.py` with `COPY_PENALTY=2 COPY_N=5 ADAPTIVE_COPY=1 ADAPTIVE_THR=0.35`, then `training/glm_eval_en.py` / `glm_eval_zh.py`.
+## Limitations
+
+- **It still makes fact errors.** 51 of 420 English outputs (12%) had a severe one by a strict LLM judge; most are a single number or word. Read the output before you use it.
+- **Chinese is weaker** than English: the judge passed 135 of 204 Chinese outputs (66%).
+- **Templated genres still look machine-made to detectors:** social posts with emoji, hashtags or numbered threads (8/16 flagged) and formal policy memos (5/13).
+- **Formatting is not always kept.** 35 of 420 outputs dropped a format element. Paragraph breaks and list or heading markup sometimes change.
+- **Register can drift in casual genres.** In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft.
+- **Detectors change.** The detection numbers above are one measurement on one date. Nothing here guarantees a result on any detector.
+- **The app** doesn't resample when a rewrite copies too much of the draft; press *Regenerate*. It is not code-signed yet, and the Windows build has not been run on real Windows hardware yet (CI smoke tests only).
+- It is a writing tool for your own drafts. Where a school, employer or publication has rules about AI assistance, follow them.
+
+## License
+
+Code and weights: [Apache License 2.0](LICENSE).
+
+humanizer is fine-tuned from [google/gemma-4-12B](https://huggingface.co/google/gemma-4-12B), which Google releases under Apache 2.0. This project is not affiliated with or endorsed by Google. The training data is not redistributed. <!-- TBD: confirm the reason/wording for not releasing training data -->
+
+This repository was previously `sgaofen/humanizer`, and the model repository was previously `jialinyyzz/humanizer-gemma-4-e4b`; that E4B release now lives in the `lite/` folder of `jialinyyzz/humanizer`.
+
+Links: [Hugging Face](https://huggingface.co/jialinyyzz/humanizer) · [App releases](https://github.com/sgaofen/humanize-model/releases/latest) · [Install guide](docs/INSTALL.md) · [AGENTS.md](AGENTS.md) · [llms.txt](llms.txt)

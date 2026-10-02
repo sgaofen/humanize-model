@@ -1,0 +1,798 @@
+// Humanizer 网页主控:状态轮询 → 视图切换(首次下载 / 编辑器)→ 改写流式输出 → 差异与历史。
+import { t, apply, setLang, getLang } from './i18n.js';
+import { getJSON, postJSON, countTokens, streamCompletion } from './api.js';
+import { buildPrompt, selfCheck, nPredictFor } from './prompt.js';
+import { tokenize, diffTokens, renderMarked, flagNumbers } from './diff.js';
+import { countText, isMostlyCJK, numberCheck, fmtBytes, fmtDuration, fmtNum, escapeHTML, pyStrip } from './text.js';
+import { loadHistory, addHistory, removeHistory, clearHistory, store } from './history.js';
+import { SAMPLES } from './samples.js';
+
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const IS_MAC = document.documentElement.classList.contains('mac');
+const KEY_LABEL = IS_MAC ? '⌘ ↵' : 'Ctrl ↵';
+const BACKEND = { metal: 'Metal', cuda: 'CUDA', vulkan: 'Vulkan', cpu: 'CPU', custom: 'custom' };
+
+const S = {
+  status: null,
+  cfg: null,
+  promptOK: false,
+  view: null,
+  forceSetup: false,
+  pickTier: null,
+  pickEndpoint: null,
+  running: false,
+  abort: null,
+  out: '',
+  result: null,
+  showDiff: store.get('diff', '1') === '1',
+  editing: true,
+  fails: 0,
+  quit: false,
+  autoRun: params.get('run') === '1',
+  tierSig: '',
+  pollTimer: 0,
+};
+
+// ───────────────────────── 启动 ─────────────────────────
+function init() {
+  apply();
+  markLang();
+  $('go-kbd').textContent = KEY_LABEL;
+  renderSamples();
+  const ex = SAMPLES.find((s) => s.id === params.get('example'));
+  $('draft').value = ex ? ex.draft : store.get('draft', '');
+  onDraftInput(false);
+  setDiffToggle(S.showDiff);
+  bind();
+  loadConfig();
+  poll();
+  if (params.get('panel') === 'history') openDrawer(true);
+}
+
+async function loadConfig() {
+  for (let i = 0; i < 20 && !S.cfg; i++) {
+    try {
+      S.cfg = await getJSON('/app/config');
+      S.promptOK = selfCheck(S.cfg);
+      if (!S.promptOK) showNotice('err', t('out.promptMismatch'));
+    } catch {
+      await sleep(1000);
+    }
+  }
+  updateGo();
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ───────────────────────── 轮询状态 ─────────────────────────
+async function poll() {
+  clearTimeout(S.pollTimer);
+  if (S.quit) return;
+  let next = 4000;
+  try {
+    const st = await getJSON('/app/status', { timeout: 4000 });
+    S.status = st;
+    S.fails = 0;
+    $('overlay').hidden = true;
+    render();
+    if (['downloading', 'starting', 'paused'].includes(st.phase)) next = 700;
+    else if (st.phase === 'setup' || st.phase === 'error') next = 2500;
+    maybeAutoRun();
+  } catch {
+    S.fails++;
+    if (S.fails >= 3 && !S.running) showOverlay(t('overlay.offTitle'), t('overlay.offMsg'), 'offline');
+    next = 3000;
+  }
+  clearTimeout(S.pollTimer); // 可能有两次轮询同时在路上(切回标签页时),只留一个定时器
+  S.pollTimer = setTimeout(poll, document.hidden ? Math.max(next, 15000) : next);
+}
+
+document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+
+function render() {
+  const st = S.status;
+  if (!st) return;
+  const ph = st.phase;
+  let view = 'editor';
+  if (S.forceSetup || ['setup', 'downloading', 'paused', 'error'].includes(ph)) view = 'setup';
+  if (ph === 'starting' && S.view === 'setup' && !S.forceSetup) view = 'setup'; // 首次下载完接着在卡片里显示装载
+  if (ph === 'ready' && S.view === 'setup' && !S.forceSetup) view = 'editor';
+  if (view !== S.view) {
+    S.view = view;
+    $('view-setup').hidden = view !== 'setup';
+    $('view-editor').hidden = view !== 'editor';
+    if (view === 'editor') requestAnimationFrame(() => $('draft').focus({ preventScroll: true }));
+  }
+  renderStatus();
+  renderBrand();
+  if (!$('pop').hidden) renderPop();
+  if (view === 'setup') renderSetup();
+  updateGo();
+}
+
+function tierOf(id) {
+  return S.status?.tiers?.find((x) => x.id === id);
+}
+
+function renderBrand() {
+  const tier = tierOf(S.status?.tier);
+  const name = tier ? (tier.id === 'lite' ? 'LITE' : '12B') : '12B';
+  $('brand-tag').textContent = t('brand.tag', { tier: name });
+}
+
+function renderStatus() {
+  const st = S.status, el = $('status');
+  let state = 'idle', text = '';
+  const tier = tierOf(st.tier);
+  switch (st.phase) {
+    case 'ready': {
+      state = 'ready';
+      const be = BACKEND[st.engine?.backend] || st.engine?.backend || '';
+      text = S.running ? t('status.writing') : [t('status.ready'), tier?.label, be].filter(Boolean).join(' · ');
+      break;
+    }
+    case 'starting': state = 'busy'; text = [t('status.loading'), tier?.label].filter(Boolean).join(' · '); break;
+    case 'downloading': {
+      state = 'busy';
+      const d = st.download;
+      text = d?.stage === 'verify' ? t('status.verify') : t('status.download', { p: pct(d?.received, d?.total) });
+      break;
+    }
+    case 'paused': text = t('status.paused'); break;
+    case 'setup': text = t('status.setup'); break;
+    case 'error': state = 'error'; text = t('status.error'); break;
+    default: text = st.phase;
+  }
+  el.dataset.state = state;
+  el.classList.toggle('working', S.running);
+  $('status-text').textContent = text;
+}
+
+function pct(a, b) {
+  if (!(b > 0)) return 0;
+  return Math.min(100, Math.floor((a / b) * 100));
+}
+
+// ───────────────────────── 首次运行 / 下载 ─────────────────────────
+function renderSetup() {
+  const st = S.status;
+  const ph = st.phase;
+  const hasModel = st.tiers.some((x) => x.downloaded);
+  const title = S.forceSetup && hasModel ? t('setup.titleSwitch') : t('setup.title');
+  $('setup-title').innerHTML = title.replace(/\{([^}]+)\}/g, '<span class="ins">$1</span>');
+
+  let pane = 'choose';
+  if (!S.forceSetup) {
+    if (ph === 'error') pane = 'error';
+    else if (ph === 'downloading' || ph === 'paused' || ph === 'starting') pane = 'progress';
+  } else if (ph === 'downloading') {
+    pane = 'progress';
+  }
+  for (const el of document.querySelectorAll('#setup-card .pane')) el.hidden = el.dataset.pane !== pane;
+  if (pane === 'choose') renderChoose();
+  else if (pane === 'progress') renderProgress();
+  else renderError();
+}
+
+function renderChoose() {
+  const st = S.status;
+  if (!S.pickTier || !tierOf(S.pickTier)) S.pickTier = st.tier || st.recommended;
+  if (!S.pickEndpoint) S.pickEndpoint = st.endpoint;
+  const cpu = st.sys.cpu ? escapeHTML(st.sys.cpu.replace(/\(R\)|\(TM\)|CPU|@.*$/g, '').trim()) : st.sys.os;
+  $('sysline').innerHTML = t('setup.sys', { cpu, ram: Math.round(st.sys.ram_gb) });
+
+  const sig = getLang() + '|' + S.pickTier + '|' + st.recommended + '|' + st.tiers.map((x) => `${x.id}:${x.downloaded}:${x.partial || 0}:${x.fits}`).join(',');
+  if (sig !== S.tierSig) {
+    S.tierSig = sig;
+    const box = $('tiers');
+    box.replaceChildren();
+    for (const tr of st.tiers) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tier' + (tr.fits ? '' : ' nofit');
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', String(tr.id === S.pickTier));
+      const badges = [];
+      if (tr.id === st.recommended) badges.push(`<span class="badge">${t('setup.recommended')}</span>`);
+      if (tr.downloaded) badges.push(`<span class="badge soft">${t('setup.downloaded')}</span>`);
+      else if (tr.partial) badges.push(`<span class="badge soft">${t('setup.partial', { got: fmtBytes(tr.partial) })}</span>`);
+      if (!tr.fits) badges.push(`<span class="badge warn">${t('setup.nofit')}</span>`);
+      const note = tr.note ? escapeHTML(tr.note[getLang()] || tr.note.en || '') : '';
+      b.innerHTML = `<span class="radio"></span>
+        <span><span class="tier-name">${escapeHTML(tr.label)} ${badges.join('')}</span><span class="tier-note">${note}</span></span>
+        <span class="tier-size">${t('setup.approx', { n: tr.approx_gb })}<small>${t('setup.needRam', { n: tr.min_ram_gb })}</small></span>`;
+      b.addEventListener('click', () => { S.pickTier = tr.id; S.tierSig = ''; renderChoose(); });
+      box.append(b);
+    }
+    const sel = $('endpoint');
+    sel.replaceChildren(...st.endpoints.map((e) => new Option(e.label, e.id, false, e.id === S.pickEndpoint)));
+  }
+  const tr = tierOf(S.pickTier);
+  let cta;
+  if (tr.downloaded) cta = t('setup.ctaUse', { tier: tr.label });
+  else if (tr.partial) cta = t('setup.ctaResume', { tier: tr.label });
+  else cta = t('setup.cta', { tier: tr.label, size: tr.approx_gb });
+  $('cta-text').textContent = cta;
+  $('endpoint').closest('.field').hidden = !!tr.downloaded;
+  $('btn-back').hidden = !(S.forceSetup && ['ready', 'starting'].includes(st.phase));
+}
+
+function renderProgress() {
+  const st = S.status;
+  const d = st.download;
+  const tier = tierOf(d?.tier || st.tier);
+  const label = tier?.label || '';
+  const sq = $('squiggle');
+  let p = 0, stage, stats = '\u00a0', note = '';
+  if (st.phase === 'starting') {
+    stage = t('prog.starting', { tier: label });
+    const at = st.engine?.attempts?.at(-1);
+    const lk = 'layers.' + (at?.layers ?? '');
+    const lt = t(lk) === lk ? '-ngl ' + at?.layers : t(lk);
+    const be = at ? `${BACKEND[at.backend] || at.backend} · ${lt}` : '…';
+    stats = escapeHTML(be);
+    note = t('prog.noteStarting', { backend: escapeHTML(be) });
+    sq.classList.add('indet');
+    $('prog-pct').hidden = true;
+    $('btn-pause').hidden = true;
+    $('btn-rechoose').hidden = true;
+  } else {
+    sq.classList.remove('indet');
+    $('prog-pct').hidden = false;
+    $('btn-pause').hidden = false;
+    $('btn-rechoose').hidden = false;
+    const total = d?.total > 0 ? d.total : (tier ? tier.approx_gb * 1e9 : 0);
+    if (st.phase === 'paused') {
+      stage = t('prog.paused', { tier: label });
+      p = pct(d?.received, total);
+      stats = t('prog.statsNoSpeed', { got: fmtBytes(d?.received || 0), total: fmtBytes(total) });
+      $('btn-pause').textContent = t('prog.resume');
+      note = t('prog.noteDownload');
+    } else if (d?.stage === 'verify') {
+      stage = t('prog.verify', { tier: label });
+      p = pct(d.verify_done, total);
+      stats = t('prog.statsNoSpeed', { got: fmtBytes(d.verify_done), total: fmtBytes(total) });
+      note = t('prog.noteVerify');
+      $('btn-pause').hidden = true;
+    } else {
+      stage = t(d?.stage === 'probe' ? 'prog.probe' : 'prog.download', { tier: label });
+      p = pct(d?.received, total);
+      stats = d?.speed > 0
+        ? t('prog.stats', { got: fmtBytes(d.received), total: fmtBytes(total), speed: fmtBytes(d.speed), eta: fmtDuration(d.eta, getLang()) })
+        : t('prog.statsNoSpeed', { got: fmtBytes(d?.received || 0), total: fmtBytes(total) });
+      if (d?.attempt > 1) stats += ' ' + t('prog.retrying', { n: d.attempt - 1 });
+      $('btn-pause').textContent = t('prog.pause');
+      note = t('prog.noteDownload');
+    }
+  }
+  $('prog-stage').textContent = stage;
+  $('prog-file').textContent = tier?.file || '';
+  $('prog-pct').innerHTML = `${p}<small>%</small>`;
+  $('prog-stats').innerHTML = stats;
+  $('prog-note').innerHTML = note;
+  drawSquiggle(st.phase === 'starting' ? null : p);
+}
+
+function drawSquiggle(p) {
+  const svg = $('squiggle');
+  const w = Math.max(40, svg.clientWidth || 400), h = 30, mid = h / 2;
+  if (svg.dataset.w !== String(w)) {
+    svg.dataset.w = String(w);
+    // 手写感:主波 + 一点不规则的二次谐波,振幅从左往右略增
+    let d = `M0 ${mid}`;
+    for (let x = 2; x <= w; x += 2) {
+      const amp = 5 + 2.2 * (x / w);
+      const y = mid + amp * Math.sin((x / 23) * Math.PI * 2) + 1.3 * Math.sin((x / 61) * Math.PI * 2 + 1.1);
+      d += ` L${x} ${y.toFixed(2)}`;
+    }
+    const path = $('sq-fill');
+    path.setAttribute('d', d);
+    path.setAttribute('pathLength', '100');
+  }
+  const path = $('sq-fill');
+  if (p === null) {
+    path.style.strokeDasharray = '16 84';
+    path.style.strokeDashoffset = '';
+  } else {
+    path.style.strokeDasharray = '100 100';
+    path.style.strokeDashoffset = String(100 - Math.max(p, 0.6));
+  }
+}
+
+function renderError() {
+  const e = S.status.error || {};
+  let title = e.kind === 'download' ? t('err.download') : t('err.engine');
+  if (e.code === 'disk_full') title = t('err.disk');
+  if (e.code === 'not_found') title = t('err.notfound');
+  // 启动器给的是中文原文;有对应错误码的换成当前语言的说明,原文放进「技术细节」
+  const key = 'errc.' + e.code;
+  const friendly = t(key) !== key ? t(key) : '';
+  const detail = [friendly ? e.message : '', e.detail].filter(Boolean).join('\n\n');
+  $('err-title').textContent = title;
+  $('err-msg').textContent = friendly || e.message || '';
+  $('err-detail').textContent = detail;
+  $('err-detail-wrap').hidden = !detail;
+}
+
+// ───────────────────────── 弹出面板 ─────────────────────────
+function renderPop() {
+  const st = S.status;
+  if (!st) return;
+  const tier = tierOf(st.tier);
+  const e = st.engine || {};
+  $('pi-model').textContent = tier ? `${tier.label} · ${tier.file}` : '—';
+  const eng = [BACKEND[e.backend] || e.backend, e.offload ? t('menu.layers', { n: e.offload }) : '', e.build].filter(Boolean).join(' · ');
+  $('pi-engine').textContent = eng || (st.backends?.length ? st.backends.map((b) => BACKEND[b] || b).join(' / ') : '—');
+  $('pi-device').textContent = e.device || st.sys.cpu || '—';
+  $('pi-ram').textContent = `${Math.round(st.sys.ram_gb)} GB`;
+  $('pi-ctx').textContent = `${fmtNum(st.ctx_size, getLang())} tokens`;
+  $('pi-idle').textContent = st.idle_exit_minutes > 0 ? t('menu.idle', { n: st.idle_exit_minutes }) : '';
+  $('pa-restart').hidden = !['ready', 'starting', 'error'].includes(st.phase);
+}
+
+function togglePop(force) {
+  const pop = $('pop');
+  const open = force ?? pop.hidden;
+  pop.hidden = !open;
+  $('status').setAttribute('aria-expanded', String(open));
+  if (open) renderPop();
+}
+
+// ───────────────────────── 编辑器 ─────────────────────────
+function renderSamples() {
+  const box = $('sample-btns');
+  box.replaceChildren(...SAMPLES.map((s) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'sample-btn';
+    b.textContent = s.label[getLang()] || s.label.en;
+    b.addEventListener('click', () => { $('draft').value = s.draft; onDraftInput(); $('draft').focus(); });
+    return b;
+  }));
+}
+
+let saveTimer = 0;
+function onDraftInput(save = true) {
+  const v = $('draft').value;
+  const c = countText(v);
+  $('draft-count').innerHTML = v ? `${t('count.zh', { n: fmtNum(c.units, getLang()) })} · ${t('count.chars', { n: fmtNum(c.chars, getLang()) })}` : '';
+  $('samples').hidden = v.trim() !== '';
+  $('draft').classList.toggle('cjk', isMostlyCJK(v));
+  updateGo();
+  if (save) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => store.set('draft', v), 400);
+  }
+}
+
+function updateGo() {
+  const ready = S.status?.phase === 'ready' && S.promptOK;
+  const has = pyStrip($('draft').value) !== '';
+  const go = $('btn-go');
+  go.disabled = !S.running && !(ready && has);
+  go.classList.toggle('running', S.running);
+  let label = t('go.label');
+  if (S.running) label = t('go.stop');
+  else if (S.status && S.status.phase !== 'ready') label = t('go.loading');
+  $('go-label').textContent = label;
+  go.setAttribute('aria-label', label);
+  $('btn-regen').disabled = S.running || !ready || !S.result;
+  $('btn-copy').disabled = S.running || !S.result;
+  $('out-empty-sub').innerHTML = t('out.emptySub', { key: KEY_LABEL });
+}
+
+function showNotice(kind, html) {
+  const n = $('out-notice');
+  n.className = 'notice ' + kind;
+  n.innerHTML = html;
+  n.hidden = false;
+}
+
+function setEditing(on) {
+  S.editing = on;
+  $('draft').hidden = !on;
+  $('draft-view').hidden = on;
+  $('btn-edit').hidden = on;
+  $('legend-del').hidden = on;
+  if (on) requestAnimationFrame(() => $('draft').focus({ preventScroll: true }));
+}
+
+function maybeAutoRun() {
+  if (S.autoRun && S.status?.phase === 'ready' && S.promptOK && pyStrip($('draft').value)) {
+    S.autoRun = false;
+    run();
+  }
+}
+
+// 流式输出按帧合并渲染。注意:改写结束后可能还有一帧没跑(后台标签页里 rAF 会被推迟),
+// 它不能再把带高亮的结果覆盖成纯文本 —— 所以结束时取消,回调里也再查一次。
+let renderRaf = 0;
+function scheduleStreamRender() {
+  if (renderRaf) return;
+  renderRaf = requestAnimationFrame(() => {
+    renderRaf = 0;
+    if (!S.running) return;
+    const out = $('output');
+    const nearBottom = out.scrollHeight - out.scrollTop - out.clientHeight < 80;
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    out.replaceChildren(S.out.replace(/^\s+/, ''), caret);
+    out.classList.toggle('cjk', isMostlyCJK(S.out));
+    $('out-empty').hidden = true;
+    if (nearBottom) out.scrollTop = out.scrollHeight;
+    const c = countText(S.out);
+    $('out-count').innerHTML = t('count.zh', { n: fmtNum(c.units, getLang()) });
+  });
+}
+
+async function run() {
+  if (S.running) { stop(); return; }
+  const draft = $('draft').value;
+  if (!pyStrip(draft)) return;
+  if (!S.promptOK || !S.cfg) { showNotice('err', t('out.promptMismatch')); return; }
+  if (S.status?.phase !== 'ready') { toast(t('out.notReady')); return; }
+
+  togglePop(false);
+  closeNumbers();
+  setEditing(true);
+  S.running = true;
+  S.abort = new AbortController();
+  S.out = '';
+  S.result = null;
+  $('out-notice').hidden = true;
+  $('chip-numbers').hidden = true;
+  $('out-stats').textContent = '';
+  $('out-count').textContent = '';
+  $('out-empty').hidden = true;
+  $('output').classList.remove('cjk');
+  $('output').innerHTML = `<span class="reading">${t('out.reading', { p: 0 })}</span>`;
+  updateGo();
+  renderStatus();
+
+  const t0 = performance.now();
+  let final = null, error = null, aborted = false;
+  try {
+    let nTok;
+    try { nTok = await countTokens(pyStrip(draft)); } catch { nTok = Math.ceil(countText(draft).chars / 3); }
+    const nPred = nPredictFor(S.cfg, nTok);
+    const r = S.cfg.n_predict;
+    if (nTok + 200 + nPred > S.cfg.ctx_size) throw Object.assign(new Error(t('out.tooLong', { n: fmtNum(nTok, getLang()) })), { notice: true });
+    if (nTok * r.factor > r.max) showNotice('warn', t('out.longDraft', { n: fmtNum(nTok, getLang()) }));
+    const body = {
+      ...S.cfg.sampling,
+      prompt: buildPrompt(S.cfg, draft),
+      n_predict: nPred,
+      stream: true,
+      cache_prompt: true,
+      return_progress: true,
+    };
+    for await (const ev of streamCompletion(body, S.abort.signal)) {
+      if (ev.prompt_progress && !S.out) {
+        const pp = ev.prompt_progress;
+        const pr = pp.total ? Math.round((100 * pp.processed) / pp.total) : 0;
+        $('output').innerHTML = `<span class="reading">${t('out.reading', { p: pr })}</span>`;
+      }
+      if (ev.content) {
+        S.out += ev.content;
+        scheduleStreamRender();
+      }
+      if (ev.stop) { final = ev; break; }
+    }
+  } catch (e) {
+    if (e.name === 'AbortError') aborted = true;
+    else error = e;
+  }
+  S.running = false;
+  S.abort = null;
+  if (renderRaf) { cancelAnimationFrame(renderRaf); renderRaf = 0; }
+  const secs = (performance.now() - t0) / 1000;
+  const text = S.out.trim();
+
+  if (error && !text) {
+    $('output').replaceChildren();
+    $('out-empty').hidden = false;
+    showNotice('err', error.notice ? escapeHTML(error.message) : t('out.failed', { msg: escapeHTML(error.message) }));
+  } else if (!text) {
+    $('output').replaceChildren();
+    $('out-empty').hidden = false;
+    if (aborted) showNotice('', t('out.stopped'));
+  } else {
+    S.result = makeResult(draft, text);
+    if (final) {
+      const tok = final.tokens_predicted || 0;
+      const tps = final.timings?.predicted_per_second;
+      $('out-stats').textContent = t('out.stats', { tok: fmtNum(tok, getLang()), tps: tps ? tps.toFixed(1) : '—', sec: secs.toFixed(1) });
+      if (final.stop_type === 'limit') showNotice('warn', t('out.truncated', { n: final.tokens_predicted }));
+      addHistory({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        t: Date.now(), draft, out: text, tier: S.status?.tier, tierLabel: tierOf(S.status?.tier)?.label, tok, tps,
+        ratio: S.result.diff ? S.result.diff.ratio : null, stop: final.stop_type,
+      });
+    } else if (aborted) {
+      showNotice('', t('out.stopped'));
+    } else if (error) {
+      showNotice('err', t('out.failed', { msg: escapeHTML(error.message) }));
+    }
+    renderResult();
+  }
+  updateGo();
+  renderStatus();
+}
+
+function stop() {
+  if (S.abort) S.abort.abort();
+}
+
+function makeResult(draft, out) {
+  const aTok = tokenize(draft), bTok = tokenize(out);
+  const diff = diffTokens(aTok, bTok);
+  return { draft, out, aTok, bTok, diff, nums: numberCheck(draft, out) };
+}
+
+function renderResult() {
+  const r = S.result;
+  if (!r) return;
+  const out = $('output');
+  out.classList.toggle('cjk', isMostlyCJK(r.out));
+  $('out-empty').hidden = true;
+  const useDiff = S.showDiff && r.diff;
+  if (useDiff) renderMarked(out, r.bTok, r.diff.b, 'ins');
+  else out.textContent = r.out;
+
+  // 草稿侧:显示被改掉的部分(只在草稿没被改过时)
+  if (useDiff && $('draft').value === r.draft) {
+    const v = $('draft-view');
+    v.classList.toggle('cjk', isMostlyCJK(r.draft));
+    renderMarked(v, r.aTok, r.diff.a, 'del');
+    flagNumbers(v, r.nums.missing);
+    setEditing(false);
+  } else if (!S.editing) {
+    setEditing(true);
+  }
+  if (S.showDiff && !r.diff) showNotice('', t('diff.tooBig'));
+
+  const c = countText(r.out);
+  let meta = t('count.zh', { n: fmtNum(c.units, getLang()) });
+  if (r.diff) meta += ' · ' + t('out.changed', { p: Math.round(r.diff.ratio * 100) });
+  $('out-count').innerHTML = meta;
+
+  const chip = $('chip-numbers');
+  if (r.nums.total) {
+    const ok = r.nums.missing.length === 0;
+    chip.hidden = false;
+    chip.className = 'chip ' + (ok ? 'ok' : 'warn');
+    chip.innerHTML = `<svg><use href="#${ok ? 'i-check' : 'i-hash'}"/></svg>` +
+      (ok ? t('num.ok', { n: r.nums.total }) : t('num.warn', { k: r.nums.missing.length }));
+  } else {
+    chip.hidden = true;
+  }
+  updateGo();
+}
+
+function setDiffToggle(on) {
+  S.showDiff = on;
+  store.set('diff', on ? '1' : '0');
+  $('btn-diff').setAttribute('aria-pressed', String(on));
+}
+
+function openNumbers() {
+  const r = S.result;
+  if (!r || !r.nums.missing.length) return;
+  const pop = $('numbers-pop');
+  pop.innerHTML = `<div>${t('num.popTitle')}</div><div class="nums">${r.nums.missing.map((n) => `<span>${escapeHTML(n)}</span>`).join('')}</div><div>${t('num.popBody')}</div>`;
+  pop.hidden = false;
+  const rc = $('chip-numbers').getBoundingClientRect();
+  pop.style.left = Math.max(12, Math.min(rc.left, innerWidth - pop.offsetWidth - 12)) + 'px';
+  pop.style.top = Math.max(12, rc.top - pop.offsetHeight - 10) + 'px';
+}
+
+function closeNumbers() { $('numbers-pop').hidden = true; }
+
+async function copyOut() {
+  const r = S.result;
+  if (!r) return;
+  try {
+    await navigator.clipboard.writeText(r.out);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = r.out;
+    document.body.append(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  const b = $('btn-copy');
+  b.classList.add('done');
+  b.querySelector('span').textContent = t('out.copied');
+  b.querySelector('use').setAttribute('href', '#i-check');
+  setTimeout(() => {
+    b.classList.remove('done');
+    b.querySelector('span').textContent = t('out.copy');
+    b.querySelector('use').setAttribute('href', '#i-copy');
+  }, 1600);
+}
+
+// ───────────────────────── 历史 ─────────────────────────
+function renderHistory() {
+  const list = loadHistory();
+  $('history-count').textContent = list.length ? String(list.length) : '';
+  $('hist-empty').hidden = list.length > 0;
+  $('btn-history-clear').hidden = list.length === 0;
+  const ol = $('hist');
+  ol.replaceChildren(...list.map((h) => {
+    const li = document.createElement('li');
+    const when = new Date(h.t).toLocaleString(getLang() === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const tier = h.tierLabel || tierOf(h.tier)?.label || h.tier || '';
+    const words = countText(h.out).units;
+    const ratio = typeof h.ratio === 'number' ? ` · ${Math.round(h.ratio * 100)}%` : '';
+    li.innerHTML = `<div class="hist-meta"><span>${escapeHTML(when)}</span><span>·</span><span>${escapeHTML(tier)}</span><span>·</span><span>${t('count.zh', { n: words }).replace(/<\/?b>/g, '')}${ratio}</span></div>
+      <div class="hist-text"></div>
+      <button class="hist-del" type="button" aria-label="delete"><svg><use href="#i-close"/></svg></button>`;
+    li.querySelector('.hist-text').textContent = h.out.slice(0, 220);
+    li.addEventListener('click', () => restore(h));
+    li.querySelector('.hist-del').addEventListener('click', (ev) => { ev.stopPropagation(); removeHistory(h.id); renderHistory(); });
+    return li;
+  }));
+}
+
+function restore(h) {
+  if (S.running) return;
+  $('draft').value = h.draft;
+  onDraftInput();
+  $('out-notice').hidden = true;
+  $('out-stats').textContent = h.tok ? `${fmtNum(h.tok, getLang())} tokens` + (h.tps ? ` · ${h.tps.toFixed(1)} tok/s` : '') : '';
+  S.result = makeResult(h.draft, h.out);
+  renderResult();
+  openDrawer(false);
+  toast(t('history.restored'));
+}
+
+function openDrawer(open) {
+  const d = $('drawer');
+  if (open) renderHistory();
+  d.classList.toggle('open', open);
+  d.setAttribute('aria-hidden', String(!open));
+  $('scrim').hidden = !open;
+}
+
+// ───────────────────────── 杂项 ─────────────────────────
+let toastTimer = 0;
+function toast(msg) {
+  const el = $('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+function showOverlay(title, msg, kind) {
+  $('overlay-title').textContent = title;
+  $('overlay-msg').textContent = msg;
+  $('overlay').hidden = false;
+  $('overlay').dataset.kind = kind;
+}
+
+function markLang() {
+  for (const b of document.querySelectorAll('[data-lang]')) b.setAttribute('aria-pressed', String(b.dataset.lang === getLang()));
+}
+
+function effectiveTheme() {
+  const a = document.documentElement.getAttribute('data-theme');
+  if (a) return a;
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+async function setup(tier, endpoint) {
+  try {
+    await postJSON('/app/setup', { tier, endpoint });
+    S.forceSetup = false;
+    S.tierSig = '';
+  } catch (e) {
+    toast(e.message);
+  }
+  poll();
+}
+
+function bind() {
+  $('draft').addEventListener('input', () => onDraftInput());
+  $('draft-view').addEventListener('click', () => setEditing(true));
+  $('btn-edit').addEventListener('click', () => setEditing(true));
+  $('btn-go').addEventListener('click', run);
+  $('btn-regen').addEventListener('click', run);
+  $('btn-copy').addEventListener('click', copyOut);
+  $('btn-diff').addEventListener('click', () => { setDiffToggle(!S.showDiff); renderResult(); });
+  $('chip-numbers').addEventListener('click', (e) => { e.stopPropagation(); $('numbers-pop').hidden ? openNumbers() : closeNumbers(); });
+  $('btn-clear').addEventListener('click', () => {
+    $('draft').value = '';
+    setEditing(true);
+    onDraftInput();
+  });
+  $('btn-paste').addEventListener('click', async () => {
+    try {
+      const txt = await navigator.clipboard.readText();
+      if (txt) { $('draft').value = txt; setEditing(true); onDraftInput(); }
+    } catch {
+      setEditing(true);
+      toast(IS_MAC ? '⌘ V' : 'Ctrl V');
+    }
+  });
+
+  // 首次运行
+  $('btn-download').addEventListener('click', () => setup(S.pickTier, $('endpoint').value));
+  $('endpoint').addEventListener('change', (e) => { S.pickEndpoint = e.target.value; });
+  $('btn-back').addEventListener('click', () => { S.forceSetup = false; S.tierSig = ''; render(); });
+  $('btn-pause').addEventListener('click', async () => {
+    const st = S.status;
+    if (st.phase === 'paused') await setup(st.download?.tier || st.tier, st.endpoint);
+    else { await postJSON('/app/download/pause').catch(() => {}); poll(); }
+  });
+  $('btn-rechoose').addEventListener('click', () => { S.forceSetup = true; S.tierSig = ''; render(); });
+  $('btn-err-choose').addEventListener('click', () => { S.forceSetup = true; S.tierSig = ''; render(); });
+  $('btn-retry').addEventListener('click', async () => {
+    const st = S.status;
+    if (st.error?.kind === 'engine') { await postJSON('/app/engine/restart').catch((e) => toast(e.message)); poll(); }
+    else await setup(st.download?.tier || st.tier, st.endpoint);
+  });
+  $('btn-err-logs').addEventListener('click', () => postJSON('/app/reveal', { what: 'logs' }).then(() => toast(t('toast.revealed'))).catch((e) => toast(e.message)));
+
+  // 顶栏
+  $('status').addEventListener('click', (e) => { e.stopPropagation(); togglePop(); });
+  $('btn-menu').addEventListener('click', (e) => { e.stopPropagation(); togglePop(); });
+  $('pop').addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('click', () => { togglePop(false); closeNumbers(); });
+  $('btn-history').addEventListener('click', () => openDrawer(!$('drawer').classList.contains('open')));
+  $('btn-drawer-close').addEventListener('click', () => openDrawer(false));
+  $('scrim').addEventListener('click', () => openDrawer(false));
+  $('btn-history-clear').addEventListener('click', () => {
+    if (confirm(t('history.confirmClear'))) { clearHistory(); renderHistory(); toast(t('history.cleared')); }
+  });
+  $('btn-theme').addEventListener('click', () => {
+    const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    store.set('theme', next);
+  });
+  for (const b of document.querySelectorAll('[data-lang]')) {
+    b.addEventListener('click', () => {
+      setLang(b.dataset.lang);
+      store.set('lang', b.dataset.lang);
+      markLang();
+      renderSamples();
+      onDraftInput(false);
+      S.tierSig = '';
+      render();
+      if (S.result) renderResult();
+      if ($('drawer').classList.contains('open')) renderHistory();
+    });
+  }
+  $('pa-tier').addEventListener('click', () => { togglePop(false); S.forceSetup = true; S.pickTier = S.status?.tier; S.tierSig = ''; render(); });
+  $('pa-reveal').addEventListener('click', () => postJSON('/app/reveal', { what: 'models' }).then(() => toast(t('toast.revealed'))).catch((e) => toast(e.message)));
+  $('pa-restart').addEventListener('click', async () => { togglePop(false); toast(t('toast.restarting')); await postJSON('/app/engine/restart').catch((e) => toast(e.message)); poll(); });
+  $('pa-quit').addEventListener('click', async () => {
+    if (!confirm(t('confirm.quit'))) return;
+    S.quit = true;
+    togglePop(false);
+    try { await postJSON('/app/quit'); } catch { /* 已经没了 */ }
+    showOverlay(t('overlay.quitTitle'), t('overlay.quitMsg'), 'quit');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); run(); }
+    else if (e.key === 'Escape') {
+      if (S.running) stop();
+      togglePop(false);
+      closeNumbers();
+      openDrawer(false);
+    }
+  });
+  new ResizeObserver(() => { if (S.view === 'setup' && S.status) renderProgressIfVisible(); }).observe($('squiggle'));
+}
+
+function renderProgressIfVisible() {
+  if (!document.querySelector('[data-pane="progress"]').hidden) {
+    $('squiggle').dataset.w = '';
+    renderProgress();
+  }
+}
+
+init();

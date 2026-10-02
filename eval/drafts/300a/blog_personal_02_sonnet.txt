@@ -1,0 +1,17 @@
+The garage smells like PB Blaster now, permanently, I think. I picked up the bike on August 2nd from a guy in Hillsboro named Russ who'd had it sitting under a tarp since 2011 — a 1978 Honda CB750K with 31,400 miles, matte with dust, $1,400 cash. The odometer cable was seized, the carbs were varnished solid, and a family of something had been living in the airbox. Classic first-owner-in-a-decade situation.
+
+Week one was just degreasing. I went through four cans of Simple Green and an entire Saturday just getting eleven years of grime off the engine cases before I could even see what I was working with. Turns out the cases are in great shape — no cracks, no stripped threads, just cosmetic corrosion on the fin edges.
+
+Week two I pulled the carb bank (four Keihin CV carburettors) and soaked them in a Berryman's dip for three days. Rebuilt them with a kit from CB750 Supply — $89 for all four sets of gaskets, O-rings, and float valves. That was the most satisfying afternoon of the whole project so far; watching float bowls that were crusted shut open up clean again.
+
+Money so far, since I'm tracking it in a notebook on the workbench:
+- Bike: $1,400
+- Carb rebuild kit: $89
+- Battery (YB9-B, since the old one was basically a brick): $34
+- New fuel lines and inline filter: $22
+- Degreaser, brushes, gloves, shop rags: about $60
+- NGK spark plugs, set of four: $18
+
+Total: $1,623 as of tonight, September 20th.
+
+Compression tested at 145, 148, 142, and 140 psi across the four cylinders, which for a 48-year-old air-cooled engine felt like winning the lottery. I haven't tried to start it yet — that's the goal for next weekend, once I've got fresh gas in the tank and the points gapped to spec. My neighbor Dave, who's rebuilt two of these himself, keeps telling me not to rush the first kick. I'm rushing it anyway.

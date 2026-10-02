@@ -1,0 +1,12 @@
+Dear Professor Martinez,
+
+I’m writing to clarify the interpretation of the Q3 regression results in my economics term paper, “Minimum-Wage Changes and Part-Time Employment in California, 2012–2023.”
+
+My model estimates that a 10% increase in the real minimum wage is associated with a 0.8% decline in part-time employment (coefficient = −0.080, p = 0.03), controlling for county fixed effects, year fixed effects, unemployment, and industry composition. However, I cited Freakley (2021), which reports no statistically significant employment reduction after minimum-wage increases. In the paper, I currently describe my result as “consistent with a modest negative employment effect,” but I am concerned that this may contradict the cited study.
+
+Should I frame the difference as a contradiction, or explain it as a result of differences in data and methodology? Freakley’s study uses national quarterly data from 1990–2018, while my analysis uses annual county-level data for California from 2012–2023 and focuses specifically on part-time workers. The coefficient becomes statistically insignificant when I exclude 2020–2021, suggesting that pandemic-related labor-market disruptions may be influencing the result.
+
+Would you recommend revising the discussion to emphasize these limitations and avoid claiming a direct disagreement with Freakley?
+
+Best,  
+Jordan Lee

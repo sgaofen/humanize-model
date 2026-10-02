@@ -1,0 +1,7 @@
+Bought the Anker 313 Power Bank (PowerCore 20K, 20,000mAh) on Amazon for $39.99 back in May, delivered May 14. Wanted something reliable for a two-week trip to Portugal in June, and for the first three months it did exactly what I needed — full charge on my Pixel 8 with about 60% left in the bank.
+
+Sometime around early September it started dying fast. It'll show 3 bars on the LED indicator, I plug in my phone, and it drops to 1 bar within ten minutes of charging. By mid-September it wouldn't hold a charge overnight at all — I'd charge it to 100% before bed, unplug it, and wake up to find it reading empty, no phone ever connected to it. I've tried three different USB-C cables and two different wall adapters, so it's not a cable issue.
+
+I contacted Anker support on September 18 through their site, gave them the order number, and they asked for a video of the LED behavior, which I sent the next day. Still waiting to hear back on a replacement as of today, September 21 — that's been three days with no response.
+
+For $40 I expected more than four months of useful life. The build quality and charging speed were genuinely good while it worked, and Anker's 18-month warranty is the only reason I'm not just writing this off. I'll update this review if support comes through with a replacement, but as it stands I can't recommend this particular unit until I see how they handle it.

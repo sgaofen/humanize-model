@@ -1,0 +1,13 @@
+Generally, no — and this trips up a lot of people since the rules changed in 2018.
+
+If you're a W-2 employee (which "working remotely for my employer" implies), the Tax Cuts and Jobs Act suspended the miscellaneous itemized deduction for unreimbursed employee business expenses, including the home office deduction, for tax years 2018 through 2025. It doesn't matter whether you work from home 1 day a week or 5 — as a W-2 employee you simply cannot claim it on your federal return, full stop. This applies even if your employer requires the hybrid schedule and doesn't give you a permanent desk on the days you're in office.
+
+A few things that could change the answer:
+
+1. **You're a 1099 contractor or have self-employment income on the side.** If part of your income is self-employment (say, freelance consulting you do from that same home office), you can deduct the business-use portion of your home for that income, using Form 8829. The space still has to meet the "regular and exclusive use" test — a home office you also use as a guest room on weekends doesn't qualify.
+
+2. **State taxes.** A handful of states (California, New York, Pennsylvania, Alabama, Arkansas) still allow the unreimbursed employee expense deduction on the state return even though it's suspended federally. Check your specific state's rules for 2025.
+
+3. **Your employer doesn't reimburse you.** Ask whether they have an "accountable plan" — if they reimburse you for a portion of internet, a monitor, etc., under an accountable plan, that reimbursement isn't taxable income to you, which is effectively better than a deduction would be anyway.
+
+Bottom line for a typical hybrid W-2 employee: no federal home office deduction, check your state, and see if your employer will reimburse expenses directly instead. This isn't tax advice for your specific situation — a CPA can confirm based on your full return.

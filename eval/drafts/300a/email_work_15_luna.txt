@@ -1,0 +1,11 @@
+Hi Maya,
+
+I’m handing off weekend on-call coverage for the monitoring dashboards from Friday, September 25, at 5:00 p.m. through Monday, September 28, at 9:00 a.m. Pacific.
+
+Please keep an eye on the Production Overview, API Latency, and Payments dashboards in Grafana. The most important thresholds are API 5xx errors above 2% for five minutes, payment failures above 1.5%, and queue depth above 10,000 messages. These alerts are currently noisy between 1:00–2:00 a.m. because of the nightly data export, so please confirm the related export job before escalating.
+
+For a confirmed customer-impacting incident, page the service owner through PagerDuty and post an update in the `#incidents-prod` Slack channel. The primary escalation contact is Daniel Ortiz (Platform Engineering, +1 415-555-0186). If Daniel is unavailable after 15 minutes, contact Priya Shah (Payments, +1 415-555-0127). For database issues, reach Elena Petrova at +1 415-555-0164.
+
+I’ve attached the current escalation contact list, including backup contacts and vendor support numbers. I also documented the latest known issue— intermittent 504s from the West Coast API gateway—in the runbook under “INC-4821.”
+
+Thanks for covering this weekend.

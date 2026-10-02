@@ -1,0 +1,19 @@
+Subject: Handoff — Sarah Kim onboarding (IT accounts pending)
+
+Hi Alex,
+
+I'm out starting tomorrow (Sept 22) through next Monday, so I need to hand off Sarah Kim's onboarding to you.
+
+Sarah started this past Monday, Sept 15, on the Analytics team. Most of the onboarding is done — desk setup, benefits paperwork with HR, and her intro meeting with Priya — but IT account provisioning is still stuck. I submitted the ticket (IT-4821) on Sept 16 for her Okta SSO, email, and Salesforce access, but it's been sitting in "pending approval" because it needs sign-off from Dana in IT Security. I followed up Friday with no response yet.
+
+Could you:
+1. Ping Dana directly (or escalate to Marcus if she's unresponsive by Wednesday, Sept 24) to get IT-4821 approved.
+2. Once accounts are live, walk Sarah through VPN and Salesforce setup — she's not done this before.
+3. Confirm she's added to the Analytics team Slack channel and the Tuesday 10am standup invite; I wasn't able to get to that this week.
+
+Her manager is Jordan Lee, and Sarah's direct line is 415-555-0148 if you need to reach her. I'll be reachable by email if anything urgent comes up, but otherwise this should be straightforward from here.
+
+Thanks for covering — let me know if anything's unclear.
+
+Best,
+Stephen

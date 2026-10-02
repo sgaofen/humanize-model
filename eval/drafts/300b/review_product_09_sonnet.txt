@@ -1,0 +1,9 @@
+Picked up the Logitech M240 Silent ($24.99, Best Buy, checkout Sept 2) to replace an MX Anywhere 3 ($79.99) that's been my daily driver for two years. Three weeks in, verdict: for most people, save the $55.
+
+The M240 pairs over Bluetooth only — no Logi Bolt receiver — and connected to my M2 MacBook Air in about four seconds. Scroll wheel is a basic notched mechanism, not the MX's free-spin hyper-fast option, so flying through a 2,000-row spreadsheet takes noticeably longer. Side buttons: two, same as the MX, and both remap fine in Logi Options+. Sensor tops out at 4000 DPI versus 8000 on the MX Anywhere 3, which I never noticed on a desk but did on my lap using my knee as a mousepad — occasional skipping.
+
+Where the M240 actually wins: battery. Logitech rates it at 18 months on a single AA; I'm one month in and the app still shows 100%. The MX charges via USB-C and needs a top-up every 2-3 months with regular use. The M240 is also 15g lighter (78g vs 99g), which matters if you're carrying it to a coffee shop daily like I do.
+
+Build feels cheaper — more hollow-sounding click, visible seam on the underside — but the clicks themselves are genuinely quieter, which I appreciate on calls.
+
+If you're pairing with one machine and don't need multi-device switching (the MX Anywhere 3 handles three via Logi Bolt or Bluetooth with a button press), the M240 covers 90% of the daily use case for a third of the price. I'm keeping the MX for my desk setup and using the M240 for travel.

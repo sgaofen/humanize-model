@@ -1,0 +1,22 @@
+Subject: Request for Legal Review — Updated NDA with Nordwind GmbH (Needed Before Friday)
+
+Dear Priya,
+
+I hope you're doing well. I'm writing to request your team's help with a time-sensitive review of the updated NDA for Nordwind GmbH, our prospective logistics partner in Hamburg.
+
+We received their redlined version on Tuesday, March 12, and there are a few substantive changes from the draft your team approved in January. Specifically:
+
+1. Clause 4.2 (Confidentiality Period) has been extended from 3 years to 5 years, with no carve-out for information already public.
+2. Clause 7.1 now includes a governing law change from New York to Germany, with disputes routed to arbitration in Frankfurt.
+3. Clause 9.3 adds a broad indemnification obligation on our side for any "indirect losses" arising from disclosure — language that seems open-ended.
+
+Their General Counsel, Dr. Anneke Voss, has asked that both parties sign by Friday, March 22, at 10:00 a.m. CET, as their board meets that afternoon to approve the pilot program. This means I'd need your comments or an approved version back by end of day Wednesday, March 20, to leave time for internal sign-off and any final negotiation with Dr. Voss.
+
+I've uploaded the redlined document and the January baseline to the shared folder under "Nordwind NDA — March 2024" (file: Nordwind_NDA_v3_redline.docx). Please let me know if a short call would be faster — I'm available tomorrow between 2:00 and 4:00 p.m.
+
+I know this is a tight turnaround, and I really appreciate your team's support. Please call me at (555) 214-8890 if anything is unclear.
+
+Best regards,
+Marcus Feldman
+Director of Business Development
+Trellis Logistics Group

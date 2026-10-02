@@ -1,0 +1,18 @@
+Q3 2026 IT Security Update — Prepared by IT Security, September 21, 2026
+
+Coverage period: July 1 – September 21, 2026
+
+Zero security breaches were recorded this quarter. No unauthorized access, data exfiltration, or ransomware incidents occurred across the corporate network, cloud infrastructure, or endpoint fleet (approximately 340 managed devices).
+
+Phishing defense: The email security gateway (Proofpoint) flagged and blocked 27 phishing attempts targeting staff inboxes, up from 19 in Q2. The most notable wave arrived August 12, when 11 near-identical messages impersonating a fake "payroll update" from HR hit 40+ mailboxes within two hours; all were quarantined automatically and no employee credentials were entered. Three additional attempts were reported directly by staff via the "Report Phishing" Outlook button, including one caught by Maria Chen in Accounting on September 3 that mimicked an invoice from a known vendor. All reporters were thanked individually.
+
+MFA rollout: Multi-factor authentication adoption reached 94% of active accounts (376 of 400) as of September 19, up from 81% at the end of Q2. The remaining 24 accounts are primarily contractors and two shared service accounts still being migrated to individual logins; target for full 100% coverage is October 15. Enforcement via Okta conditional access policies remains active for all finance and engineering systems.
+
+Other notes:
+- Patch compliance held at 98% across servers and workstations, with the two outstanding devices scheduled for remediation next week.
+- One tabletop incident-response exercise was run on August 28 with the IT and Legal teams; no gaps were identified.
+- Security awareness training completion stands at 89% for the quarter, with reminder emails going out to the remaining staff by September 30.
+
+Next quarter's priorities: close the final MFA gap, roll out phishing-simulation testing company-wide, and complete the SOC 2 readiness review ahead of the November audit.
+
+Questions can be directed to the IT Security mailbox or to me directly.

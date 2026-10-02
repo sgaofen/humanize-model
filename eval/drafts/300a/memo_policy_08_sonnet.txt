@@ -1,0 +1,14 @@
+To: Executive Leadership Team
+From: Finance & Strategy
+Date: September 21, 2026
+Re: Q2 FY26 Financial Performance Summary
+
+Consolidated revenue for Q2 FY26 reached $412.6 million, up 7.1% year-over-year from $385.2 million in Q2 FY25, driven by strong performance in Medical Devices (+11.4%) and Consumer Diagnostics (+9.2%). However, gross margin for the Pharmaceutical division fell to 38.4%, down from 44.9% in Q2 FY25 — a 650 basis-point contraction that offset otherwise healthy topline growth and dragged consolidated operating margin down to 19.8% from 22.3%.
+
+Three factors account for the pharma margin erosion. First, input costs for active pharmaceutical ingredients sourced from our Hyderabad and Cork facilities rose 14% following supply disruptions in March and April. Second, the loss of patent exclusivity on Nexovant (our second-largest branded product by revenue) in January triggered generic substitution earlier than modeled, cutting average selling price by roughly 18% in the U.S. market. Third, one-time inventory write-downs of $6.2 million were recorded in May related to discontinued lots at the Raleigh manufacturing site.
+
+Pharmaceutical division revenue was essentially flat at $148.3 million (+0.6% YoY), meaning the division contributed disproportionately to consolidated cost growth without offsetting revenue gains. If current trends hold, we project full-year pharma gross margin could settle near 39%, roughly 500 basis points below FY25's 44.1%.
+
+Recommended actions for Q3: (1) accelerate the API dual-sourcing initiative with our Basel supplier to reduce input cost volatility by year-end; (2) fast-track the Nexovant-XR reformulation, targeting FDA submission by November 15 to partially restore branded pricing power; (3) complete the Raleigh site's process audit by October 10 to prevent recurrence of write-downs.
+
+We will present a detailed pharma margin recovery plan to the Board at the October 14 meeting.

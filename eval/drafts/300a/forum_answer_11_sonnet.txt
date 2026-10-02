@@ -1,0 +1,13 @@
+This happens because JavaScript stores numbers as IEEE 754 double-precision floats, and neither 0.1 nor 0.2 has an exact binary representation—they're stored as the nearest approximable value. 0.1 is actually stored as roughly 0.1000000000000000055511151231257827, and 0.2 as roughly 0.200000000000000011102230246251565. Add those together and round to the nearest representable double, and you get 0.30000000000000004, not 0.3. This isn't a JavaScript-specific bug; it's the same in Python, Java, C, and any language using standard floating-point arithmetic (per IEEE 754). Try `0.1 + 0.2` in a Node.js console or your browser's devtools and you'll see it immediately.
+
+For money, never use raw floats for arithmetic you plan to compare or sum precisely. A few solid options:
+
+1. **Work in integer cents/minor units.** Store $19.99 as `1999` (an integer), do all math in integers, and only divide by 100 for display. This is the simplest fix and works fine until you need fractional cents or very large sums.
+
+2. **Use a decimal library.** `decimal.js`, `big.js`, or `bignumber.js` model numbers as base-10 decimals instead of binary floats, so `0.1 + 0.2` really does equal `0.3`. Example: `new Decimal('0.1').plus('0.2').toString()` returns `"0.3"`.
+
+3. **Use native BigInt for whole-cent integer math** if you don't need decimals mid-calculation, since BigInt avoids float precision issues entirely for large integers.
+
+4. **In newer environments, watch for the upcoming `Number.prototype.toFixed` pitfalls too**—`toFixed()` doesn't fix the underlying precision problem, it just rounds the display string, so don't rely on it for actual calculations, only formatting.
+
+Rule of thumb: floats for measurements and graphics, integers or decimal libraries for money.

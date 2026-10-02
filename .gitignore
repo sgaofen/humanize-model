@@ -3,3 +3,4 @@ __pycache__/
 *.safetensors
 *.jsonl
 .DS_Store
+assets/preview/
