@@ -103,8 +103,13 @@ hf download jialinyyzz/humanizer humanizer-12b-Q8_0.gguf prompt_format.json --lo
 wc -c ./humanizer-model/*.gguf     # Q8_0: 12669627840 bytes, Q6_K: 10029797088 bytes
 ```
 
-<!-- TBD: sha256 of each GGUF, after upload -->
-sha256 checksums: *coming soon*.
+sha256 (`shasum -a 256 FILE` on macOS, `sha256sum FILE` on Linux, `certutil -hashfile FILE SHA256` on Windows):
+
+| File | sha256 |
+|---|---|
+| `humanizer-12b-Q8_0.gguf` | `3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9` |
+| `humanizer-12b-Q6_K.gguf` | `ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28` |
+| `lite/humanizer-lite-Q6_K.gguf` | `baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c` |
 
 ## 3. llama.cpp (recommended)
 
@@ -599,7 +604,7 @@ If the app is open but has no model yet (first run), `hz` tells you to pick one 
 - Blank lines separate blocks. These are **kept exactly as written** and never sent to the model: Markdown headings (`#`, underlined, or a line that is only `**bold**`), fenced and indented code, tables, lines that are only images or links, HTML blocks and comments, `$$…$$` and `\[…\]` math, block quotes, horizontal rules, YAML front matter, footnote and link definitions, a short line ending in a colon right before a list, table or code block ("Key points:"), and everything under a heading called References, Bibliography, Works Cited, Sources or 参考文献.
 - Prose paragraphs are grouped in order into pieces of at most about **350 English words or 600 Chinese characters** (`--max-words`, `--max-chars`). A piece never crosses a heading or any kept block, and pieces in one stretch of prose are made about the same size.
 - A paragraph longer than that is cut at sentence ends; its rewritten pieces are joined back into one paragraph.
-- **Lists:** each item keeps its bullet or number and a leading `**Label:**`. An item of at least about 10 words (17 Chinese characters) is rewritten on its own; shorter items are kept. Short items are where the model is weakest, so read them.
+- **Lists:** each item keeps its bullet or number and a leading `**Label:**`. An item of at least about 15 words (26 Chinese characters) is rewritten on its own; shorter items are kept. Short items are where the model is weakest, so read them.
 - The rewritten pieces go back in their original places, with the original blank lines between blocks. Inline formatting inside prose (bold, inline code, links) is up to the model and is sometimes dropped.
 
 ### Checks and the retry

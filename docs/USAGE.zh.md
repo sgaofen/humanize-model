@@ -103,8 +103,13 @@ hf download jialinyyzz/humanizer humanizer-12b-Q8_0.gguf prompt_format.json --lo
 wc -c ./humanizer-model/*.gguf     # Q8_0 应为 12669627840 字节,Q6_K 应为 10029797088 字节
 ```
 
-<!-- TBD: 上传后填每个 GGUF 的 sha256 -->
-sha256 校验值：*即将推出*。
+sha256 校验值（macOS 用 `shasum -a 256 文件名`，Linux 用 `sha256sum 文件名`，Windows 用 `certutil -hashfile 文件名 SHA256`）：
+
+| 文件 | sha256 |
+|---|---|
+| `humanizer-12b-Q8_0.gguf` | `3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9` |
+| `humanizer-12b-Q6_K.gguf` | `ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28` |
+| `lite/humanizer-lite-Q6_K.gguf` | `baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c` |
 
 ## 3. llama.cpp（推荐）
 
@@ -599,7 +604,7 @@ hz paper.md --server http://127.0.0.1:8080   # 指定某个 llama-server
 - 用空行分块。下面这些**原样保留**，不送给模型：Markdown 标题（`#`、下划线式标题，或整行只有 `**粗体**`）、围栏和缩进代码块、表格、只有图片或链接的行、HTML 块和注释、`$$…$$` 与 `\[…\]` 公式、引用块、分隔线、YAML front matter、脚注和链接定义、紧挨在列表/表格/代码块前面以冒号结尾的短句（如"主要成效如下："），以及 References、Bibliography、Works Cited、Sources、参考文献等标题下面的全部内容。
 - 正文段落按顺序拼成块，每块最多约 **350 个英文词或 600 个汉字**（`--max-words`、`--max-chars`）。块不会跨过标题或任何保留块；同一段连续正文切出的几块大小大致相同。
 - 单段超长时按句子切开，各块改完再拼回同一段。
-- **列表：**每一项保留原来的项目符号或编号，以及开头的 `**小标题：**`。一项有约 10 个英文词（17 个汉字）以上就单独改写，更短的保持原样。短列表项是模型最弱的地方，请重点看。
+- **列表：**每一项保留原来的项目符号或编号，以及开头的 `**小标题：**`。一项有约 15 个英文词（26 个汉字）以上就单独改写，更短的保持原样。短列表项是模型最弱的地方，请重点看。
 - 改写后的块放回原来的位置，块与块之间的空行照旧。正文里的行内格式（粗体、行内代码、链接）由模型决定，有时会丢。
 
 ### 检查和重写

@@ -184,7 +184,7 @@ Q6_K 和 Q4_K_M 用我们自己的改写数据做 imatrix 校准，词表和输�
 | Q6_K | 0.0033 | 97.8% | +0.5% |
 | Q4_K_M | 0.0214 | 93.9% | +2.3% |
 
-Q4_K_M 的损失明显更大，所以要等事实判官通过才发。sha256 校验值：<!-- TBD: 上传后填 sha256 --> *即将推出*。
+Q4_K_M 的损失明显更大，所以要等事实判官通过才发。sha256 校验值见 [USAGE.zh.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.zh.md)。
 
 ### 提示词格式
 

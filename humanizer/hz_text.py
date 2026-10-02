@@ -33,7 +33,7 @@ CJK = re.compile(r'[぀-ヿ㐀-䶿一-鿿豈-﫿가-힯]')
 MAX_WORDS = 350        # English words per piece
 MAX_CJK = 600          # Chinese characters per piece
 MIN_PROSE = 6          # a prose piece smaller than this (in English-word equivalents) is kept as is
-MIN_ITEM = 10          # a list item (or a .docx list paragraph) smaller than this is kept as is
+MIN_ITEM = 15          # a list item (or a .docx list paragraph) smaller than this is kept as is
 
 
 def latin_words(text: str) -> int:

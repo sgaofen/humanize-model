@@ -182,7 +182,7 @@ Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embed
 | Q6_K | 0.0033 | 97.8% | +0.5% |
 | Q4_K_M | 0.0214 | 93.9% | +2.3% |
 
-The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums: <!-- TBD: sha256 after upload --> *coming soon*.
+The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums are in [USAGE.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#2-pick-a-file).
 
 ### Prompt format
 

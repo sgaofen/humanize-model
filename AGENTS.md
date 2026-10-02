@@ -60,7 +60,10 @@ Check the download:
 ```bash
 head -c 4 ./humanizer-model/humanizer-12b-Q8_0.gguf; echo     # must print GGUF
 wc -c ./humanizer-model/*.gguf                                # Q8_0: 12669627840 bytes; Q6_K: 10029797088 bytes
-# sha256: [TBD: publish the sha256 of each GGUF and compare with shasum -a 256 / sha256sum]
+shasum -a 256 ./humanizer-model/*.gguf                       # macOS (Linux: sha256sum)
+# Q8_0: 3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9
+# Q6_K: ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28
+# lite/humanizer-lite-Q6_K.gguf: baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c
 ```
 
 ## 5. Start the server

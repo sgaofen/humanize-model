@@ -35,6 +35,8 @@ tags:
 
 **App:** download the `.dmg` (Mac with Apple silicon) or the Windows installer from [Releases](https://github.com/sgaofen/humanize-model/releases/latest). On first run it picks a model size for your memory and downloads it once; after that it works offline.
 
+**Command line, for long documents and agents:** `pipx install git+https://github.com/sgaofen/humanize-model`, then `hz paper.md -o paper.out.md` (also `.txt` and `.docx`). It uses the app or a llama-server, keeps headings, code, tables and links, rewrites the prose piece by piece and flags any piece where a number went missing. See [USAGE.md, section 14](USAGE.md#14-hz-command-line-tool).
+
 **Without the app:** pick a file below, then follow [Usage without the app](#usage-without-the-app). The full guide, with a batch script, long documents, Chinese and troubleshooting, is **[USAGE.md](USAGE.md)** ([中文](USAGE.zh.md)).
 
 ## Files
@@ -56,7 +58,7 @@ Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embed
 | Q6_K | 0.0033 | 97.8% | +0.5% |
 | Q4_K_M | 0.0214 | 93.9% | +2.3% |
 
-The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums: <!-- TBD: sha256 after upload --> *coming soon*.
+The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums are in [USAGE.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#2-pick-a-file).
 
 ## Prompt format
 
