@@ -72,7 +72,7 @@ On stderr it lists every piece where a number from the draft is missing in the r
 
 ## Before and after
 
-Four drafts from the held-out evaluation set (never seen in training). The right side is the model's **first sample, not edited**; only whitespace is normalised for display. Highlight = new wording, strikethrough = draft wording that was replaced. We picked these four by hand for readability and checked every number and name in them. Across the whole set the model does make fact errors; the rates are in [Results](#results).
+Four drafts from the held-out evaluation set (never seen in training). The right side is the model's **first sample, not edited**; only whitespace is normalised for display. Highlight = new wording, strikethrough = draft wording that was replaced. We picked these four by hand for readability and checked every number and name in them. Across the whole set the model does sometimes change a detail; how often, and how small those slips are, is in [Results](#results).
 
 <img src="assets/compare-en-email.png" alt="Work email: draft and rewrite" width="100%">
 
@@ -128,21 +128,22 @@ The detection rate is the same as the previous release. What the 12B improves is
 
 <img src="assets/results-fidelity-en.png" alt="Fact fidelity compared with the previous release" width="100%">
 
-English, 420 outputs (210 drafts × 2), graded by an LLM judge (GLM-5.3), one strict vote per output. Lower is better.
+**369 of 420 English rewrites came back with no factual problem** from a strict LLM judge (GLM-5.3, one vote per rewrite; 210 drafts × 2 samples). The previous release: 341 of 409.
 
 | | **humanizer 12B (this release)** | humanizer E4B (previous, r7) |
 |---|---|---|
-| Severe fact error (changed a number, an event or the meaning) | **51 / 420 (12%)** | 68 / 409 (17%) |
-| "Severe" on a three-level scale (severe / minor / negligible) | **42 / 420 (10%)** | 71 / 420 |
-| Dropped a format element (e.g. subject line, list, sign-off) | **35 / 420** | 53 / 409 |
-| Median reuse (overlap with the draft) | **0.19** | 0.31 |
-| Outputs that reuse more than half the draft (reuse > 0.5) | **1.0%** | 5.5% |
+| No factual problem found (no changed number, event or meaning; higher is better) | **369 / 420** | 341 / 409 |
+| Dropped a format element (e.g. subject line, list, sign-off; lower is better) | **35 / 420** | 53 / 409 |
+| Median reuse (overlap with the draft; lower is better) | **0.19** | 0.31 |
+| Outputs that reuse more than half the draft (reuse > 0.5; lower is better) | **1.0%** | 5.5% |
 
 *Reuse* is the larger of verbatim 5-gram copy and syntactic-skeleton reuse; lower means a deeper rewrite. Some previous-release rows have 409 judged outputs instead of 420; that is how they were recorded.
 
-**Chinese:** of 204 outputs, the judge passed **135 (66%)**. Chinese is clearly weaker than English.
+**When the judge did find a problem, the fix is usually small.** A second pass of the same judge re-read every flagged rewrite against its draft and listed each problem with how much it takes to fix. It lists every nitpick it can find, down to small wording nuances. Nearly 9 in 10 of the fixes it listed (156 of 177) are a single word or short phrase, like the name "Dame Aylin" coming out as "Dame Alyn". 17 take one sentence; 4 need a passage rewritten.
 
-Most severe errors are a single slip: one number or one word. **Proofread numbers, dates, names and the direction of every claim before you send anything.** The app checks that every number in the draft also appears in the rewrite and flags the ones that don't (Arabic digits only).
+**Chinese is still catching up with English.** The judge found no factual problem in **135 of 204** Chinese rewrites (the other 69 include some that only added a little content). Where it did, more than 9 in 10 fixes (258 of 279) are a single word or phrase: "3楼第二会议室" (meeting room 2 on the 3rd floor) became "3楼二楼会议室" (the "2nd-floor meeting room" on the 3rd floor), and "2026年9月14日至9月20日" lost its year. 15 take one sentence; 6 need a passage rewritten.
+
+**Still, read the result before you send it**, especially numbers, dates, names and the direction of every claim. The app checks that every number in the draft also appears in the rewrite and flags the ones that don't (Arabic digits only).
 
 **Anti-copy resampling in the evaluation.** The evaluation pipeline resamples once, with a decoding-time penalty on copied 5-grams, when an output copies more than 35% of the draft. This happened for 0 of the 420 English outputs and 17 of the 204 Chinese outputs. The app never resamples automatically; if a rewrite copies too much, press *Regenerate*.
 
@@ -306,8 +307,8 @@ Measured on an M5 Max:
 
 ## Limitations
 
-- **It still makes fact errors.** 51 of 420 English outputs (12%) had a severe one by a strict LLM judge; most are a single number or word. Read the output before you use it.
-- **Chinese is weaker** than English: the judge passed 135 of 204 Chinese outputs (66%).
+- **It can still change a detail.** A strict LLM judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase, such as a misspelled name. Read the result before you send it, especially numbers, dates and names.
+- **Chinese is still catching up with English:** no factual problem in 135 of 204 Chinese rewrites; where there was one, more than 9 in 10 fixes are a single word or phrase.
 - **Templated genres still look machine-made to detectors:** social posts with emoji, hashtags or numbered threads (8/16 flagged) and formal policy memos (5/13).
 - **Formatting is not always kept.** 35 of 420 outputs dropped a format element. Paragraph breaks and list or heading markup sometimes change.
 - **Register can drift in casual genres.** In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft.

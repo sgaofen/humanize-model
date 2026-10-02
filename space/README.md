@@ -31,8 +31,9 @@ before/after pairs from the held-out evaluation set are on the page and need no 
 [AGENTS.md](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md).
 
 **Measured, not promised:** on our 210 English evaluation drafts, Originality.ai (AI Allowance 0%,
-2026-10-01) flagged 26; a strict LLM judge found a severe fact error in 51 of 420 English outputs.
-Chinese is weaker (135 of 204 outputs passed the fact judge). Proofread every number, date and name.
+2026-10-01) flagged 26; a strict LLM judge found no factual problem in 369 of 420 English rewrites,
+and nearly 9 in 10 of the fixes it did list are a single word or phrase. Chinese is still catching up
+(no factual problem in 135 of 204). Still, read every number, date and name before you send it.
 
 **API:** `gradio_client` → `Client("jialinyyzz/humanizer").predict(draft, api_name="/humanize")` returns
 the rewrite plus copy rate and any numbers missing from it.

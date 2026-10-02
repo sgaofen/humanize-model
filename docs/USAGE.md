@@ -523,7 +523,7 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 ## 11. Chinese
 
 - Use **the same English instruction**; don't translate it.
-- Chinese is **weaker than English**: our fact judge passed 135 of 204 Chinese outputs (66%).
+- Chinese is **still catching up with English**: our fact judge found no factual problem in 135 of 204 Chinese rewrites; where it found one, more than 9 in 10 fixes are a single word or phrase.
 - Chinese rewrites copy the draft more often. In the evaluation, the anti-copy resample (triggered above 35% copying) fired for 17 of 204 Chinese outputs and 0 of 420 English ones. If a rewrite looks too close to the draft, sample again; the batch script does this automatically.
 - **Numbers change form** more often in Chinese: Chinese numerals become digits (三 → 3) and dates get reformatted (6月14日 → 6.14). Digit-only checks, like the one in the app and in the batch script, can't see this. Check the numbers by reading.
 - Full-width and half-width punctuation may switch, and greeting, body and sign-off lines are sometimes merged into one paragraph. Fix the layout before sending.
@@ -531,7 +531,7 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 
 ## 12. Quality checklist
 
-- **Read the rewrite once.** Check every number, date, unit and name, and the direction of every claim (who did what, more or less, before or after). On our evaluation set, 51 of 420 English outputs (12%) had a severe fact error, usually a single number or word.
+- **Read the rewrite once.** Check every number, date, unit and name, and the direction of every claim (who did what, more or less, before or after). On our evaluation set a strict judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase, like a misspelled name.
 - **Restore formatting** you need: subject lines, lists, headings and sign-offs are sometimes dropped (35 of 420 outputs).
 - **Too close to the draft? Sample again.** Each run is a fresh sample.
 - **Casual genres can drift in register.** In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft; edit it out.

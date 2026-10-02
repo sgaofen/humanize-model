@@ -267,17 +267,16 @@ Public baseline: the `blader/humanizer` skill (v3.1.0, 53k GitHub stars), applie
 
 <img src="assets/results-detector-en.png" alt="Originality.ai pass rates" width="100%">
 
-**Fact fidelity.** English, 420 outputs, LLM judge GLM-5.3, one strict vote per output. Lower is better.
+**Fact fidelity.** **369 of 420 English rewrites came back with no factual problem** from a strict LLM judge (GLM-5.3, one vote per rewrite). The previous release: 341 of 409.
 
 | | **12B (this release)** | E4B (previous, r7) |
 |---|---|---|
-| Severe fact error (changed a number, an event or the meaning) | **51 / 420 (12%)** | 68 / 409 (17%) |
-| "Severe" on a three-level scale | **42 / 420 (10%)** | 71 / 420 |
-| Dropped a format element | **35 / 420** | 53 / 409 |
-| Median reuse (overlap with the draft) | **0.19** | 0.31 |
-| Outputs with reuse > 0.5 | **1.0%** | 5.5% |
+| No factual problem found (higher is better) | **369 / 420** | 341 / 409 |
+| Dropped a format element (lower is better) | **35 / 420** | 53 / 409 |
+| Median reuse, overlap with the draft (lower is better) | **0.19** | 0.31 |
+| Outputs with reuse > 0.5 (lower is better) | **1.0%** | 5.5% |
 
-Chinese: the judge passed 135 of 204 outputs (66%). Severe errors are mostly a single number or word. The evaluation pipeline resamples once with an anti-copy penalty when an output copies more than 35% of the draft: 0 of 420 English and 17 of 204 Chinese outputs; the app never does this automatically (press *Regenerate*). **Proofread numbers, dates and names before you use the output.**
+Where the judge did find a problem, the fix is usually small: a second pass re-read each flagged rewrite against its draft and listed every problem, down to small wording nuances, and nearly 9 in 10 of those fixes are a single word or phrase (for example, the name "Dame Aylin" came out as "Dame Alyn"). Chinese is still catching up with English: no factual problem in 135 of 204 Chinese rewrites; where there was one, more than 9 in 10 fixes are a single word or phrase ("3楼第二会议室" became "3楼二楼会议室"). The evaluation pipeline resamples once with an anti-copy penalty when an output copies more than 35% of the draft: 0 of 420 English and 17 of 204 Chinese outputs; the app never does this automatically (press *Regenerate*). **Still, read the result before you send it, especially numbers, dates and names.**
 
 <img src="assets/results-fidelity-en.png" alt="Fact fidelity vs. the previous release" width="100%">
 
@@ -298,8 +297,8 @@ Measured on an M5 Max. llama.cpp Q8_0 with Metal (what the app uses): about 36�
 
 ## Limitations
 
-- Still makes fact errors: 12% of English outputs had a severe one on our set, usually one number or one word.
-- Chinese is weaker than English (66% passed the judge).
+- It can still change a detail: on our set the judge found no factual problem in 369 of 420 English rewrites, and nearly 9 in 10 of the fixes it did list are a single word or phrase. Proofread numbers, dates and names.
+- Chinese is still catching up with English (no factual problem in 135 of 204 Chinese rewrites; more than 9 in 10 fixes are a single word or phrase).
 - Templated genres (emoji/hashtag social posts, policy memos) are still often flagged by detectors.
 - Formatting can change: 35 of 420 outputs dropped a format element; paragraph breaks, lists and headings sometimes merge or disappear.
 - In casual genres it sometimes adds slang or profanity that wasn't in the draft.

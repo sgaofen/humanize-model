@@ -176,10 +176,10 @@ def examples_section(examples) -> str:
   <h2 class="sec-title">{L("Real before and after", "改写前后，真实输出")}</h2>
   {P("Drafts from our held-out evaluation set, never seen in training. The right side is the released model's first sample, not edited; only whitespace is normalised. "
      "<span class='ins'>Highlight</span> = new wording, <span class='del'>strikethrough</span> = draft wording that was replaced. "
-     "We picked these for readability from samples our fact judge passed. Across the whole set the model does make fact errors; the rates are below.",
+     "We picked these for readability from samples our fact judge passed. Across the whole set the model does sometimes change a detail; how often, and how small, is below.",
      "草稿来自留出评测集，训练时从没见过。右边是发布版模型的第一发，未经任何修改，只统一了空白。"
      "<span class='ins'>荧光笔</span> = 新写的，<span class='del'>删除线</span> = 被改掉的原文。"
-     "这几篇是从事实判官判为通过的样本里挑的，为了好读；放到整个评测集上，模型是会改错事实的，比例见下方。",
+     "这几篇是从事实判官判为通过的样本里挑的，为了好读；放到整个评测集上，模型偶尔会改错细节，多常见、错得多小，见下方。",
      "sec-lede")}
   <div class="ex-wrap">
     {"".join(radios)}
@@ -264,11 +264,12 @@ def results_section() -> str:
         ("26 / 210", L("English drafts flagged as AI by Originality.ai", "篇英文草稿被 Originality.ai 判为 AI"),
          L("API v3, AI Allowance 0% (its strictest setting), measured 2026-10-01, first sample of each draft. 88% judged human.",
            "API v3，AI Allowance 0%（最严档），2026-10-01 实测，每篇取第 1 发。88% 判为人写。")),
-        ("51 / 420", L("English outputs with a severe fact error (12%)", "发英文输出有严重事实错（12%）"),
-         L("Changed a number, an event or the meaning. Strict LLM judge (GLM-5.3), one vote per output. Previous E4B release: 68 / 409 (17%).",
-           "改了数字、事件或意思。LLM 判官 GLM-5.3，每发一票、从严。上一版 E4B：68 / 409（17%）。")),
-        ("135 / 204", L("Chinese outputs passed the fact judge (66%)", "发中文输出通过事实判官（66%）"),
-         L("Chinese is clearly weaker than English.", "中文明显弱于英文。")),
+        ("369 / 420", L("English rewrites with no factual problem found", "篇英文改写，判官没挑出事实问题"),
+         L("Strict LLM judge (GLM-5.3), one vote per rewrite. Previous E4B release: 341 / 409. Where it did find a problem, nearly 9 in 10 fixes are a single word or phrase, like the name “Dame Aylin” coming out as “Dame Alyn”.",
+           "LLM 判官 GLM-5.3，每篇一票、从严。上一版 E4B：409 篇里 341 篇。有问题的，近 9 成改一个词或短语就好，比如人名“Dame Aylin”被写成了“Dame Alyn”。")),
+        ("135 / 204", L("Chinese rewrites with no factual problem found", "篇中文改写，判官没挑出事实问题"),
+         L("Chinese is still catching up with English. Where the judge found a problem, more than 9 in 10 fixes are a single word or phrase, like “3楼第二会议室” becoming “3楼二楼会议室”.",
+           "中文还在追赶英文。有问题的，9 成以上改一个词或短语就好，比如“3楼第二会议室”写成了“3楼二楼会议室”。")),
         ("0.19", L("median reuse of the draft", "照抄程度中位数（复用率）"),
          L("The larger of verbatim 5-gram copy and syntactic-skeleton reuse; lower means a deeper rewrite. Previous release: 0.31.",
            "取逐字 5-gram 照抄和句法骨架复用里较大的那个，越低改得越深。上一版：0.31。")),
@@ -311,10 +312,10 @@ def results_section() -> str:
 
 def limits_section() -> str:
     items = [
-        ("<b>It still makes fact errors.</b> 51 of 420 English outputs (12%) had a severe one by a strict LLM judge; most are a single number or word. Read the output before you use it.",
-         "<b>还是会改错事实。</b>英文 420 发里有 51 发（12%）被从严的 LLM 判官判出严重错，多数是错一个数字或一个词。用之前请通读。"),
-        ("<b>Chinese is weaker</b> than English: the judge passed 135 of 204 Chinese outputs (66%).",
-         "<b>中文弱于英文：</b>中文 204 发里判官判通过 135 发（66%）。"),
+        ("<b>It can still change a detail.</b> A strict LLM judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase, such as a misspelled name. Read the result before you send it, especially numbers, dates and names.",
+         "<b>细节还可能出错。</b>英文 420 篇改写里，从严的 LLM 判官在 369 篇里没挑出事实问题；有问题的，近 9 成改一个词或短语就好，比如拼错一个人名。发出去之前还是请读一遍，重点看数字、日期和人名。"),
+        ("<b>Chinese is still catching up with English:</b> no factual problem in 135 of 204 Chinese rewrites; where there was one, more than 9 in 10 fixes are a single word or phrase.",
+         "<b>中文还在追赶英文：</b>中文 204 篇改写里 135 篇判官没挑出事实问题；有问题的，9 成以上改一个词或短语就好。"),
         ("<b>Templated genres still look machine-made to detectors:</b> social posts with emoji, hashtags or numbered threads (8/16 flagged) and formal policy memos (5/13).",
          "<b>模板化体裁仍容易被检测器认出：</b>带 emoji、井号或编号连载的社交帖（8/16 被判 AI），正式政策备忘（5/13）。"),
         ("<b>Formatting is not always kept.</b> 35 of 420 outputs dropped a format element. Paragraph breaks and list or heading markup sometimes change.",

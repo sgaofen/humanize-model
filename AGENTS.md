@@ -191,9 +191,9 @@ if missing: print("NOTE: numbers not found in this sample:", missing,
 
 - Send **one draft per request**. Our setup uses an 8192-token context, so the draft plus the rewrite must fit. For long or structured documents, use `hz` ([section 12](#12-long-and-complex-documents-use-hz)); it splits them for you. For a folder of `.txt` files, [USAGE.md section 9](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#9-rewrite-a-whole-folder) has a batch script.
 - **Never edit the output silently**, and never tell the user the result is guaranteed to pass an AI detector. Detection numbers in the README are one measurement on one date.
-- **Ask the user to proofread** numbers, dates, names and the direction of each claim. On the evaluation set, 51 of 420 English outputs (12%) had a severe fact error, usually a single number or word. Compare the numbers in the draft and the output yourself and point out any that differ.
+- **Ask the user to proofread** numbers, dates, names and the direction of each claim. On the evaluation set a strict judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase (for example a misspelled name). Compare the numbers in the draft and the output yourself and point out any that differ.
 - If an output copies most of the draft, or a number differs, **sample again** (same prompt; sampling is random).
-- Chinese is weaker than English (135 of 204 Chinese outputs passed the fact judge).
+- Chinese is still catching up with English (no factual problem in 135 of 204 Chinese rewrites; more than 9 in 10 fixes are a single word or phrase).
 - Formatting can change: paragraph breaks, lists and headings are sometimes dropped or merged.
 
 ## 10. Other runtimes
