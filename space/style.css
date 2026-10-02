@@ -110,7 +110,7 @@ html[data-lang="zh"] .seg [data-setlang="zh"], html:not([data-lang="zh"]) .seg [
 /* ───────── hero ───────── */
 .hero { padding: 18px 0 24px; max-width: 1020px; }
 .display {
-  margin: 0 0 14px; font-family: var(--f-display); font-weight: 700; letter-spacing: -.045em; line-height: 1.0;
+  margin: 0 0 14px; font-family: var(--f-display); font-weight: 700; letter-spacing: -.022em; word-spacing: .04em; line-height: 1.0;
   font-size: clamp(30px, 3.9vw, 52px); font-variation-settings: "opsz" 96; color: var(--ink);
 }
 html[data-lang="zh"] .display { letter-spacing: -.02em; line-height: 1.15; font-weight: 800; }
@@ -242,7 +242,7 @@ html[data-diff="off"] .textview .del { text-decoration: none; color: inherit; }
 /* ───────── sections ───────── */
 .sec { padding: 72px 0 0; }
 .eyebrow { margin: 0 0 12px !important; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
-.sec-title { margin: 0 0 14px !important; font-family: var(--f-display) !important; font-weight: 700 !important; font-size: clamp(28px, 3.4vw, 42px) !important; letter-spacing: -.035em; line-height: 1.08 !important; color: var(--ink) !important; }
+.sec-title { margin: 0 0 14px !important; font-family: var(--f-display) !important; font-weight: 700 !important; font-size: clamp(28px, 3.4vw, 42px) !important; letter-spacing: -.02em; line-height: 1.08 !important; color: var(--ink) !important; }
 html[data-lang="zh"] .sec-title { letter-spacing: -.01em; }
 .sec-lede { margin: 0 0 26px !important; max-width: 62em; font-size: 15.5px; line-height: 1.65; color: var(--ink-2); }
 .sec-p { margin: 18px 0 0 !important; max-width: 62em; font-size: 14px; line-height: 1.65; color: var(--ink-2); }

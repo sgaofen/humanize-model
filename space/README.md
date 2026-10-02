@@ -44,6 +44,6 @@ Source of this Space: [`space/`](https://github.com/sgaofen/humanize-model/tree/
 
 ---
 
-把 AI 写的草稿改成读起来像人写的，数字、单位、日期、人名、引语一个不丢。中英文都行。训练全程没有用任何 AI 检测器。
+把 AI 写的草稿改成读起来像人写的，训练目标是数字、单位、日期、人名、引语原样保留。中英文都行。训练全程没有用任何 AI 检测器。
 这里可以在线试一篇；想装到自己电脑上，下载 [App（macOS / Windows）](https://github.com/sgaofen/humanize-model/releases/latest)，
 或者看 [不用 App 怎么用](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.zh.md)。

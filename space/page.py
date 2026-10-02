@@ -89,8 +89,8 @@ def topbar() -> str:
 <section class="hero">
   <h1 class="display">{L('Rewrite AI drafts so they read like <span class="ins">a person</span> wrote them.',
                          '把 AI 写的草稿，改成<span class="ins">像人写的</span>。')}</h1>
-  {P("A 12B model for English and Chinese. It keeps every number, unit, date, name and quote, and it runs on your own computer. Try it here, then take it home.",
-     "一个 12B 改写模型，中英文都行。数字、单位、日期、人名、引语一个不丢，可以在你自己的电脑上跑。先在这里试，再装到本地。",
+  {P("A 12B model for English and Chinese. It is trained to keep every number, unit, date, name and quote, and it runs on your own computer. Try it here, then take it home.",
+     "一个 12B 改写模型，中英文都行。训练目标是数字、单位、日期、人名、引语原样保留，可以在你自己的电脑上跑。先在这里试，再装到本地。",
      "lede")}
 </section>
 """
