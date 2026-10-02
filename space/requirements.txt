@@ -1,0 +1,4 @@
+# gradio comes from sdk_version in README.md; spaces is preinstalled on ZeroGPU.
+transformers==5.14.1
+torch==2.8.0
+huggingface_hub>=1.5,<2
