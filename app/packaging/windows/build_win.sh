@@ -30,7 +30,8 @@ ISCC_DIR="$(dirname "$ISCC")"
 if [ ! -f "$ISCC_DIR/Languages/ChineseSimplified.isl" ] && [ -n "${INNO_ZH_URL:-}" ]; then
   curl -fsSL "$INNO_ZH_URL" -o "$ISCC_DIR/Languages/ChineseSimplified.isl" || echo "下载中文语言文件失败,安装界面只有英文"
 fi
-"$ISCC" "/DAppVersion=$VERSION" packaging/windows/humanizer.iss
+# Git Bash 会把 /DAppVersion=… 当路径改写成 C:/Program Files/Git/DAppVersion=…,ISCC 以为有两个脚本文件(10-01 CI 第二次失败);关掉参数改写
+MSYS2_ARG_CONV_EXCL="*" MSYS_NO_PATHCONV=1 "$ISCC" "/DAppVersion=$VERSION" packaging/windows/humanizer.iss
 
 # 便携版:解压即用,不写注册表
 (cd dist/win && 7z a -tzip -mx=7 "../Humanizer-$VERSION-windows-x64-portable.zip" . >/dev/null)
