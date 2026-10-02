@@ -22,11 +22,14 @@ The instruction text (instr), verbatim, lines joined with "\n", no trailing newl
 
     Every fact, number, unit, date, name and quotation must survive unchanged.
 
+Long or structured documents (Markdown, .docx): use the hz command instead of raw requests. pipx install git+https://github.com/sgaofen/humanize-model (python-docx for .docx: pipx inject humanize-model python-docx), then hz input.md -o output.md --json. It uses the running Humanizer app or a llama-server (--server URL, default http://127.0.0.1:8080), keeps headings, code, tables and links, rewrites prose in pieces of about 350 words, flags missing or added numbers and copying, and retries a bad piece once. Exit code 3 = no model running.
+
 Rules: one draft per request; never use /v1/chat/completions or a chat template; don't reword the instruction; ask the user to proofread numbers, dates and names (on the evaluation set, 51 of 420 English outputs, 12%, had a severe fact error); never promise that output passes an AI detector.
 
 ## Docs
 
 - [AGENTS.md](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md): step-by-step install, exact prompt, API call, self-test script, troubleshooting
+- [docs/USAGE.md, section 14](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#14-hz-command-line-tool): the hz command-line tool: install, how documents are split, checks, --json fields
 - [docs/USAGE.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md): usage without the app: llama.cpp, MLX, transformers, vLLM, Ollama, LM Studio, batch script for a folder, long documents, Chinese ([中文](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.zh.md))
 - [README.md](https://github.com/sgaofen/humanize-model/blob/main/README.md): overview, evaluation results, usage for llama.cpp, MLX, transformers, Ollama and LM Studio
 - [docs/INSTALL.md](https://github.com/sgaofen/humanize-model/blob/main/docs/INSTALL.md): install guide for people (app and command line, macOS, Windows, Linux, FAQ)

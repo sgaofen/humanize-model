@@ -14,6 +14,7 @@ Instructions for AI agents (Claude Code, Codex, Cursor, etc.) setting up **human
 ## 1. Pick the route
 
 - **The user wants an app, not code:** send them to <https://github.com/sgaofen/humanize-model/releases/latest> and have them download `Humanizer-<version>-macos-arm64.dmg` (Mac with Apple silicon) or `Humanizer-<version>-windows-x64-setup.exe` (Windows x64). The app is unsigned; the first-launch fix is in [INSTALL.md](https://github.com/sgaofen/humanize-model/blob/main/docs/INSTALL.md#first-launch-warnings). The app downloads the model itself. **You are done.**
+- **The user wants a long or structured document rewritten** (Markdown with headings, lists, code or tables; a `.docx`; anything over a few paragraphs): use the `hz` command, [section 12](#12-long-and-complex-documents-use-hz). It needs the app or a llama-server running the model (steps 2 to 5), and does the splitting, the prompt, the sampling and the checks itself.
 - **Otherwise** (scripts, pipelines, a local API): continue with step 2.
 
 ## 2. Check the machine
@@ -185,7 +186,7 @@ if missing: print("NOTE: numbers not found in this sample:", missing,
 
 ## 9. Rules when you use it for a user
 
-- Send **one draft per request**. Our setup uses an 8192-token context, so the draft plus the rewrite must fit. Split long documents at paragraph boundaries and rewrite the pieces separately ([USAGE.md section 9](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#9-rewrite-a-whole-folder) has a ready-made batch script that does this).
+- Send **one draft per request**. Our setup uses an 8192-token context, so the draft plus the rewrite must fit. For long or structured documents, use `hz` ([section 12](#12-long-and-complex-documents-use-hz)); it splits them for you. For a folder of `.txt` files, [USAGE.md section 9](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#9-rewrite-a-whole-folder) has a batch script.
 - **Never edit the output silently**, and never tell the user the result is guaranteed to pass an AI detector. Detection numbers in the README are one measurement on one date.
 - **Ask the user to proofread** numbers, dates, names and the direction of each claim. On the evaluation set, 51 of 420 English outputs (12%) had a severe fact error, usually a single number or word. Compare the numbers in the draft and the output yourself and point out any that differ.
 - If an output copies most of the draft, or a number differs, **sample again** (same prompt; sampling is random).
@@ -213,3 +214,56 @@ All of them need the same prompt (step 6) and the same sampling (step 7). Comple
 | Out of memory while loading | Not enough RAM or VRAM for Q8_0 | Use Q6_K (16 GB) or the lite model (8 GB); lower `-ngl` |
 | Very slow | Running on the CPU | Check `offloaded N/N layers` in the log; install the Metal, CUDA or Vulkan build |
 | 404 when downloading a file | Wrong name, or Q4_K_M (not published yet) | Use the file names in step 2 |
+
+## 12. Long and complex documents: use `hz`
+
+For a document longer than a few paragraphs, or one with structure (Markdown headings, lists, code blocks, tables; `.docx`), call `hz` instead of building requests yourself. It keeps the structure, rewrites the prose in pieces, uses the exact prompt and sampling above, checks every piece and retries once when a check fails. Full reference: [USAGE.md, section 14](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#14-hz-command-line-tool).
+
+**Install** (Python 3.8 or newer, no dependencies):
+
+```bash
+pipx install git+https://github.com/sgaofen/humanize-model
+pipx inject humanize-model python-docx       # only for .docx
+# without pipx: pip install git+https://github.com/sgaofen/humanize-model
+#               pip install "humanize-model[docx] @ git+https://github.com/sgaofen/humanize-model"
+hz --version                                 # must print: hz 0.1.0
+```
+
+**Backend.** `hz` uses the Humanizer app if it is running (or, on macOS, installed: it starts it and waits up to 3 minutes), otherwise a llama-server at `http://127.0.0.1:8080`. Pass `--server URL` for any other llama-server. If no model is available it exits with code 3 and prints setup steps; then do steps 2 to 5 (or install the app) and run it again. Don't try to work around it with a chat endpoint.
+
+**Call:**
+
+```bash
+hz input.md -o output.md --json --quiet > report.json      # Markdown or plain text
+hz input.docx -o output.docx --json --quiet > report.json  # .docx
+hz draft.txt --json --quiet                                # no -o: the JSON has the whole result in "text"
+hz input.md --dry-run                                      # how it will be split; no model needed
+```
+
+**What is kept as is:** headings, fenced and indented code, tables, image or link-only lines, HTML, `$$` math, block quotes, front matter, a short "Key points:" line before a list/table/code, and everything under a References heading. Prose is rewritten in pieces of about 350 words (600 Chinese characters) that never cross a heading; list items keep their bullets and a leading `**Label:**`. In `.docx`, each rewritten paragraph's text goes into its first run, so bold or italic inside a paragraph is lost; paragraphs with links, images or fields are skipped.
+
+**`--json` fields:**
+
+| Field | Meaning |
+|---|---|
+| `summary.pieces`, `summary.retried`, `summary.flagged` | Pieces rewritten; how many were rewritten a second time; how many still have a problem |
+| `summary.seconds`, `summary.copy_rate` | Total time; copy rate of all rewritten prose against its drafts |
+| `backend.kind`, `backend.url`, `backend.model` | `app` or `server`, its address, and the model (app tier or GGUF file) |
+| `kept` | Blocks kept as they were, by kind |
+| `pieces[].line` (`.docx`: `paragraph`) | Where the piece starts in the input (1-based) |
+| `pieces[].copy_rate` | Share of the rewrite's word 5-grams (Chinese: 6-character grams) found in the draft, 0 to 1 |
+| `pieces[].missing_numbers` | Numbers in the draft not found in the rewrite (`1,250` = `1250`, `480k` = `480,000`, `31.7万` = `317,000`) |
+| `pieces[].added_numbers` | Numbers in the rewrite not in the draft: arithmetic the model did, or an invented figure. Reported, not retried |
+| `pieces[].missing_urls` | Links in the draft not found in the rewrite |
+| `pieces[].retried`, `chosen`, `attempts` | Whether it was rewritten twice, which try was kept, each try's checks |
+| `pieces[].seconds` | Model time for the piece |
+| `pieces[].flagged`, `issues` | The kept version still has a problem: `missing_numbers`, `added_numbers`, `missing_urls`, `copy`, `too_long`, `too_short`, `repeated`, `markup`, `truncated`, `empty` |
+| `text` | The whole result, only without `-o` and for text input |
+
+Exit codes: 0 done (also when pieces are flagged), 1 error during the run (nothing written), 2 bad input or arguments, 3 no model found.
+
+**After the run:**
+
+- If `summary.flagged` is above 0, show the user each flagged piece: its line, and the numbers that are missing or added. Compare them with the draft yourself. Don't fix the text silently.
+- The checks cover numbers, links, copying, length, repetition and stray HTML tags only. A changed word, name or claim is not caught (in a real Chinese test, "all 48 stores" became "48 stores in the province"). Ask the user to read the result and check names, dates and the direction of each claim.
+- Never tell the user the result will pass an AI detector.

@@ -4,7 +4,9 @@
 
 这份文档写给不想用[桌面 App](https://github.com/sgaofen/humanize-model/releases/latest)、要在自己的代码或命令行里跑 humanizer 的人。每个代码块都可以直接复制。
 
-**目录：**[1. 这个模型哪里特殊](#1-这个模型哪里特殊) · [2. 选哪个文件](#2-选哪个文件) · [3. llama.cpp](#3-llamacpp推荐) · [4. MLX](#4-mlxapple-芯片) · [5. transformers](#5-transformerscuda) · [6. vLLM](#6-vllm) · [7. Ollama](#7-ollama) · [8. LM Studio](#8-lm-studio) · [9. 批量改写一个文件夹](#9-批量改写一个文件夹) · [10. 长文](#10-长文) · [11. 中文](#11-中文) · [12. 质量检查清单](#12-质量检查清单) · [13. 排错](#13-排错)
+**只是想改写文件？**命令行工具 `hz` 替你处理提示词、采样参数、长文切块和检查，后端用 App 或 llama-server 都行：`pipx install git+https://github.com/sgaofen/humanize-model`，然后 `hz draft.md -o out.md`。见[第 14 节](#14-命令行工具-hz)。
+
+**目录：**[1. 这个模型哪里特殊](#1-这个模型哪里特殊) · [2. 选哪个文件](#2-选哪个文件) · [3. llama.cpp](#3-llamacpp推荐) · [4. MLX](#4-mlxapple-芯片) · [5. transformers](#5-transformerscuda) · [6. vLLM](#6-vllm) · [7. Ollama](#7-ollama) · [8. LM Studio](#8-lm-studio) · [9. 批量改写一个文件夹](#9-批量改写一个文件夹) · [10. 长文](#10-长文) · [11. 中文](#11-中文) · [12. 质量检查清单](#12-质量检查清单) · [13. 排错](#13-排错) · [14. 命令行工具 hz](#14-命令行工具-hz)
 
 ## 1. 这个模型哪里特殊
 
@@ -511,6 +513,7 @@ if __name__ == "__main__":
 - 模型训练和评测用的都是单篇邮件、帖子、作文、报告段落，几百词的长度，这个长度的段效果最好。
 - 每段改写时看不到其他段，所以段与段之间语气可能略有变化，事实也不会在段之间挪动。拼好之后从头到尾读一遍。
 - 标题、代码块和列表常被删掉或改成正文。只改写正文，标题和代码自己留着；[`humanizer/markdown_guard.py`](https://github.com/sgaofen/humanize-model/blob/main/humanizer/markdown_guard.py) 就是这样逐块处理的。
+- **[`hz`](#14-命令行工具-hz) 一行命令就能做完上面这些**，支持 `.md`、`.txt` 和 `.docx`：标题、代码、表格、链接原样保留，正文按约 350 个英文词（中文约 600 字）一块切开，不跨标题，每块都做检查。
 
 ## 11. 中文
 
@@ -546,3 +549,142 @@ if __name__ == "__main__":
 | 指纹自检不过 | 提示词拼法和训练时不一样 | 直接复制[第 1 节](#提示词)里的 `build_prompt` |
 
 **自检。**[AGENTS.md 第 8 节](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md#8-self-test-verify-the-install)有一个只用标准库的脚本：它把评测集里的一篇真实草稿发给 llama-server，检查提示词格式、接口、聊天模板有没有漏进来、有没有照抄。设置正确会打印 `PASS`。
+
+## 14. 命令行工具 hz
+
+`hz` 一行命令改写一篇草稿或一整份文档，人和 AI Agent 用法一样。它连接 [App](https://github.com/sgaofen/humanize-model/releases/latest) 或 llama-server（[第 3 节](#起服务)），逐字拼好提示词，用评测时的采样参数，把长文切块、保留结构，并检查每一块。需要 Python 3.8 及以上，只用标准库；`.docx` 支持是可选的。
+
+### 安装
+
+```bash
+pipx install git+https://github.com/sgaofen/humanize-model
+pipx inject humanize-model python-docx            # 只有要处理 .docx 时才需要
+
+# 或者用 pip,装进任意环境:
+pip install git+https://github.com/sgaofen/humanize-model
+pip install "humanize-model[docx] @ git+https://github.com/sgaofen/humanize-model"   # 连同 .docx 支持
+
+# 克隆了仓库、不想安装:
+python3 -m humanizer.hz draft.txt
+```
+
+装好后只有一个命令 `hz`。如果你机器上已经有别的程序也叫 `hz`，以 `PATH` 里排在前面的为准。
+
+### 用法
+
+```bash
+hz draft.txt                          # 改写结果打印到 stdout
+hz < draft.txt > rewrite.txt
+hz paper.md -o paper.out.md           # 长篇 Markdown:结构保留,正文分块改写
+hz report.docx -o report.out.docx     # 不写 -o 时输出到 report.hz.docx
+hz paper.md --json > report.json      # 每块的统计;有 -o 时正文写进文件
+hz paper.md --dry-run                 # 只看怎么切块,不调用模型
+hz paper.md --server http://127.0.0.1:8080   # 指定某个 llama-server
+```
+
+进度打印在 stderr，每块一行。`--quiet` 不打印进度；需要人工核对的块无论如何都会列出来。
+
+### 它怎么找模型
+
+1. 给了 `--server URL`：只用这个 llama-server。（如果这个地址其实是 App，就按 App 的方式调用。）
+2. 否则先找 **App**：正在运行且状态为 ready 就用它。端口从 App 的 `instance.json` 里读，读不到就用 `http://127.0.0.1:47615`。请求发到 `POST /api/completion`，带上 App 要求的 `X-Humanizer: 1` 头。
+3. 再找 `http://127.0.0.1:8080` 上的 **llama-server**（`POST /completion`）。
+4. 都没有、而 macOS 上装了 App 但没开：`hz` 在后台拉起它（`open -a Humanizer`），最多等 3 分钟让模型加载完，期间打印进度。
+5. 还是没有就以退出码 3 结束，并告诉你怎么装 App、怎么起 llama-server。
+
+如果 App 开着但还没下模型（第一次运行），`hz` 会提示你先在 App 里选一个档位下载。
+
+### 文档怎么切
+
+- 用空行分块。下面这些**原样保留**，不送给模型：Markdown 标题（`#`、下划线式标题，或整行只有 `**粗体**`）、围栏和缩进代码块、表格、只有图片或链接的行、HTML 块和注释、`$$…$$` 与 `\[…\]` 公式、引用块、分隔线、YAML front matter、脚注和链接定义、紧挨在列表/表格/代码块前面以冒号结尾的短句（如"主要成效如下："），以及 References、Bibliography、Works Cited、Sources、参考文献等标题下面的全部内容。
+- 正文段落按顺序拼成块，每块最多约 **350 个英文词或 600 个汉字**（`--max-words`、`--max-chars`）。块不会跨过标题或任何保留块；同一段连续正文切出的几块大小大致相同。
+- 单段超长时按句子切开，各块改完再拼回同一段。
+- **列表：**每一项保留原来的项目符号或编号，以及开头的 `**小标题：**`。一项有约 10 个英文词（17 个汉字）以上就单独改写，更短的保持原样。短列表项是模型最弱的地方，请重点看。
+- 改写后的块放回原来的位置，块与块之间的空行照旧。正文里的行内格式（粗体、行内代码、链接）由模型决定，有时会丢。
+
+### 检查和重写
+
+每块改完都会检查。出现下表任一问题就再改一次（`--retries`），两版里留问题少的那版：
+
+| 问题 | 含义 |
+|---|---|
+| `missing_numbers` | 草稿里的某个数字在改写里找不到。先做规范化：`1,250` = `1250`，`3.50` = `3.5`，`07` = `7`，`480k` = `480,000`，`31.7万` = `317,000`；改写里写成文字的数字（`three`、`两`）也算找到。 |
+| `copy` | 改写有一半以上照抄草稿（`--max-copy`，默认 0.5）：改写里的英文 5 词片段（中文 6 字片段）有多少在草稿里出现过。 |
+| `missing_urls` | 草稿里的链接在改写里找不到。 |
+| `empty`、`truncated` | 什么都没返回，或者输出撞到了长度上限。 |
+| `too_short`、`too_long` | 改写不到草稿长度的 35%，或超过 175%。真机测试里正常块的长度是草稿的 0.7 到 1.5 倍；超过 1.75 倍的几块分别是凭空多出一段、编了一个数、同一句话写了两遍。 |
+| `repeated` | 改写里有两句话几乎在说同一件事，而草稿里没有这样的重复。 |
+| `markup` | 改写里出现了草稿没有的 HTML 标签（真机测试里见过短列表项末尾多出一个 `<p>`）。 |
+
+`added_numbers`（改写里有、草稿里没有的数字）**只报告、不重写**：模型有时是做了正确的算术（"成本从 $480k 降到 $305k"被写成"省了 $175k"），有时是编出来的数字。不管哪种，都要看一眼。
+
+重写之后仍有问题的块会在 stderr 列出行号（`.docx` 为段落序号）；用 `--json` 时标为 `"flagged": true`。这种情况退出码仍是 0。
+
+### `--json` 输出
+
+下面是一次真机运行的结果（1,200 词的英文 Markdown 文章，走 App，21 块里只列出一块）：
+
+```json
+{
+  "hz": "0.1.0", "input": "article.md", "output": "article.out.md", "format": "text",
+  "backend": {"kind": "app", "url": "http://127.0.0.1:47615", "model": "q8"},
+  "summary": {"pieces": 21, "retried": 0, "flagged": 1, "seconds": 41.4,
+              "words_in": 1035, "words_out": 1153, "copy_rate": 0.05},
+  "kept": {"heading": 8, "intro": 2, "table": 1, "code": 1},
+  "pieces": [
+    {"id": 15, "kind": "prose", "line": 65, "words_in": 102, "words_out": 111,
+     "copy_rate": 0.036, "missing_numbers": [], "missing_urls": [], "added_numbers": ["175k"],
+     "truncated": false, "retried": false, "chosen": 1, "seconds": 4.4,
+     "flagged": true, "issues": ["added_numbers"],
+     "attempts": [{"copy_rate": 0.036, "missing_numbers": [], "issues": ["added_numbers"], "seconds": 4.4}],
+     "draft_start": "The results of the migration have exceeded our initial expec"}
+  ]
+}
+```
+
+| 字段 | 含义 |
+|---|---|
+| `summary.pieces` / `retried` / `flagged` | 送去改写的块数；其中重写过的块数；重写后仍有问题的块数 |
+| `summary.copy_rate` | 全部改写正文相对全部草稿的照抄率 |
+| `kept` | 原样保留的块，按类型计数（`short` 是短到不值得改写的正文，`list item` 是短列表项） |
+| `pieces[].line`（`.docx` 为 `paragraph`） | 这块在输入里从第几行开始，从 1 数起 |
+| `pieces[].kind` | `prose`（一段或几段正文）、`item`（列表项）、`sentences`（超长段落切出的一部分）、`paragraph`（`.docx` 段落） |
+| `pieces[].words_in` / `words_out` | 草稿和改写的长度；一个汉字算一个词 |
+| `pieces[].copy_rate` | 选中那版的照抄率，0 到 1 |
+| `pieces[].missing_numbers` / `missing_urls` / `added_numbers` | 见上表；缺失的按草稿里的写法，新增的按改写里的写法 |
+| `pieces[].retried` / `chosen` / `attempts` | 是否重写过、留的是第几版、每一版的检查结果 |
+| `pieces[].seconds` | 这块所有版本加起来的模型耗时 |
+| `pieces[].flagged` / `issues` | 留下的那版是否仍有问题，以及是哪些问题 |
+| `text` | 完整结果，只在没给 `-o`、输入又不是 `.docx` 时才有 |
+
+### `.docx` 文件
+
+- 需要 `python-docx`（见上面的安装）。正文段落逐段改写。标题（Heading、Title、Subtitle 样式或带大纲级别的段落）、表格、空段、题注、引用、代码样式、目录，以及参考文献标题下面的内容都不动。页眉、页脚、脚注和文本框也不碰。
+- 段落里有超链接、图片、域、脚注引用、修订痕迹或公式的，整段不动，免得丢东西。
+- 改写结果写进段落的**第一个 run**，其余 run 清空。段落样式和编号都保留，但**段内局部的粗体、斜体等格式会丢**，整段统一用第一个 run 的格式。
+
+### 选项
+
+| 选项 | 默认 | 含义 |
+|---|---|---|
+| `-o FILE` | stdout（`.docx`：`NAME.hz.docx`） | 结果写到哪里。不允许覆盖输入文件。 |
+| `--server URL` | | 只用这个 llama-server |
+| `--app URL` | 自动 | App 不在常用地址时用 |
+| `--json` | 关 | 在 stdout 输出 JSON 报告 |
+| `-q`、`--quiet` | 关 | 不打印进度 |
+| `--dry-run` | 关 | 只显示切块和保留块，不调用模型 |
+| `--max-words` / `--max-chars` | 350 / 600 | 英文 / 中文每块大小 |
+| `--max-copy` | 0.5 | 照抄率超过多少就重写 |
+| `--retries` | 1 | 有问题的块最多再改几次（0 = 不重写） |
+| `--no-launch` | 关 | App 没开时不自动拉起 |
+
+退出码：0 完成（有块被标记也是 0），1 运行中出错（不写任何输出），2 输入或参数有误，3 找不到模型。
+
+### 局限
+
+- 检查只管数字、链接、照抄、长度、重复和多余的 HTML 标签。**改了一个词、一个人名或句子意思，它查不出来。**真机中文测试里，"覆盖全部 48 家门店"被改成"覆盖全省 48 家门店"，"时有发生"被改成"经常出现"，数字却一个没错。请通读结果。
+- 每块改写时看不到其他块，所以块与块之间语气可能略有变化。
+- 短列表项最弱：模型有时会丢掉短项的主语，或者把同一句话写两遍。
+- 用汉字写的数字只能部分识别，三和 3 之间来回换写法时，两个方向都可能漏报或误报。
+- 速度（M5 Max 上走 App，Q8_0）：1,200 词的英文 Markdown 文章切成 21 块，41 到 54 秒；约 700 字的中文报告切成 6 块，13 到 17 秒。
+- 不承诺任何 AI 检测器结果。

@@ -53,6 +53,20 @@ jq -n --rawfile d draft.txt --slurpfile f prompt_format.json \
 
 这是纯文本续写模型，不是聊天模型：用 `/completion`，不要用 `/v1/chat/completions`。接到别的程序之前请先看[提示词格式](#提示词格式)。
 
+### 方式三：命令行 `hz`（适合 Agent 和长文档）
+
+`hz` 一行命令改写整个文件：短稿、长篇 Markdown 或 `.docx` 都行。它自己去找方式一的 App 或方式二的 llama-server（macOS 上 App 装了没开会自动拉起），标题、代码块、表格和链接原样保留，正文分块改写，每块都检查有没有丢数字、是不是照抄。需要 Python 3.8 及以上，没有别的依赖。
+
+```bash
+pipx install git+https://github.com/sgaofen/humanize-model     # 或者:pip install git+https://github.com/sgaofen/humanize-model
+hz draft.txt                          # 打印改写结果
+hz paper.md -o paper.out.md           # 长篇 Markdown:结构保留,正文分块改写
+hz report.docx -o report.out.docx     # .docx 需要 python-docx:pipx inject humanize-model python-docx
+hz paper.md --json                    # 每块的统计,给脚本和 Agent 用
+```
+
+改完它会在 stderr 列出哪些块丢了草稿里的数字、或者多出了草稿里没有的数字，告诉你该看哪里。全文还是要通读一遍：人名和句子意思它查不了，也不承诺任何检测器结果。`.docx` 里改写过的段落统一用第一个 run 的格式，段内的粗体、斜体会丢。在 M5 Max 上用 App，一篇 1,200 词的英文 Markdown 用了 41 到 54 秒。详见 [USAGE.zh.md 第 14 节](docs/USAGE.zh.md#14-命令行工具-hz)。
+
 国内下载慢可以给命令前面加 `HF_ENDPOINT=https://hf-mirror.com`（App 里也能直接选 hf-mirror.com）。
 
 > [!IMPORTANT]

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "humanize-model"
+version = "0.1.0"
+description = "hz: rewrite AI-written drafts and long documents with the local humanizer model (Humanizer app or llama-server)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "sgaofen" }]
+keywords = ["humanizer", "rewrite", "llama.cpp", "cli", "markdown", "docx"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: Text Processing",
+]
+# Standard library only. .docx support is optional: pip install "humanize-model[docx]"
+dependencies = []
+
+[project.optional-dependencies]
+docx = ["python-docx>=1.0"]
+
+[project.scripts]
+hz = "humanizer.hz:main"
+
+[project.urls]
+Homepage = "https://github.com/sgaofen/humanize-model"
+Documentation = "https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md"
+Model = "https://huggingface.co/jialinyyzz/humanizer"
+
+[tool.setuptools]
+packages = ["humanizer"]

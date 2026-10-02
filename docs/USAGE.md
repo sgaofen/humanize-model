@@ -4,7 +4,9 @@
 
 This guide is for people who want to run humanizer from their own code or the command line instead of the [desktop app](https://github.com/sgaofen/humanize-model/releases/latest). Every block can be copied as is.
 
-**Contents:** [1. What makes this model different](#1-what-makes-this-model-different) · [2. Pick a file](#2-pick-a-file) · [3. llama.cpp](#3-llamacpp-recommended) · [4. MLX](#4-mlx-apple-silicon) · [5. transformers](#5-transformers-cuda) · [6. vLLM](#6-vllm) · [7. Ollama](#7-ollama) · [8. LM Studio](#8-lm-studio) · [9. Rewrite a whole folder](#9-rewrite-a-whole-folder) · [10. Long documents](#10-long-documents) · [11. Chinese](#11-chinese) · [12. Quality checklist](#12-quality-checklist) · [13. Troubleshooting](#13-troubleshooting)
+**Just want to rewrite files?** The `hz` command does the prompt, the sampling, the splitting of long documents and the checks for you, on top of the app or a llama-server: `pipx install git+https://github.com/sgaofen/humanize-model`, then `hz draft.md -o out.md`. See [section 14](#14-hz-command-line-tool).
+
+**Contents:** [1. What makes this model different](#1-what-makes-this-model-different) · [2. Pick a file](#2-pick-a-file) · [3. llama.cpp](#3-llamacpp-recommended) · [4. MLX](#4-mlx-apple-silicon) · [5. transformers](#5-transformers-cuda) · [6. vLLM](#6-vllm) · [7. Ollama](#7-ollama) · [8. LM Studio](#8-lm-studio) · [9. Rewrite a whole folder](#9-rewrite-a-whole-folder) · [10. Long documents](#10-long-documents) · [11. Chinese](#11-chinese) · [12. Quality checklist](#12-quality-checklist) · [13. Troubleshooting](#13-troubleshooting) · [14. hz command-line tool](#14-hz-command-line-tool)
 
 ## 1. What makes this model different
 
@@ -511,6 +513,7 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 - The model was trained and evaluated on single emails, posts, essays and report sections of a few hundred words. Pieces of that size work best.
 - Each piece is rewritten without seeing the others, so tone can shift a little between pieces and a fact can't move from one piece to another. Read the joined result once from top to bottom.
 - Headings, code blocks and bullet lists are often dropped or turned into prose. Rewrite only the prose and keep headings and code yourself; [`humanizer/markdown_guard.py`](https://github.com/sgaofen/humanize-model/blob/main/humanizer/markdown_guard.py) does this block by block.
+- **[`hz`](#14-hz-command-line-tool) does all of this in one command**, for `.md`, `.txt` and `.docx`: it keeps headings, code, tables and links, splits the prose into pieces of about 350 words (600 Chinese characters) without crossing a heading, and checks every piece.
 
 ## 11. Chinese
 
@@ -546,3 +549,142 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 | Self-test fingerprint fails | The prompt builder differs from training | Copy `build_prompt` from [section 1](#the-prompt) |
 
 **Self-test.** [AGENTS.md, section 8](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md#8-self-test-verify-the-install) has a standard-library script that sends a real draft from the evaluation set to llama-server and checks the prompt format, the endpoint, chat-template leaks and copying. It prints `PASS` when the setup is right.
+
+## 14. hz command-line tool
+
+`hz` rewrites a draft or a whole document in one command and works the same for people and AI agents. It talks to the [app](https://github.com/sgaofen/humanize-model/releases/latest) or to a llama-server ([section 3](#start-a-server)), builds the exact prompt, uses the evaluated sampling, splits long documents, keeps their structure, and checks every piece. Python 3.8 or newer, standard library only; `.docx` support is optional.
+
+### Install
+
+```bash
+pipx install git+https://github.com/sgaofen/humanize-model
+pipx inject humanize-model python-docx            # only if you need .docx
+
+# or with pip, in any environment:
+pip install git+https://github.com/sgaofen/humanize-model
+pip install "humanize-model[docx] @ git+https://github.com/sgaofen/humanize-model"   # with .docx support
+
+# from a clone, without installing:
+python3 -m humanizer.hz draft.txt
+```
+
+It installs one command, `hz`. If you already have another program called `hz`, the one that comes first in your `PATH` wins.
+
+### Use
+
+```bash
+hz draft.txt                          # print the rewrite to stdout
+hz < draft.txt > rewrite.txt
+hz paper.md -o paper.out.md           # long Markdown: structure kept, prose rewritten in pieces
+hz report.docx -o report.out.docx     # without -o it writes report.hz.docx
+hz paper.md --json > report.json      # per-piece stats; with -o the text goes to the file
+hz paper.md --dry-run                 # show how it will be split; no model needed
+hz paper.md --server http://127.0.0.1:8080   # a specific llama-server
+```
+
+Progress goes to stderr, one line per piece. `--quiet` hides it; the list of pieces to check is always printed.
+
+### Where it finds the model
+
+1. `--server URL`: that llama-server and nothing else. (If the address is the app's, it talks to the app.)
+2. Otherwise the **app**, if it is running and ready. It reads the app's port from the app's `instance.json`, and falls back to `http://127.0.0.1:47615`. Requests go to `POST /api/completion` with the `X-Humanizer: 1` header the app requires.
+3. Otherwise a **llama-server** at `http://127.0.0.1:8080` (`POST /completion`).
+4. Otherwise, on macOS, if the app is installed but closed: `hz` starts it in the background (`open -a Humanizer`) and waits up to 3 minutes for the model to load, printing progress.
+5. Otherwise it stops with exit code 3 and prints how to install the app or start llama-server.
+
+If the app is open but has no model yet (first run), `hz` tells you to pick one in the app first.
+
+### How a document is split
+
+- Blank lines separate blocks. These are **kept exactly as written** and never sent to the model: Markdown headings (`#`, underlined, or a line that is only `**bold**`), fenced and indented code, tables, lines that are only images or links, HTML blocks and comments, `$$…$$` and `\[…\]` math, block quotes, horizontal rules, YAML front matter, footnote and link definitions, a short line ending in a colon right before a list, table or code block ("Key points:"), and everything under a heading called References, Bibliography, Works Cited, Sources or 参考文献.
+- Prose paragraphs are grouped in order into pieces of at most about **350 English words or 600 Chinese characters** (`--max-words`, `--max-chars`). A piece never crosses a heading or any kept block, and pieces in one stretch of prose are made about the same size.
+- A paragraph longer than that is cut at sentence ends; its rewritten pieces are joined back into one paragraph.
+- **Lists:** each item keeps its bullet or number and a leading `**Label:**`. An item of at least about 10 words (17 Chinese characters) is rewritten on its own; shorter items are kept. Short items are where the model is weakest, so read them.
+- The rewritten pieces go back in their original places, with the original blank lines between blocks. Inline formatting inside prose (bold, inline code, links) is up to the model and is sometimes dropped.
+
+### Checks and the retry
+
+Each rewritten piece is checked. If it has one of these problems, the piece is rewritten once more (`--retries`) and the version with fewer problems is kept:
+
+| Problem | Meaning |
+|---|---|
+| `missing_numbers` | A number in the draft is not in the rewrite. Numbers are normalized first: `1,250` = `1250`, `3.50` = `3.5`, `07` = `7`, `480k` = `480,000`, `31.7万` = `317,000`, and a number written as a word in the rewrite (`three`, `两`) counts. |
+| `copy` | More than half of the rewrite copies the draft (`--max-copy`, default 0.5): share of the rewrite's word 5-grams, or 6-character grams for Chinese, that also appear in the draft. |
+| `missing_urls` | A link in the draft is not in the rewrite. |
+| `empty`, `truncated` | Nothing came back, or the output hit the length limit. |
+| `too_short`, `too_long` | The rewrite is under 35% or over 175% of the draft's length. On a real run, outputs of normal pieces were 0.7 to 1.5 times the draft; the ones above 1.75 had added a made-up paragraph, a made-up figure, or the same sentence twice. |
+| `repeated` | Two sentences of the rewrite say nearly the same thing, and the draft had no such pair. |
+| `markup` | The rewrite contains an HTML tag the draft doesn't have (on real runs, a stray `<p>` after a short list item). |
+
+`added_numbers`, numbers in the rewrite that are not in the draft, are **reported but never retried**: the model sometimes does correct arithmetic ("cut costs from $480k to $305k" became "saved $175k"), and sometimes invents a figure. Either way, look at them.
+
+Pieces that still have a problem after the retry are listed on stderr with their line number (`.docx`: paragraph number) and, with `--json`, marked `"flagged": true`. The exit code is still 0.
+
+### `--json` output
+
+From a real run on a 1,200-word English Markdown article through the app (one of its 21 pieces shown):
+
+```json
+{
+  "hz": "0.1.0", "input": "article.md", "output": "article.out.md", "format": "text",
+  "backend": {"kind": "app", "url": "http://127.0.0.1:47615", "model": "q8"},
+  "summary": {"pieces": 21, "retried": 0, "flagged": 1, "seconds": 41.4,
+              "words_in": 1035, "words_out": 1153, "copy_rate": 0.05},
+  "kept": {"heading": 8, "intro": 2, "table": 1, "code": 1},
+  "pieces": [
+    {"id": 15, "kind": "prose", "line": 65, "words_in": 102, "words_out": 111,
+     "copy_rate": 0.036, "missing_numbers": [], "missing_urls": [], "added_numbers": ["175k"],
+     "truncated": false, "retried": false, "chosen": 1, "seconds": 4.4,
+     "flagged": true, "issues": ["added_numbers"],
+     "attempts": [{"copy_rate": 0.036, "missing_numbers": [], "issues": ["added_numbers"], "seconds": 4.4}],
+     "draft_start": "The results of the migration have exceeded our initial expec"}
+  ]
+}
+```
+
+| Field | Meaning |
+|---|---|
+| `summary.pieces` / `retried` / `flagged` | Pieces sent to the model; how many were rewritten a second time; how many still have a problem |
+| `summary.copy_rate` | Copy rate of all rewritten prose against all of its drafts |
+| `kept` | Blocks kept as they were, by kind (`short` = prose too short to rewrite; `list item` = short list items) |
+| `pieces[].line` (`.docx`: `paragraph`) | Where the piece starts in the input, 1-based |
+| `pieces[].kind` | `prose` (one or more paragraphs), `item` (a list item), `sentences` (part of an over-long paragraph), `paragraph` (`.docx`) |
+| `pieces[].words_in` / `words_out` | Size of draft and rewrite; a Chinese character counts as one word |
+| `pieces[].copy_rate` | Copy rate of the chosen version, 0 to 1 |
+| `pieces[].missing_numbers` / `missing_urls` / `added_numbers` | As in the table above, spelled as in the draft (missing) or the rewrite (added) |
+| `pieces[].retried` / `chosen` / `attempts` | Whether it was rewritten twice, which try was kept, and each try's checks |
+| `pieces[].seconds` | Model time for this piece, all tries together |
+| `pieces[].flagged` / `issues` | Whether the kept version still has a problem, and which |
+| `text` | The whole result, only when there is no `-o` and the input is not `.docx` |
+
+### `.docx` files
+
+- Needs `python-docx` (see Install). Body paragraphs are rewritten one by one. Headings (Heading, Title and Subtitle styles, or an outline level), tables, empty paragraphs, captions, quotes, code styles, the table of contents and everything under a References heading are left alone. Headers, footers, footnotes and text boxes are not touched.
+- A paragraph that contains a hyperlink, an image, a field, a footnote reference, tracked changes or an equation is left alone too, so nothing in it is lost.
+- The rewrite is written into the paragraph's **first run** and the other runs are emptied. The paragraph keeps its style and numbering, but **bold, italic or other formatting on part of a paragraph is lost**; the whole paragraph takes the first run's formatting.
+
+### Options
+
+| Option | Default | Meaning |
+|---|---|---|
+| `-o FILE` | stdout (`.docx`: `NAME.hz.docx`) | Where to write the result. It refuses to overwrite the input. |
+| `--server URL` | | Use this llama-server only |
+| `--app URL` | auto | The app's address, if it is not the usual one |
+| `--json` | off | Print the JSON report on stdout |
+| `-q`, `--quiet` | off | No progress lines |
+| `--dry-run` | off | Show the pieces and the kept blocks; no model is called |
+| `--max-words` / `--max-chars` | 350 / 600 | Piece size for English / Chinese |
+| `--max-copy` | 0.5 | Copy rate that triggers a retry |
+| `--retries` | 1 | Extra tries for a piece with a problem (0 = none) |
+| `--no-launch` | off | Don't start the app if it is closed |
+
+Exit codes: 0 done (also when some pieces are flagged), 1 error during the run (nothing is written), 2 bad input or arguments, 3 no model found.
+
+### Limits
+
+- The checks cover numbers, links, copying, length, repetition and stray HTML tags. **A changed word, name or meaning is not caught.** On a real Chinese run, "all 48 stores" became "48 stores in the province" and "from time to time" became "often", with every number intact. Read the result.
+- Each piece is rewritten without seeing the others, so tone can shift a little between pieces.
+- Short list items are the weakest part: the model sometimes drops the subject of a short item or repeats it.
+- Chinese numerals written as characters are only partly understood, so a number that changes between 三 and 3 can slip through either way.
+- Speed with the app on an M5 Max (Q8_0): a 1,200-word English Markdown article, 21 pieces, 41 to 54 seconds; a Chinese report of about 700 characters, 6 pieces, 13 to 17 seconds.
+- No AI detector result is promised.

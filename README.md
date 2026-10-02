@@ -53,6 +53,20 @@ jq -n --rawfile d draft.txt --slurpfile f prompt_format.json \
 
 This is a plain text-completion model, not a chat model. Use `/completion`, not `/v1/chat/completions`. See [Prompt format](#prompt-format) before wiring it into anything else.
 
+### Option 3: the command line, `hz` (for agents and long documents)
+
+`hz` rewrites a whole file in one command: a short draft, a long Markdown document or a `.docx`. It uses the app from Option 1 or the llama-server from Option 2 (it starts the installed app on macOS if it is closed), keeps headings, code blocks, tables and links as they are, rewrites the prose piece by piece, and checks every piece for lost numbers and copying. Python 3.8 or newer, no dependencies.
+
+```bash
+pipx install git+https://github.com/sgaofen/humanize-model     # or: pip install git+https://github.com/sgaofen/humanize-model
+hz draft.txt                          # prints the rewrite
+hz paper.md -o paper.out.md           # long Markdown: structure kept, prose rewritten in pieces
+hz report.docx -o report.out.docx     # .docx needs python-docx: pipx inject humanize-model python-docx
+hz paper.md --json                    # stats per piece for scripts and agents
+```
+
+On stderr it lists every piece where a number from the draft is missing in the rewrite or a new number appeared, so you know where to look. Read the whole result anyway: names and the meaning of a sentence are not checked, and no detector result is promised. In a `.docx`, each rewritten paragraph takes the formatting of its first run, so bold or italic inside a paragraph is lost. On an M5 Max with the app, a 1,200-word Markdown article took 41 to 54 seconds. Details: [USAGE.md, section 14](docs/USAGE.md#14-hz-command-line-tool).
+
 > [!IMPORTANT]
 > **Not using the app? Read [docs/USAGE.md](docs/USAGE.md) (Usage without the app).** It has complete, copy-paste steps for llama.cpp (server and one-shot), MLX, transformers, vLLM, Ollama and LM Studio, a script that rewrites a whole folder, how to handle long documents and Chinese, and a troubleshooting table.
 
