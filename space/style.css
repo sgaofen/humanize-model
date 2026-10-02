@@ -367,7 +367,7 @@ html[data-lang="zh"] .sec-title { letter-spacing: -.01em; }
   #rail-label { width: auto !important; flex: none !important; }
   .go-kbd { display: none; }
   .go-label { padding-left: 4px; }
-  #draft textarea { min-height: 300px; }
+  #draft textarea { min-height: 0; height: 300px !important; }
   .out-body { min-height: 280px; max-height: none; }
   .cards { grid-template-columns: 1fr; }
   .tiles { grid-template-columns: 1fr 1fr; }
