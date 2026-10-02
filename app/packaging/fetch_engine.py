@@ -104,7 +104,7 @@ def main():
     with open(os.path.join(HERE, "llama-cpp.lock.json"), encoding="utf-8") as f:
         lock = json.load(f)
     os.makedirs(args.cache, exist_ok=True)
-    print(f"llama.cpp {lock['tag']} ({lock['commit']}) → {args.out}")
+    print(f"llama.cpp {lock['tag']} ({lock['commit']}) -> {args.out}")
     for name, keys in LAYOUT[args.target]:
         dest = os.path.join(args.out, name)
         shutil.rmtree(dest, ignore_errors=True)
