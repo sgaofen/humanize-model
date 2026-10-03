@@ -72,11 +72,11 @@ On stderr it lists every piece where a number from the draft is missing in the r
 
 ## Before and after
 
-Four drafts from the held-out evaluation set (never seen in training). The right side is the model's **first sample, not edited**; only whitespace is normalised for display. Highlight = new wording, strikethrough = draft wording that was replaced. We picked these four by hand for readability and checked every number and name in them. Across the whole set the model does sometimes change a detail; how often, and how small those slips are, is in [Results](#results).
+Four drafts from the held-out evaluation set (never seen in training). The right side is this release's **first sample, not edited** (the `humanizer-12b-Q8_0.gguf` file, llama.cpp); only whitespace is normalised for display. Highlight = new wording, strikethrough = draft wording that was replaced. We picked these four by hand for readability and checked every number and name in them. Across the whole set the model does sometimes change a detail; how often, and how small those slips are, is in [Results](#results).
 
 <img src="assets/compare-en-email.png" alt="Work email: draft and rewrite" width="100%">
 
-<img src="assets/compare-en-reddit.png" alt="Reddit post: draft and rewrite" width="100%">
+<img src="assets/compare-en-forum.png" alt="Forum answer: draft and rewrite" width="100%">
 
 <details>
 <summary><b>Two Chinese examples</b> (work email, Zhihu answer)</summary>

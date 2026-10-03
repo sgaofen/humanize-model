@@ -244,13 +244,13 @@ Never the Chat tab or `/v1/chat/completions`.
 
 ## Before and after
 
-First samples from the held-out evaluation set, not edited. Hand-picked and fact-checked by hand; error rates over the whole set are below.
+First samples of this release (the Q8_0 file) on drafts from the held-out evaluation set, not edited. Hand-picked and fact-checked by hand; results over the whole set are below.
 
 <img src="assets/compare-en-email.png" alt="Work email: draft and rewrite" width="100%">
 
 <img src="assets/compare-zh-email.png" alt="Chinese work email: draft and rewrite" width="100%">
 
-More examples (a Reddit post, a Zhihu answer) are in the [GitHub README](https://github.com/sgaofen/humanize-model#before-and-after).
+More examples (a forum answer, a Zhihu answer) are in the [GitHub README](https://github.com/sgaofen/humanize-model#before-and-after).
 
 ## Results
 

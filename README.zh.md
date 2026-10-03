@@ -74,7 +74,7 @@ hz paper.md --json                    # 每块的统计,给脚本和 Agent 用
 
 ## 改写前后
 
-下面四篇草稿来自留出评测集（训练时从没见过）。右边是模型的**第一发，未经任何修改**，只为显示统一了空白。荧光笔 = 新写的，删除线 = 被改掉的原文。这四篇是我们为了好读手挑的，里面每个数字和人名都人工核对过；放到整个评测集上，模型偶尔会改错细节，多常见、错得多小，见[评测结果](#评测结果)。
+下面四篇草稿来自留出评测集（训练时从没见过）。右边是本版模型的**第一发，未经任何修改**（`humanizer-12b-Q8_0.gguf` 文件，llama.cpp），只为显示统一了空白。荧光笔 = 新写的，删除线 = 被改掉的原文。这四篇是我们为了好读手挑的，里面每个数字和人名都人工核对过；放到整个评测集上，模型偶尔会改错细节，多常见、错得多小，见[评测结果](#评测结果)。
 
 <img src="assets/compare-zh-email.png" alt="中文工作邮件:草稿与改写" width="100%">
 
@@ -83,11 +83,11 @@ hz paper.md --json                    # 每块的统计,给脚本和 Agent 用
 知乎这篇是节选：全文 8 段里的前 4 段，两边在同一段处截断。
 
 <details>
-<summary><b>两个英文例子</b>（工作邮件、Reddit 帖）</summary>
+<summary><b>两个英文例子</b>（工作邮件、论坛回答）</summary>
 
 <img src="assets/compare-en-email.png" alt="英文工作邮件:草稿与改写" width="100%">
 
-<img src="assets/compare-en-reddit.png" alt="英文 Reddit 帖:草稿与改写" width="100%">
+<img src="assets/compare-en-forum.png" alt="英文论坛回答:草稿与改写" width="100%">
 </details>
 
 ## 评测结果
