@@ -1,45 +1,45 @@
 [
  {
   "id": "en-email",
-  "case": "email_work_00_luna",
+  "case": "email_work_09_luna",
   "lang": "en",
   "genre": {
    "en": "Work email",
    "zh": "英文工作邮件"
   },
   "writer": "GPT-5.6 luna",
-  "draft": "Hi Nadia,\n\nI’m handing off the Meridian Bank loan audit to you. We’ve completed the review of 88 files, with 12 files remaining. The outstanding files are in the “Pending Review” folder in the Meridian Bank audit workspace, organized by borrower name.\n\nThe remaining items are primarily commercial real estate loans and include several files requiring confirmation of updated income statements, collateral valuations, and covenant documentation. I’ve flagged the missing items in the audit tracker and added notes for the files that may need follow-up with Meridian Bank’s loan operations team.\n\nThe deadline is Friday, March 14. Please prioritize the files marked “High” in the tracker, especially MB-2047, MB-2091, and MB-2110, since those are scheduled for management review first. I’ll be available through Wednesday afternoon to answer questions or provide context on any earlier decisions.\n\nThanks for taking this over.",
-  "output": "Hi Nadia,\n\nI am turning the audit of the loans for Meridian Bank over to you. We have reviewed 88 files and have 12 remaining. The files we have left are in the \"Pending Review\" folder of the Meridian Bank audit workspace (sorted by borrower name).\n\nWe have mostly commercial real estate loans left to review. We have a few where we need to make sure we have up to date income statements, valuations of the collateral, documentation of covenants, etc. I have marked where we are missing things in the audit tracker and provided some notes on the files where we may need to touch base with loan ops at Meridian Bank.\n\nThe cutoff is Friday, March 14. Please focus on the \"High\" items in the tracker, particularly MB-2047, MB-2091 and MB-2110, as these will be reviewed by management first. I'll be around until Wednesday afternoon to help with questions or provide some background on prior decisions.\n\nThanks for taking this on.",
+  "draft": "Hi Priya,\n\nCould HR help us arrange two additional temporary staff members for our September inventory count at the Fremont warehouse? The count is scheduled for September 28–30, from 8:00 a.m. to 4:30 p.m., and we expect to process approximately 4,800 units across receiving, storage, and outbound staging.\n\nWe currently have six team members assigned, but two employees are out on scheduled leave and one is supporting a customer audit. Adding two temps would allow us to maintain normal shipping operations while completing the count accurately and on schedule.\n\nThe temporary staff would need basic warehouse experience, the ability to lift up to 40 pounds, and availability for all three days. Their main responsibilities would be scanning labels, recording quantities, and reconciling discrepancies under the supervision of Miguel Santos, our Inventory Control Lead. A short safety and process briefing will be provided at 7:45 a.m. on September 28.\n\nPlease let me know whether HR can source and onboard two people by September 25. If temporary staff are unavailable for all three days, coverage for September 28 and 29 would still be very helpful.\n\nThank you,\n\nJordan Lee",
+  "output": "Hey Priya,\n\nIs there any way that HR can help bring us two more temporary employees for our inventory count in our Fremont warehouse in September? The inventory count will be taking place on Sept 28th, 29th, and 30th (8:00 a.m.-4:30 p.m.)\n\nWe're going to be counting about 4,800 units in and out of the warehouse (receiving, storage, outbound staging).\n\nRight now we've got 6 people working on it. However, 2 of them are on planned leave and another is helping out on a customer audit. If we could get 2 temp employees that would help us keep up normal shipping and still get the count accurate and on schedule.\n\nWe would need them to have some warehouse experience. Be able to lift up to 40lbs. Be available all 3 days. Mostly just scanning labels and noting quantities, resolving discrepancies. They'd be working under the Inventory Control Lead Miguel Santos. (We'll do a quick safety/process briefing at 7:45 a.m. Sept 28th)\n\nIf HR can find and get 2 people onboard by Sept 25th? If we can't get any temps for all 3 days it would be really beneficial if we could at least get covered for the 28th and 29th.\n\nThanks,\n\nJordan Lee",
   "words": [
-   140,
-   163
+   187,
+   203
   ],
-  "copy": 0.06,
+  "copy": 0.0,
   "numbers": [
-   6,
-   6
+   11,
+   11
   ],
   "judge_clean": true
  },
  {
-  "id": "en-reddit",
-  "case": "reddit_post_10_sonnet",
+  "id": "en-review",
+  "case": "review_product_02_luna",
   "lang": "en",
   "genre": {
-   "en": "Reddit post",
-   "zh": "Reddit 帖"
+   "en": "Film review",
+   "zh": "影评"
   },
-  "writer": "Claude Sonnet",
-  "draft": "Bought the NordicTrack Commercial 1750 in January from the NordicTrack outlet store in Salt Lake City ($1,899 after their \"New Year\" discount). Nine months in, I'm on repair number two and I need to vent.\n\nFirst issue hit in March: the incline motor started grinding on any setting above 5%, then just stopped responding. Took three weeks and four phone calls to get a tech out. He replaced the incline motor assembly under warranty, no charge, but I lost almost a month of my training block for a half marathon I was building toward.\n\nSecond issue started about two weeks ago — the belt started drifting to the left every time I ran past 6 mph, badly enough that my foot was clipping the side rail. Tech came out this past Tuesday (September 16th), re-centered and re-tensioned the belt, and told me the rear roller bearings were already showing wear \"for a machine this age,\" which is not a sentence you want to hear nine months in.\n\nThe console, the iFit integration, the touchscreen — all genuinely great when the machine is working. That's the frustrating part. When it runs, it's a really good treadmill. But two hardware failures before the one-year warranty mark makes me nervous about what happens in month 13 when I'm paying out of pocket for parts and labor.\n\nAnyone else have reliability issues with the Commercial series, or did I just get a lemon? Trying to decide if I push for a replacement unit or just ride out the warranty and hope for the best.",
-  "output": "Purchased the Nordictrack Commercial 1750 in January from the NordicTrack outlet in SLC ($1899 after the \"New Year\" sale). It's been 9 months now, and I'm on my 2nd repair. Need to vent.\n\n1. March- Started having problems with incline motor grinding at incline above 5%. Stopped working all together. Had to schedule tech to come out after 3 weeks and 4 phone calls. Tech came out and replaced incline motor assembly under warranty (no cost). However, it cost me almost 1 month of training for half-marathon I was preparing for.\n\n2. ~2 weeks ago- Belt was starting to pull to the left when I ran above 6mph. Enough to where my foot was catching the side rail. Tech came out last Tuesday (9/16). Tech re-centered and re-tensioned the belt. Told me rear roller bearings were showing wear \"for a machine this age\" (9 months). Yikes....\n\nI love the console. I love integration with iFit. I love the touch screen. It is all awesome when it works. And that's the rub. It's a pretty damn good treadmill when it works. But to have 2 hardware failures before year 1 of warranty. It makes me wonder how month 13 is going to go when I am having to pay for parts and labor.\n\nAnyone else have any reliability issues with Commercial series? Or just a lemon?? Deciding to ask for new unit or just cross my fingers till warranty is out.",
+  "writer": "GPT-5.6 luna",
+  "draft": "Christopher Nolan’s *Oppenheimer* (2023) is an intense, ambitious film that feels especially powerful in IMAX. The huge format makes the Trinity test sequence genuinely overwhelming: the silence before the explosion, the sudden flash of light, and the delayed roar create a physical sense of dread rather than simple spectacle. Ludwig Göransson’s score and the pounding sound design add to the experience without making it feel like a conventional action movie.\n\nCillian Murphy gives a remarkable performance as J. Robert Oppenheimer, portraying him as brilliant, vain, anxious, and increasingly haunted by the consequences of his work. The supporting cast is exceptional too, particularly Robert Downey Jr. as Lewis Strauss, Emily Blunt as Kitty Oppenheimer, and Matt Damon as General Leslie Groves. The film’s shifting timelines and black-and-white sections initially feel complicated, but they gradually build a compelling picture of how scientific achievement became entangled with politics, ego, and fear.\n\nAt three hours, *Oppenheimer* is undeniably long. Some courtroom and security-hearing scenes move slowly, and the dense dialogue demands concentration. Still, the runtime feels mostly justified because the film is covering the Manhattan Project, Oppenheimer’s personal life, and the political fallout over several decades. In IMAX, the scale and detail make the length easier to accept, though it is worth taking a break beforehand. This is not a relaxed historical drama; it is an absorbing, exhausting experience that lingers long after the credits.",
+  "output": "Christopher Nolan's Oppenheimer (2023) is an epic and very intense film. It really comes into its own when viewed in IMAX as the sheer scale of the experience when seeing the Trinity test is overwhelming. The build-up to the explosion, the flash and the delayed sound of the explosion are genuinely intimidating rather than just being a spectacle. The score by Ludwig Göransson and the thunderous sound design compliment the film without it being a standard action film.\n\nThe performances are amazing and are led by a wonderful Cillian Murphy as J. Robert Oppenheimer. He shows Oppenheimer to be a genius, vain, neurotic and increasingly tortured by what he has done. The supporting cast is fantastic. Robert Downey Jr. is great as Lewis Strauss. Emily Blunt as Kitty Oppenheimer and Matt Damon as General Leslie Groves are also very good. While at first it seems confusing and complicated with multiple timelines and black and white segments it gradually coheres and paints a fascinating picture of the interplay of science with politics, ego and fear.\n\nThis is a very long film. At 3 hours it's a long sit. There are a few scenes in the court and security hearings which can drag a bit and require you to pay close attention to what can be dense dialog. Ultimately though, the length makes sense as it's not just telling the story of the Manhattan Project. It's telling that story, the personal story of Oppenheimer and the political aftermath of it all over a period of decades. In IMAX the detail and scale helps make it easier to swallow. But perhaps have a break first as it's not a lazy history lesson. It's a fascinating and tiring film. You won't forget it easily.",
   "words": [
-   258,
-   240
+   231,
+   290
   ],
-  "copy": 0.08,
+  "copy": 0.05,
   "numbers": [
-   6,
-   6
+   1,
+   1
   ],
   "judge_clean": true
  },
@@ -53,12 +53,12 @@
   },
   "writer": "GLM-5.3",
   "draft": "When the European Recovery Program—better known as the Marshall Plan—was signed into law by President Truman on April 3, 1948, West Germany's economic future looked bleak. Its industrial cities lay in ruins, its currency was nearly worthless, and its economy remained constrained by Allied occupation policies that had capped steel production and dismantled industrial plants. Yet over the next four years, roughly $1.4 billion in Marshall Plan aid flowed into what would become the Federal Republic of Germany, helping to catalyze one of the most remarkable economic recoveries of the twentieth century.\n\nThe aid itself, distributed through the Economic Cooperation Administration (ECA), mattered less for its raw quantity than for its timing and function. West Germany received goods—cotton, wheat, coal, machinery—paid for in nearly worthless Reichsmarks, with the proceeds funneled into a special counterpart fund. This fund, worth several billion Deutschmarks, was later reinvested in infrastructure and industry, helping finance projects like electrical grid modernization and the expansion of the Ruhr Valley's steel sector. Perhaps just as important, Marshall Plan money covered Germany's chronic trade deficit in 1949 and 1950, buying the young West German state time while its currency reform of June 1948—which introduced the Deutschmark—took hold.\n\nThe Marshall Plan also forced institutional changes that proved decisive. Acceptance of American aid required participation in the Organisation for European Economic Co-operation (OEEC), pulling West Germany into a framework of European cooperation that would culminate decades later in the European Coal and Steel Community of 1951. Moreover, American pressure helped soften occupation restrictions: limits on steel production were progressively raised from around 5.8 million tons to over 11 million by the early 1950s, and plant dismantling largely ceased. Economist Ludwig Erhard, appointed Economic Director in 1948, combined this new freedom with his policy of the \"social market economy,\" blending free-market competition with a social safety net.\n\nThe results were extraordinary. Industrial production in West Germany roughly doubled between 1948 and 1952, and by the mid-1950s the country was producing more than it had before the war—a phenomenon Chancellor Konrad Adenauer's government celebrated as the \"economic miracle,\" or Wirtschaftswunder. Historians rightly caution that the Marshall Plan was only one cause among many, alongside currency reform, Korean War demand, and a skilled labor force. Still, it is fair to say that American aid did not simply rebuild West Germany's economy; it reoriented it—toward Europe, toward trade, and toward the stable democratic capitalism that would define the Federal Republic for generations.",
-  "output": "When President Truman signed the European Recovery Program (aka Marshall Plan) into law on April 3, 1948, the economic prospects for West Germany seemed grim. West German industrial towns were rubble. The currency was practically worthless. And the economy remained shackled to occupation-era Allied policy limiting steel output and breaking up industrial facilities. But in the succeeding four years, West Germany (soon to become the Federal Republic) received about $1.4 billion in Marshall Plan aid that catalyzed one of the most stunning economic comebacks of the 20th century.\n\nThe Marshall Plan aid provided by the Economic Cooperation Administration (ECA) had less to do with the size of the aid than with its timing and function. The Marshall Plan provided goods (cotton, wheat, coal, machinery, etc.) to West Germany which were purchased with virtually worthless Reichsmarks that were in turn deposited in a special counterpart fund. That fund, a few billion Deutschmarks, was in turn invested in infrastructure and industry to support such things as the modernization of the electrical grid and expansion of the steel industry in the Ruhr Valley. And perhaps equally important was the Marshall Plan aid which in 1949 and 1950 helped support Germany's persistent trade deficit, giving breathing room to the young West German government during the adjustment period of its currency reform in June 1948 (which introduced the Deutschmark).\n\nThe Marshall Plan also led to important institutional changes. In order to receive US aid, West Germany had to join the Organisation for European Economic Co-operation (OEEC), bringing West Germany into a European cooperation that led to the 1951 European Coal and Steel Community decades later. Also, US pressure relaxed some occupation restrictions, incrementally boosting the steel production quota from about 5.8 million tons to over 11 million tons by the early 1950s, while dismantling industrial plants was more or less stopped. Meanwhile, the new Economic Director (1948) Ludwig Erhard combined these new opportunities with his policy of the \"social market economy,\" which integrated free-market competition with social safety-nets.\n\nBetween 1948 and 1952, West German industrial production approximately doubled. By the mid-1950s West Germany was producing more than it did before the war. The Chancellor Konrad Adenauer's government called this phenomenon the \"economic miracle\" (Wirtschaftswunder). Of course, historians are careful to note that the Marshall Plan was only one of several reasons for West Germany's recovery (the others being the currency reform, the Korean War-driven demand, and the availability of skilled labor). But it's fair to say that the US aid didn't only repair West Germany's economy, it re-directed the economy. Re-directed towards Europe, trade and stable, democratic capitalism that was to be the Federal Republic's hallmark for decades to come.",
+  "output": "On April 3, 1948, President Truman signed into law the European Recovery Program (Marshall Plan). At the time, the economic outlook for West Germany was grim. Much of the industrial heartland was destroyed. The currency had virtually no value. The economy was still hamstrung by Allied policies that had limited steel output and deindustrialized the country. But in the next four years, the Federal Republic of Germany would receive about $1.4 billion of Marshall Plan assistance to help propel it into one of the greatest economic turnarounds of the 20th century.\n\nThe aid, managed by the Economic Cooperation Administration (ECA) did not come so much in the amount of assistance received, as in the timing and the role of the money. The Federal Republic of Germany was given goods such as cotton, wheat, coal and machinery. The goods were purchased with near-worthless Reichsmarks and the receipts were placed into a special counterpart fund. Later, this fund (several billion Deutschmarks) was reinvested into infrastructure and industry, financing such projects as the modernization of the electrical grid and the development of the Ruhr Valley steel industry. Also, critical to the recovery was that the Marshall Plan funds helped fill West Germany's yawning trade deficit in 1949 and 1950, giving the new state of West Germany time for its June 1948 currency reform (new currency, the Deutschmark) to take effect.\n\nCrucial to the economic recovery was the way that the Marshall Plan created institutional change. For one thing, in order to take U.S. assistance, West Germany had to join the Organisation for European Economic Co-operation (OEEC). This meant that West Germany was being linked into European cooperation that would ultimately lead, decades later, to the 1951 European Coal and Steel Community. The U.S. also used pressure to relax occupation restrictions. Restrictions on steel output were increased gradually from about 5.8 million to over 11 million tons by the early 1950s. Dismantling of industrial facilities largely stopped. Economic Director (appointed in 1948) Ludwig Erhard took advantage of this and instituted his \"social market economy.\" Free-market competition would be combined with a social safety net.\n\nThe results were dramatic. Between 1948 and 1952, industrial output in West Germany rose roughly two-fold. By the mid-1950s, West Germany's output surpassed pre-war levels. This was something that Chancellor Konrad Adenauer's government would tout as the \"economic miracle,\" Wirtschaftswunder. Certainly, historians are careful to note that the Marshall Plan was just one of many factors that contributed to the recovery. Also important were currency reform, increased demand due to the Korean War and a workforce skilled in industrial production. But it is fair to say that not only did U.S. assistance revive West Germany's economy, it transformed it. It turned it towards Europe, it turned it towards trade. And it transformed it towards a stable form of democratic capitalism that would be the hallmark of the Federal Republic for many years to come.",
   "words": [
    407,
-   445
+   484
   ],
-  "copy": 0.05,
+  "copy": 0.04,
   "numbers": [
    9,
    9
@@ -67,67 +67,67 @@
  },
  {
   "id": "en-forum",
-  "case": "forum_answer_07_luna",
+  "case": "forum_answer_04_luna",
   "lang": "en",
   "genre": {
-   "en": "Forum answer with code",
-   "zh": "带代码的论坛回答"
+   "en": "Forum answer",
+   "zh": "论坛回答"
   },
   "writer": "GPT-5.6 luna",
-  "draft": "The best fix is to reduce how often two people edit the same lines, not to rely on Git’s conflict resolution.\n\nFor example, in our `checkout-web` repository, Maya owns the `CartSummary.jsx` layout and Jordan owns the tax-calculation hook. We split the component into smaller files:\n\n```text\nCartSummary/\nCartSummary.jsx\nuseCartTotals.js\nCartLineItem.jsx\nCartSummary.test.jsx\n```\n\nEach person works on a short-lived branch such as `maya/cart-layout` or `jordan/tax-hook`, and branches from `main` immediately before starting. We open pull requests within one or two days instead of keeping branches for weeks. Before opening a PR, we run:\n\n```bash\ngit fetch origin\ngit rebase origin/main\nnpm test -- CartSummary\n```\n\nThe component should also receive data through props rather than having multiple developers modify shared internal logic. For instance, `CartSummary.jsx` can render `subtotal`, `tax`, and `total`, while `useCartTotals.js` calculates those values. That lets Jordan change calculations without touching Maya’s JSX.\n\nIf two changes genuinely must affect the same lines, agree on the integration order. On September 21, 2026, for example, Maya’s structural refactor should merge first; Jordan can then rebase onto it and update the hook’s interface. Avoid resolving the conflict independently in both branches.\n\nFinally, make commits small and focused. A commit named `Extract CartLineItem` is much easier to review and rebase than one containing formatting changes, dependency upgrades, and business logic. Enable branch protection and require a successful CI check so the second PR is tested against the current `main` before merging.",
-  "output": "Don't try to make Git handle conflicts, try to minimize the number of lines being changed by two different people.\n\nFor example, in our checkout-web repo, Maya is in charge of the layout of `CartSummary.jsx` and Jordan is in charge of the tax calculation hook. We split the component into several files.\n\n```text\nCartSummary/\nCartSummary.jsx\nuseCartTotals.js\nCartLineItem.jsx\nCartSummary.test.jsx\n```\n\nMaya and Jordan each create short-lived branches (like `maya/cart-layout` or `jordan/tax-hook`). They branch off `main` just before they begin. We create pull requests within a day or two, rather than letting branches live for weeks. We run this before we create the PR:\n\n```bash\ngit fetch origin\ngit rebase origin/main\nnpm test -- CartSummary\n```\n\nAlso, supply the component with data from props, rather than letting many developers change the same internal code. For example, let `CartSummary.jsx` display `subtotal`, `tax`, and `total`. Let `useCartTotals.js` handle the calculation. This way, Jordan can alter the calculations without disturbing Maya's JSX.\n\nIf you really have to change the same lines of code, at least coordinate the order in which you will integrate the changes. Suppose it's September 21, 2026. Maya will merge her structural refactor. Then Jordan can rebase off of that and adjust the interface of the hook. Don't resolve the conflict from each of your branches.\n\nKeep commits small and narrow. It's so much easier to read/rebase a commit like `Extract CartLineItem` than one that has some formatting, some dependency updates, some business logic. Turn on branch protection and enforce passing CI before they can merge. That way, the second PR is run against the latest `main` before it gets merged.",
+  "draft": "For a freelance designer, I’d aim for 6–12 months of essential personal expenses, not an arbitrary dollar amount. Irregular income makes the upper end more appropriate than the usual three-month target.\n\nFor example, if you live in Portland, Oregon, and your bare-bones monthly costs are:\n\n- Rent and utilities: $1,800\n- Health insurance and medical costs: $500\n- Food: $500\n- Transportation: $250\n- Minimum debt payments and other necessities: $150\n\nYour essential budget is $3,200 per month. A reasonable emergency-fund target would therefore be $19,200 for six months, with $28,800 providing a stronger 9-month cushion.\n\nKeep separate accounts for three different purposes:\n\n1. Emergency fund: job gaps, illness, or major unexpected expenses.\n2. Tax reserve: money for quarterly federal and state estimated taxes.\n3. Business reserve: software, equipment replacement, subcontractors, and slow client payments.\n\nOtherwise, a large tax bill or broken laptop can make your “emergency fund” look healthier than it really is.\n\nI’d calculate the target using your lowest realistic monthly spending, not your average lifestyle. Pay yourself a consistent amount—say $4,000 monthly—from your business account, and send unusually strong months into savings. Refill the fund after using it, and keep it in an easily accessible FDIC-insured savings account rather than investments.\n\nThe CFPB specifically identifies emergency funds as useful for people with irregular income, while the FDIC cites three to six months as a general guideline and notes that people with especially uncertain employment may need six months or more. [CFPB guidance](https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/) and [FDIC guidance](https://www.fdic.gov/consumer-resource-center/2025-01/saving-unexpected-and-your-future).",
+  "output": "As a freelance designer I think you'd want 6-12 months of core living expenses rather than a dollar number.  The irregular income means you'd want more than the typical 3-month emergency fund amount.\nSo say, if you're in Portland, Oregon and your absolutely-barebones monthly expenses are:\n- Rent & utilities: $1800\n- Health insurance & health costs: $500\n- Food: $500\n- Transportation: $250\n- Debt minimums & other necessities: $150\n\nSo your core expenses are $3200/month.  So you'd want something like $19.2k for 6 months emergency fund or a stronger $28.8k for 9 months.\nHave separate accounts for 3 types of things:\n1) Emergency fund: gaps in work, sickness, major unexpected expenses\n2) Tax buffer: For quarterly federal & state estimated tax payments\n3) Business buffer: Software & equipment replacement. Subcontractors.  Slow clients.\nOtherwise you'll have a big tax bill or busted laptop and then your \"emergency\" fund looks better than it actually is.\nFigure out your target based on your minimum real-world monthly expenses.  Not average lifestyle.  Set yourself a regular salary (e.g. $4k/month) to draw from business account and save on those really good months.  Replenish the fund when you draw from it.  Make it a liquid FDIC savings account.  Not investments.\nCFPB directly mentions emergency funds as good for irregular income folks.  FDIC mentions 3-6 months as a good guideline in general.  Also mentions if you're really uncertain about employment you may need 6+ months. [cfpb guidance](https://www.consumerfinance.gov/an-essential-guide-to-building-an-emergency-fund/) [fdic guidance](https://www.fdic.gov/consumer-resource-center/2025-01/saving-unexpected-and-your-future)",
   "words": [
-   235,
-   266
+   243,
+   233
   ],
-  "copy": 0.09,
+  "copy": 0.1,
   "numbers": [
-   2,
-   2
+   15,
+   15
   ],
   "judge_clean": true
  },
  {
   "id": "zh-email",
-  "case": "zh_email_15_sonnet",
+  "case": "zh_email_08_luna",
   "lang": "zh",
   "genre": {
-   "en": "Chinese work email",
-   "zh": "中文工作邮件"
+   "en": "Chinese email to a landlord",
+   "zh": "给房东的中文邮件"
   },
-  "writer": "Claude Sonnet",
-  "draft": "林晓，你好：\n\n近期产品部计划针对新版本迭代前的设计质量把控，成立\"产品设计评审小组\"，负责对各条线的原型稿、交互流程及视觉规范进行统一评审。经和王涛总监商量，我们都觉得你在用户体验和交互细节上的把控一直很到位，特别是上个月\"订单中心\"改版时提出的几处优化建议非常关键，所以想邀请你正式加入这个小组，一起把关后续的设计输出。\n\n小组目前初定成员为你、我、以及来自研发侧的赵敏，后续视情况再补充人手。第一次会议安排在9月25日（周五）下午3点，在3楼B会议室进行，预计时长1小时，议程如下：\n\n1. 小组职责与评审流程说明（15分钟）\n2. 现行\"消息中心\"模块原型评审，收集初步反馈（25分钟）\n3. 确定后续评审排期（每两周一次，暂定周三下午）与责任分工（15分钟）\n4. 其他事项与答疑（5分钟）\n\n麻烦你提前看一下附件中的\"消息中心\"原型稿（我稍后单独发你），会上会请你重点谈谈交互层面的看法。如果9月25日下午不方便，也请提前告诉我，我们再协调时间。\n\n期待你的加入，谢谢！\n\nStephen",
-  "output": "林晓：\n\n最近为了新版本迭代之前的设计质量控制，产品部准备组建一个“产品设计评审小组”，对各条线原型稿/交互流程/视觉规范等进行统一的评审。综合考虑后，与王涛总监探讨，认为你对用户体验及交互的控制一直非常到位，特别是上个月“订单中心”改版，你的一些优化建议至关重要，所以希望正式邀请你一起加入我们的“产品设计评审小组”，来把控一下后面的设计输出。\n\n这个小组的人员初步包括你，我，研发侧的赵敏（暂定），后续人手再行调整。第一次会议定在9月25日（周五）下午3点，3楼B会议室，1小时左右，安排如下：\n\n1、小组说明/评审流程说明（15分钟）\n2、“消息中心”目前现状原型评审，初步讨论意见反馈（25分钟）\n3、后续评审的计划/时间周期（两周一次，暂定周三下午）及人员分工等（15分钟）\n4、其他及解答（5分钟）\n\n请你提前看一下附件里的消息中心原型（单独发给你，稍后），在会上请你重点说说交互方面的意见。如9月25日，下午你没有时间，请提前告知，调整时间。\n\n期待你的加入，谢谢！\n\nStephen",
+  "writer": "GPT-5.6 luna",
+  "draft": "尊敬的李女士：\n\n您好！我是承租您位于北京市海淀区中关村南大街18号华景公寓3号楼502室的租户张伟。根据租赁合同约定，我计划于2024年12月31日正式退租，并在当天完成房屋清洁、物品搬离及钥匙交接。退租前，我会结清截至12月31日的水费、电费、燃气费及物业相关费用，并配合您检查房屋设施。如房屋及家具没有超出正常使用范围的损坏，烦请告知押金退还的具体流程、所需材料及预计到账时间。我此前支付的押金为人民币6,000元，退还账户为中国工商银行，户名张伟，账号尾号为2386。如需预约验房，也请您告知合适的日期和时间。感谢您的配合，期待您的回复。\n\n此致\n敬礼！\n\n张伟\n2024年12月10日",
+  "output": "李女士，您好！\n\n我是您租给我的北京市海淀区中关村南大街18号华景公寓3号楼502室的房客张伟，按照合同约定，我将在2024年12月31日正式退出租房，并在此日当天完成房屋清理、物品搬离及钥匙移交。退房前我会结清至2024年12月31日为止水费电费燃气费物业费用等，并且协助您一同检查房屋设施。如果房屋及家具无超出合理使用范围的损害请告知我押金退还的流程、材料要求以及退还到账时间。我交的押金为人民币6000元，退款银行账户为中国工商银行，户名张伟，账号尾号2386。如有需要预约验房的，请告知我您方便的验房日期时间。谢谢！期待您的回复！\n\n此致 敬礼！\n\n张伟\n2024年12月10日",
   "words": [
-   366,
-   361
+   243,
+   241
   ],
-  "copy": 0.17,
+  "copy": 0.29,
   "numbers": [
-   8,
-   8
+   9,
+   9
   ],
   "judge_clean": true
  },
  {
   "id": "zh-social",
-  "case": "zh_social_09_glm",
+  "case": "zh_social_12_glm",
   "lang": "zh",
   "genre": {
    "en": "Chinese social post",
    "zh": "中文社交帖"
   },
   "writer": "GLM-5.3",
-  "draft": "每年立冬前后，我妈都要上演一场“囤菜大战”。今年是100斤白菜、50斤土豆、20斤大葱，11月3号那天，她蹬着三轮车跑了三趟菜市场，跟摊主老王砍价砍到5毛8一斤，回家时棉袄都汗湿了。\n\n我劝她：“妈，超市天天开门，何必呢？”她头也不抬：“你懂什么，1960年你姥爷拉着一车红薯干走三十里地去换粮，一家人靠这个过冬。”\n\n后来我才慢慢理解。我妈1962年生在山东济宁的农村，小时候一年到头吃不上几顿白面，过年的饺子是地瓜面皮包的。她十几岁时最奢侈的梦想，是“顿顿有玉米饼子吃”。1980年她嫁到县城，第一件事就是托人买了两口大缸腌酸菜。那两口缸如今还在阳台立着，缸沿都磕出豁口了，她舍不得扔。\n\n囤的不只是菜，是安全感。白菜堆在楼道，她每晚睡前都要去看一眼，像点验自己的士兵。邻居张阿姨笑她，转身自己也搬回来80斤。\n\n有人说这是穷怕了的惯性。可我觉得，那是一代人把饥饿刻进了骨头里，又用一屋子白菜，笨拙地告诉自己：这下，饿不着了。",
-  "output": "每年立冬，我妈就上演一出“囤菜大戏”。今年100斤白菜、50斤土豆、20斤大葱。11月3号，蹬着三轮车去菜市场跑了三趟，跟摊贩老王杀价杀到5毛8一斤，回来棉袄都汗了。\n\n我劝她：“妈，超市每天都有，犯不上。”我妈头也不抬：“你懂啥？你姥爷1960年拉着一车红薯干，走三十里地换粮，一家人就靠这过冬了。”\n\n我后来才明白，我妈1962年生，山东济宁农村。小时候一年到头吃不上几顿白面，过年饺子也是地瓜面皮包的。她10几岁最奢侈的梦想就是，“顿顿有玉米饼子吃”。1980年嫁到县城，第一件事是托关系买了两个大缸腌酸菜。两个缸现在还在阳台立着呢，缸沿都磕豁了，舍不得丢。\n\n这是在囤菜。同时也是在囤安全感。一堆白菜放楼道里，每晚睡前必须看看，就好像在点兵点将自己手下的兵。邻居张阿姨笑她，转头也屯了80斤。\n\n说穷怕了的，惯性使然。其实是他们这代人的骨头里烙上了饥饿。用堆成一屋子的白菜，拙劣地给自己说，好了，这次，不会饿了。",
+  "draft": "在杭州做了5年全职妈妈后，我重新找工作的72小时\n\n周一早上8点，我把女儿送到滨江的幼儿园，站在门口深吸一口气，打开了尘封5年的招聘软件。\n\n简历改到凌晨一点。老公阿哲说：“你这5年的空白期，HR会问的。”我在“工作经历”里补了一行：“2020-2025 独立运营家庭及社区项目”——听起来体面，其实就是带娃加组织了三年小区团购。\n\n周二上午接到第一个面试电话，是滨江一家电商公司招运营。对方问：“孩子谁带？”我说婆婆每周来帮忙三天。电话那头沉默了两秒：“我们加班比较多。”我说我可以加班，孩子爸爸也在杭州工作。她说“回去等通知”，我就知道没戏了。\n\n周三下午，第二家，武林广场附近的MCN公司。面试官是个94年的姑娘，看完我2019年做的双11活动复盘，眼睛亮了：“数据sense还在啊。”她没问我结没结婚，只问：“薪资预期？”我说了个比5年前低20%的数，她笑了：“我们给到的是你原来的数。”\n\n周四中午offer到了。走出幼儿园接娃的路上，我在钱塘江边哭了十分钟。\n\n5年，我以为自己被职场淘汰了，其实只是被暂停了。妈妈们，别怕，你的能力一直在。",
+  "output": "5年杭州全职妈妈，找工作72小时\n\n周一早上8点送完滨江幼儿园女儿，我站在大门外吸了一口气，开启了自己沉寂了5年的招聘软件。\n\n改简历熬到凌晨1点。老公阿哲说：“5年你这空白期HR会问你。”\n\n于是我在“工作经历”这一栏加了一条：2020-2025 独立运营家庭/社区项目\n\n（听起来很高级其实就是带娃组织小区团购3年啦）\n\n周二上午接到了第一个面试电话。\n\n是滨江这边一个电商公司，要招运营。\n\n“你孩子谁带？”\n\n“我婆婆一个礼拜过来三天”\n\n电话那边停顿了两秒，“我们加班挺多的”\n\n“我能加班，我娃爸也在杭州工作”\n\n“回去等通知”\n\n“……”\n\n知道没戏了\n\n周三下午第二个面试。\n\nMCN公司。\n\n武林广场附近。\n\n面试是个94年的妹子。\n\n她看着我双11的活动复盘2019年做的。\n\n眼睛一亮。\n\n“数据sense还在啊”\n\n她没问我结婚没。\n\n只问我“薪资预期？”\n\n我说我比5年前低20%吧。\n\n她笑了一下：“我们给你的薪资还是你原来的。”\n\n周四中午offer拿到了。\n\n走出来接娃在钱塘江边哭10分钟。\n\n5年我以为被职场淘汰。\n\n原来被暂停。\n\n妈妈们别害怕！\n\n你的能力在的。",
   "words": [
-   342,
-   333
+   371,
+   354
   ],
-  "copy": 0.19,
+  "copy": 0.13,
   "numbers": [
-   11,
-   11
+   9,
+   9
   ],
   "judge_clean": true
  }

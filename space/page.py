@@ -108,7 +108,7 @@ def draft_head() -> str:
 
 
 def draft_foot(examples) -> str:
-    short = {"en-email": ("Email", "英文邮件"), "en-reddit": ("Reddit", "Reddit 帖"),
+    short = {"en-email": ("Email", "英文邮件"), "en-review": ("Film review", "影评"),
              "en-essay": ("Essay", "英文作文"), "zh-email": ("中文邮件", "中文邮件"),
              "zh-social": ("中文社交帖", "中文社交帖")}
     btns = "".join(f'<button type="button" class="sample-btn" data-sample="{e["id"]}">{L(*short[e["id"]])}</button>'
@@ -174,10 +174,10 @@ def examples_section(examples) -> str:
     return f"""<section class="sec" id="examples">
   <p class="eyebrow">{L("Examples", "示例")}</p>
   <h2 class="sec-title">{L("Real before and after", "改写前后，真实输出")}</h2>
-  {P("Drafts from our held-out evaluation set, never seen in training. The right side is the released model's first sample, not edited; only whitespace is normalised. "
+  {P("Drafts from our held-out evaluation set, never seen in training. The right side is the first sample from the Q8_0 file you download (llama.cpp, the app's settings), not edited; only whitespace is normalised. "
      "<span class='ins'>Highlight</span> = new wording, <span class='del'>strikethrough</span> = draft wording that was replaced. "
      "We picked these for readability from samples our fact judge passed. Across the whole set the model does sometimes change a detail; how often, and how small, is below.",
-     "草稿来自留出评测集，训练时从没见过。右边是发布版模型的第一发，未经任何修改，只统一了空白。"
+     "草稿来自留出评测集，训练时从没见过。右边是你下载的 Q8_0 文件（llama.cpp，和 App 相同的设置）的第一发，未经任何修改，只统一了空白。"
      "<span class='ins'>荧光笔</span> = 新写的，<span class='del'>删除线</span> = 被改掉的原文。"
      "这几篇是从事实判官判为通过的样本里挑的，为了好读；放到整个评测集上，模型偶尔会改错细节，多常见、错得多小，见下方。",
      "sec-lede")}
@@ -234,8 +234,8 @@ def local_section() -> str:
     <article class="card">
       <div class="card-head">{icon("chip")}<h3>{L("llama.cpp, one line", "llama.cpp 一行命令")}</h3><span class="badge soft">{L("any OS", "任何系统")}</span></div>
       {code_block(llama_cmd)}
-      {P("The first run downloads <code>humanizer-12b-Q8_0.gguf</code> (about 12.7 GB); on a 16 GB machine use <code>humanizer-12b-Q6_K.gguf</code>. This is a text-completion model, not a chat model: send the exact prompt from <code>prompt_format.json</code> to <code>/completion</code> with temperature 1.0, top_p 0.95, top_k 0, min_p 0.",
-         "第一次会下载 <code>humanizer-12b-Q8_0.gguf</code>（约 12.7 GB）；16 GB 内存的机器换成 <code>humanizer-12b-Q6_K.gguf</code>。这是文本续写模型，不是聊天模型：按 <code>prompt_format.json</code> 逐字拼好提示词，发到 <code>/completion</code>，temperature 1.0、top_p 0.95、top_k 0、min_p 0。国内下载慢可以在命令前加 <code>HF_ENDPOINT=https://hf-mirror.com</code>。")}
+      {P("The first run downloads <code>humanizer-12b-Q8_0.gguf</code> (about 12.7 GB); on a 16 GB machine use <code>humanizer-12b-Q6_K.gguf</code> (about 10.0 GB), or <code>humanizer-12b-Q4_K_M.gguf</code> (about 7.6 GB) if disk is tight. This is a text-completion model, not a chat model: send the exact prompt from <code>prompt_format.json</code> to <code>/completion</code> with temperature 1.0, top_p 0.95, top_k 0, min_p 0.",
+         "第一次会下载 <code>humanizer-12b-Q8_0.gguf</code>（约 12.7 GB）；16 GB 内存的机器换成 <code>humanizer-12b-Q6_K.gguf</code>（约 10.0 GB），硬盘紧张就用 <code>humanizer-12b-Q4_K_M.gguf</code>（约 7.6 GB）。这是文本续写模型，不是聊天模型：按 <code>prompt_format.json</code> 逐字拼好提示词，发到 <code>/completion</code>，temperature 1.0、top_p 0.95、top_k 0、min_p 0。国内下载慢可以在命令前加 <code>HF_ENDPOINT=https://hf-mirror.com</code>。")}
     </article>
   </div>
   <div class="docs">
@@ -261,24 +261,24 @@ def bar(label: str, n: int, total: int, strong: bool) -> str:
 
 def results_section() -> str:
     tiles = [
-        ("26 / 210", L("English drafts flagged as AI by Originality.ai", "篇英文草稿被 Originality.ai 判为 AI"),
-         L("API v3, AI Allowance 0% (its strictest setting), measured 2026-10-01, first sample of each draft. 88% judged human.",
-           "API v3，AI Allowance 0%（最严档），2026-10-01 实测，每篇取第 1 发。88% 判为人写。")),
-        ("369 / 420", L("English rewrites with no factual problem found", "篇英文改写，判官没挑出事实问题"),
-         L("Strict LLM judge (GLM-5.3), one vote per rewrite. Previous E4B release: 341 / 409. Where it did find a problem, nearly 9 in 10 fixes are a single word or phrase, like the name “Dame Aylin” coming out as “Dame Alyn”.",
-           "LLM 判官 GLM-5.3，每篇一票、从严。上一版 E4B：409 篇里 341 篇。有问题的，近 9 成改一个词或短语就好，比如人名“Dame Aylin”被写成了“Dame Alyn”。")),
-        ("135 / 204", L("Chinese rewrites with no factual problem found", "篇中文改写，判官没挑出事实问题"),
-         L("Chinese is still catching up with English. Where the judge found a problem, more than 9 in 10 fixes are a single word or phrase, like “3楼第二会议室” becoming “3楼二楼会议室”.",
-           "中文还在追赶英文。有问题的，9 成以上改一个词或短语就好，比如“3楼第二会议室”写成了“3楼二楼会议室”。")),
-        ("0.19", L("median reuse of the draft", "照抄程度中位数（复用率）"),
-         L("The larger of verbatim 5-gram copy and syntactic-skeleton reuse; lower means a deeper rewrite. Previous release: 0.31.",
-           "取逐字 5-gram 照抄和句法骨架复用里较大的那个，越低改得越深。上一版：0.31。")),
+        ("11 / 210", L("English drafts flagged as AI by Originality.ai", "篇英文草稿被 Originality.ai 判为 AI"),
+         L("API v3, AI Allowance 0% (its strictest setting), bf16 weights, measured 2026-10-02, first sample of each draft. 95% judged human. Previous release: 26 / 210. The Q8_0 file you download: 15 / 210, within noise of bf16.",
+           "API v3，AI Allowance 0%（最严档），bf16 权重，2026-10-02 实测，每篇取第 1 发。95% 判为人写。上一版：26 / 210。你下载的 Q8_0 文件：15 / 210，和 bf16 的差别在噪声范围内。")),
+        ("376 / 420", L("English rewrites with no factual problem found", "篇英文改写，判官没挑出事实问题"),
+         L("Strict LLM judge (GLM-5.3), one vote per rewrite, measured on the Q8_0 file you download. Previous release: 369 / 420; E4B: 341 / 409. Where it did find a problem, more than 9 in 10 fixes are a single word or phrase, like “The remaining 37 complaints” coming out as “The other 37% of complaints”.",
+           "LLM 判官 GLM-5.3，每篇一票、从严，测的是你下载的 Q8_0 文件。上一版：420 篇里 369 篇；E4B：409 篇里 341 篇。有问题的，9 成以上改一个词或短语就好，比如“The remaining 37 complaints”（剩下的 37 条投诉）被写成了“The other 37% of complaints”（另外 37% 的投诉）。")),
+        ("149 / 204", L("Chinese rewrites with no factual problem found", "篇中文改写，判官没挑出事实问题"),
+         L("Chinese is still catching up with English (previous release: 135 / 204). Where the judge found a problem, about 9 in 10 fixes are a single word or phrase, like “本月20日前后” (around the 20th of this month) becoming “20号以前” (before the 20th).",
+           "中文还在追赶英文（上一版：204 篇里 135 篇）。有问题的，约 9 成改一个词或短语就好，比如“本月20日前后”写成了“20号以前”。")),
+        ("0.165", L("median reuse of the draft", "照抄程度中位数（复用率）"),
+         L("The larger of verbatim 5-gram copy and syntactic-skeleton reuse; lower means a deeper rewrite. Previous release: 0.19; E4B: 0.31.",
+           "取逐字 5-gram 照抄和句法骨架复用里较大的那个，越低改得越深。上一版：0.19；E4B：0.31。")),
     ]
     tiles_html = "".join(f'<div class="tile"><div class="tile-num">{n}</div><div class="tile-label">{a}</div>'
                          f'<div class="tile-note">{b}</div></div>' for n, a, b in tiles)
     bars = (bar(L(f"{A(BLADER, 'blader/humanizer')} skill (v3.1.0, Claude Sonnet following its rules)",
                   f"{A(BLADER, 'blader/humanizer')} skill（v3.1.0，Claude Sonnet 按它的规则改）"), 60, 60, False)
-            + bar(L("humanizer 12B (this model)", "humanizer 12B（本模型）"), 10, 60, True))
+            + bar(L("humanizer 12B (this model, bf16)", "humanizer 12B（本模型，bf16）"), 4, 60, True))
     return f"""<section class="sec" id="results">
   <p class="eyebrow">{L("Results", "评测")}</p>
   <h2 class="sec-title">{L("What it does, measured", "实测结果")}</h2>
@@ -293,8 +293,8 @@ def results_section() -> str:
        "blader/humanizer 是 GitHub 上最火的去 AI 味 skill（5.3 万星）。两者是不同类型的工具（给通用模型的一套规则 vs. 专门微调的改写模型），所以这里比的是同一批输入上的结果，不是方法本身。",
        "fine")}
   </div>
-  {P("<b>Where it still fails:</b> the most templated genres. Social posts with emoji, hashtags or “1/ 2/” threads: 8 / 16 flagged. Formal policy memos: 5 / 13. Detectors change: this is what one detector said on one date, not a promise about any other detector or date.",
-     "<b>还会失败的地方：</b>最模板化的体裁。带 emoji、井号或“1/ 2/”连载的社交帖：8 / 16 被判 AI；正式政策备忘：5 / 13。检测器会更新，这只是一个检测器在某一天的结果，不代表其他检测器或其他时间。",
+  {P("<b>Where it still fails:</b> the most templated genres. Social posts with emoji, hashtags or “1/ 2/” threads: 3 / 16 flagged. Formal policy memos: 2 / 13. Detectors change: this is what one detector said on one date, not a promise about any other detector or date.",
+     "<b>还会失败的地方：</b>最模板化的体裁。带 emoji、井号或“1/ 2/”连载的社交帖：3 / 16 被判 AI；正式政策备忘：2 / 13。检测器会更新，这只是一个检测器在某一天的结果，不代表其他检测器或其他时间。",
      "sec-p")}
   <div class="callout">{P("<b>No AI detector was used anywhere in training:</b> not as a reward, not as a filter, not to pick a checkpoint. The model learns from how people actually write and from whether the facts survived. Detector numbers on this page are only an external check.",
                           "<b>训练全程没有用任何 AI 检测器：</b>不当奖励，不当过滤条件，也不用来挑检查点。模型只从两样东西里学：真人怎么写，以及事实有没有保住。本页的检测器数字只是外部核对。")}</div>
@@ -302,24 +302,24 @@ def results_section() -> str:
   <ol class="steps">
     <li>{P("<b>Supervised fine-tuning, 28,598 pairs</b> of AI draft → real human original. The human side is always real human writing: paper abstracts, government reports, student essays, company and mailing-list email, Reddit, Hacker News, Zhihu and more. The AI side is a draft that a frontier model wrote back from the human text.",
            "<b>监督微调（SFT），28,598 对</b>“AI 草稿 → 真人原文”。人写一侧全是真人文本：论文摘要、政府报告、学生作文、公司和邮件列表邮件、Reddit、Hacker News、知乎等；AI 一侧是前沿模型照着真人原文反写出来的草稿。")}</li>
-    <li>{P("<b>DPO, about 4,100 preference pairs</b>, chosen only on fact fidelity and on how much the output copies the draft (LLM judge GLM-5.3).",
-           "<b>DPO，约 4,100 对偏好对</b>，只按事实忠实度和照抄程度挑选（LLM 判官 GLM-5.3）。")}</li>
-    <li>{P("<b>Reinforcement learning (GRPO)</b> in two runs: 200 steps with a strict single-vote fact judge, then 150 steps of RLRt, where the reward reads the whole rewrite against the draft (penalising severe errors, invented content, changed meaning and dropped formatting) plus a copy penalty. The release is the final RLRt checkpoint.",
-           "<b>强化学习（GRPO）分两段：</b>先 200 步，用单票从严的事实判官；再 150 步 RLRt，奖励 = LLM 判官把改写和草稿对照通读、核对事实（严重错、编造、改了意思、丢格式都扣分），再加照抄惩罚。发布版本就是 RLRt 的最后一个检查点。")}</li>
+    <li>{P("<b>DPO, 3,918 preference pairs</b>, chosen only on fact fidelity and on how much the output copies the draft (LLM judge GLM-5.3).",
+           "<b>DPO，3,918 对偏好对</b>，只按事实忠实度和照抄程度挑选（LLM 判官 GLM-5.3）。")}</li>
+    <li>{P("<b>Reinforcement learning (GRPO) in three rounds, 500 steps in total</b> (200 + 150 + 150). Round 1 used a strict single-vote fact judge. In rounds 2 and 3 (RLRt, then RLRt2) the reward is an LLM judge that reads the whole rewrite against the draft (penalising severe errors, invented content, changed meaning and dropped formatting), plus a copy penalty; round 3 drew its drafts from a genre-balanced pool of 8,268. In all, RL generated 41,600 rewrites, each scored by an LLM judge against its draft. The release is the final RLRt2 checkpoint.",
+           "<b>强化学习（GRPO）分三轮，共 500 步</b>（200 + 150 + 150）。第一轮用单票从严的事实判官；第二、三轮（RLRt，然后 RLRt2）的奖励 = LLM 判官把改写和草稿对照通读、核对事实（严重错、编造、改了意思、丢格式都扣分），再加照抄惩罚；第三轮的草稿取自按体裁配平的 8,268 篇草稿池。RL 一共生成了 41,600 篇改写，每篇都由 LLM 判官对照草稿打分。发布版本就是 RLRt2 的最后一个检查点。")}</li>
   </ol>
 </section>"""
 
 
 def limits_section() -> str:
     items = [
-        ("<b>It can still change a detail.</b> A strict LLM judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase, such as a misspelled name. Read the result before you send it, especially numbers, dates and names.",
-         "<b>细节还可能出错。</b>英文 420 篇改写里，从严的 LLM 判官在 369 篇里没挑出事实问题；有问题的，近 9 成改一个词或短语就好，比如拼错一个人名。发出去之前还是请读一遍，重点看数字、日期和人名。"),
-        ("<b>Chinese is still catching up with English:</b> no factual problem in 135 of 204 Chinese rewrites; where there was one, more than 9 in 10 fixes are a single word or phrase.",
-         "<b>中文还在追赶英文：</b>中文 204 篇改写里 135 篇判官没挑出事实问题；有问题的，9 成以上改一个词或短语就好。"),
-        ("<b>Templated genres still look machine-made to detectors:</b> social posts with emoji, hashtags or numbered threads (8/16 flagged) and formal policy memos (5/13).",
-         "<b>模板化体裁仍容易被检测器认出：</b>带 emoji、井号或编号连载的社交帖（8/16 被判 AI），正式政策备忘（5/13）。"),
-        ("<b>Formatting is not always kept.</b> 35 of 420 outputs dropped a format element. Paragraph breaks and list or heading markup sometimes change.",
-         "<b>格式不一定保得住。</b>420 发里有 35 发丢了格式要素；分段、列表和标题标记有时会变。"),
+        ("<b>It can still change a detail.</b> A strict LLM judge found no factual problem in 376 of 420 English rewrites; where it found one, more than 9 in 10 fixes are a single word or phrase, such as “The remaining 37 complaints” becoming “The other 37% of complaints”. Still, read the result before you send it, especially numbers, dates, names (and the direction of every claim).",
+         "<b>细节还可能出错。</b>英文 420 篇改写里，从严的 LLM 判官在 376 篇里没挑出事实问题；有问题的，9 成以上改一个词或短语就好，比如“The remaining 37 complaints”（剩下的 37 条投诉）被写成了“The other 37% of complaints”（另外 37% 的投诉）。发出去之前还是请读一遍，重点看数字、日期、人名（和每个论断的方向）。"),
+        ("<b>Chinese is still catching up with English:</b> no factual problem in 149 of 204 Chinese rewrites; where there was one, about 9 in 10 fixes are a single word or phrase, such as “本月20日前后” (around the 20th of this month) becoming “20号以前” (before the 20th).",
+         "<b>中文还在追赶英文：</b>中文 204 篇改写里 149 篇判官没挑出事实问题；有问题的，约 9 成改一个词或短语就好，比如“本月20日前后”写成了“20号以前”。"),
+        ("<b>Templated genres still look machine-made to detectors:</b> social posts with emoji, hashtags or numbered threads (3/16 flagged) and formal policy memos (2/13).",
+         "<b>模板化体裁仍容易被检测器认出：</b>带 emoji、井号或编号连载的社交帖（3/16 被判 AI），正式政策备忘（2/13）。"),
+        ("<b>Formatting is not always kept.</b> 28 of 420 outputs dropped a format element. Paragraph breaks and list, heading or code markup sometimes change.",
+         "<b>格式不一定保得住。</b>420 发里有 28 发丢了格式要素；分段、列表、标题和代码标记有时会变。"),
         ("<b>Register can drift in casual genres.</b> In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft.",
          "<b>随意体裁里语气会跑。</b>Reddit 一类的帖子里，它有时会加上原文没有的俚语或粗口。"),
         ("<b>Detectors change.</b> The detection numbers above are one measurement on one date. Nothing here guarantees a result on any detector.",
