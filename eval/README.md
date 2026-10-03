@@ -36,6 +36,10 @@ One measurement per file on one date. Detectors change.
 
 ---
 
+Privacy note: a few drafts (and the rewrites of them) contained a real person's name and email address that the draft-writing model had inserted into signatures. In this public copy they are replaced with the placeholder "Daniel Park" / daniel.park@example.com (Chinese: 林同学). All scores were computed before this replacement; only the name and address differ.
+
+---
+
 # 评测集与原始结果
 
 主 README 里所有数字的原始数据都在这里。这些数据没有用于训练。
@@ -51,3 +55,5 @@ One measurement per file on one date. Detectors change.
 - `originality/`:Originality.ai(API v3,AI Allowance 0% 最严档)对每篇英文草稿第 1 发的检测结果;`label: 1` 表示被判为 AI。各文件的测量日期和结果见上表。
 
 检测结果只代表这一天、这一档位的一次测量,检测器会更新。
+
+隐私说明：少数草稿（及其改写）的落款里有起草模型写进去的真实姓名和邮箱，公开版已统一换成占位的 "Daniel Park" / daniel.park@example.com（中文为"林同学"）。所有分数都是在替换之前算的，只有姓名和邮箱不同。

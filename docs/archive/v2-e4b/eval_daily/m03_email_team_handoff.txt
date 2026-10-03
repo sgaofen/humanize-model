@@ -10,7 +10,7 @@ Second, the data-cleaning script lives in the shared repo under /scripts/data_cl
 
 I've also left comments throughout both codebases and a short README in each folder summarizing what's been done and what's outstanding.
 
-Thank you all for such a great learning experience this summer — I've genuinely enjoyed working with this team. Feel free to reach out at stephenyu070129@gmail.com if anything comes up before my last day.
+Thank you all for such a great learning experience this summer — I've genuinely enjoyed working with this team. Feel free to reach out at daniel.park@example.com if anything comes up before my last day.
 
 Best,
-Stephen
+Daniel

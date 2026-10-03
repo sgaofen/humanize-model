@@ -110,7 +110,7 @@ All drafts below were written by Claude Sonnet for the evaluation set (`eval_dai
 > 
 > Dear Dr. [Researcher's Name],
 > 
-> My name is Stephen Yu, and I am a PhD student researching [your research area]. I recently came across your published dataset on [dataset topic] and was impressed by its scope and the rigor of its collection methodology. I believe it holds significant potential for further analysis that aligns closely with my current research interests.
+> My name is Daniel Park, and I am a PhD student researching [your research area]. I recently came across your published dataset on [dataset topic] and was impressed by its scope and the rigor of its collection methodology. I believe it holds significant potential for further analysis that aligns closely with my current research interests.
 > 
 > I am writing to ask whether you would be open to a collaboration centered on this dataset. Specifically, I am interested in applying [describe planned analysis, e.g., a machine learning framework, statistical modeling approach, or comparative analysis] to explore [specific research question or hypothesis]. I believe this could yield insights that complement and extend the findings from your original work.
 > 
@@ -119,8 +119,8 @@ All drafts below were written by Claude Sonnet for the evaluation set (`eval_dai
 > I would greatly appreciate the opportunity to discuss this further at your convenience. Thank you for considering my proposal.
 > 
 > Best regards,
-> Stephen Yu
-> stephenyu070129@gmail.com
+> Daniel Park
+> daniel.park@example.com
 
 **Humanizer output / 改写:** *(5-gram copy 0.10)*
 
@@ -128,7 +128,7 @@ All drafts below were written by Claude Sonnet for the evaluation set (`eval_dai
 > 
 > Dear Dr. [Researcher's Name]
 > 
-> My name is Stephen Yu and I am a PhD student interested in researching [your research topic]. Recently, I came across your published data set on [dataset topic]. I was impressed by the breadth of the data set and the rigor of the data collection methodology. The data set has great potential for further analysis that closely matches my current research interest.
+> My name is Daniel Park and I am a PhD student interested in researching [your research topic]. Recently, I came across your published data set on [dataset topic]. I was impressed by the breadth of the data set and the rigor of the data collection methodology. The data set has great potential for further analysis that closely matches my current research interest.
 > 
 > I am wondering if you might be interested in collaborating on the data set. More specifically, I am interested in using [describe planned analysis i.e., machine learning framework, statistical modelling approach, comparative analysis, etc.] to investigate [specific research question / hypothesis]. I believe that we can obtain insights that will compliment and expand upon your research findings.
 > 
@@ -137,8 +137,8 @@ All drafts below were written by Claude Sonnet for the evaluation set (`eval_dai
 > I would really appreciate your time and willingness to discuss further on this issue when you are available. Thanks for considering my proposal.
 > 
 > Regards,
-> Stephen Yu
-> stephenyu070129@gmail.com
+> Daniel Park
+> daniel.park@example.com
 
 ### Paper methods section (biology) / 论文方法部分
 
@@ -240,7 +240,7 @@ All drafts below were written by Claude Sonnet for the evaluation set (`eval_dai
 > 此致
 > 敬礼
 > 
-> 学生：于同学（stephenyu070129@gmail.com）
+> 学生：林同学（daniel.park@example.com）
 > 2026年9月6日
 
 **Humanizer output / 改写:** *(5-gram copy 0.27)*
