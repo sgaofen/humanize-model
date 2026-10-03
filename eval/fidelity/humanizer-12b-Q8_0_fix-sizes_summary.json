@@ -1,0 +1,69 @@
+{
+ "en": {
+  "flagged": 44,
+  "real": 44,
+  "problems": 135,
+  "per_output": {
+   "1": 10,
+   "2": 11,
+   "3": 7,
+   "4": 5,
+   "5": 5,
+   "6": 5,
+   "7": 1
+  },
+  "kinds": {
+   "word_meaning": 71,
+   "dropped": 18,
+   "added": 17,
+   "meaning_overall": 12,
+   "name": 5,
+   "date": 4,
+   "number": 4,
+   "other": 3,
+   "meaning_overal": 1
+  },
+  "fix": {
+   "one_phrase": 94,
+   "one_word": 31,
+   "one_sentence": 8,
+   "rewrite_needed": 2
+  },
+  "failed": 0
+ },
+ "zh": {
+  "flagged": 54,
+  "real": 54,
+  "problems": 236,
+  "per_output": {
+   "1": 7,
+   "2": 5,
+   "3": 10,
+   "4": 14,
+   "5": 4,
+   "6": 3,
+   "7": 2,
+   "8": 4,
+   "9": 3,
+   "10": 1,
+   "12": 1
+  },
+  "kinds": {
+   "word_meaning": 130,
+   "dropped": 39,
+   "added": 22,
+   "number": 13,
+   "date": 11,
+   "meaning_overall": 9,
+   "name": 7,
+   "other": 5
+  },
+  "fix": {
+   "one_phrase": 136,
+   "one_word": 76,
+   "one_sentence": 21,
+   "rewrite_needed": 3
+  },
+  "failed": 0
+ }
+}

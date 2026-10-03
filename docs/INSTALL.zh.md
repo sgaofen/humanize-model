@@ -17,9 +17,9 @@
 |---|---|---|---|
 | 32 GB 及以上 | **Q8_0**（效果最好） | `humanizer-12b-Q8_0.gguf` | 约 12.7 GB |
 | 16 GB | **Q6_K** | `humanizer-12b-Q6_K.gguf` | 约 10.0 GB |
-| 8 GB | **Lite**：上一版更小的 E4B | `lite/humanizer-lite-Q6_K.gguf` | 约 6.2 GB |
+| 8 GB | **Lite**：更早、更小的 E4B 版 | `lite/humanizer-lite-Q6_K.gguf` | 约 6.2 GB |
 
-更小的 `humanizer-12b-Q4_K_M.gguf`（约 7.6 GB）*即将推出*：过了我们的事实判官才发。各档和全精度模型差多少，见[不用 App 怎么用](USAGE.zh.md#2-选哪个文件)里的实测。
+更小的 `humanizer-12b-Q4_K_M.gguf`（约 7.6 GB）也已经放在 Hugging Face 上，给 llama.cpp、Ollama 或 LM Studio 用；App 里没有这一档。各档和全精度模型差多少（包括事实判官对每个文件的结果），见[不用 App 怎么用](USAGE.zh.md#2-选哪个文件)里的实测。
 
 App 有 1 GB 的容差，32 GB 的电脑报 31.x GB 也会选 Q8_0。在选档页面上随时可以换别的档。所有档位的提示词和参数都一样。
 
@@ -158,3 +158,5 @@ print(json.load(urllib.request.urlopen(req))["content"].strip())
 **我的文字会被发到哪里吗？**不会。App 和服务只听 `127.0.0.1`（你自己的电脑），网页也不从网上加载任何东西。唯一的下载就是模型本身。
 
 **怎么卸载？**macOS：删掉 `Humanizer.app` 和 `~/Library/Application Support/Humanizer`。Windows：在「设置 → 应用」里卸载（便携版直接删文件夹），再删掉 `%LOCALAPPDATA%\Humanizer`。
+
+**怎么换成更新后的模型？**Hugging Face 上的模型文件在 2026-10-02 更新为 RLRt2（见 [README](../README.zh.md#评测结果)）。App 不会替换已经下好的模型：先退出 App，删掉数据目录里 `models` 文件夹中的 `.gguf` 文件（macOS 是 `~/Library/Application Support/Humanizer/models`，Windows 是 `%LOCALAPPDATA%\Humanizer\models`），再打开 App，它会弹出选档页面并下载当前版本。用 `hf download` 的话，再执行一遍同样的命令就会拿到新版。

@@ -75,40 +75,42 @@ All files are in [`jialinyyzz/humanizer`](https://huggingface.co/jialinyyzz/huma
 |---|---|---|
 | 32 GB or more | `humanizer-12b-Q8_0.gguf` | 12,669,627,840 bytes (about 12.7 GB) |
 | 16 GB | `humanizer-12b-Q6_K.gguf` | 10,029,797,088 bytes (about 10.0 GB) |
-| 8 GB | `lite/humanizer-lite-Q6_K.gguf`, the previous, smaller E4B release | about 6.2 GB |
-| (not yet) | `humanizer-12b-Q4_K_M.gguf` | about 7.6 GB, *coming soon*: released only after it passes the fact judge |
+| 16 GB, or short on disk | `humanizer-12b-Q4_K_M.gguf`, the smallest 12B file | 7,625,158,368 bytes (about 7.6 GB) |
+| 8 GB | `lite/humanizer-lite-Q6_K.gguf`, the earlier, smaller E4B release | about 6.2 GB |
 
 Also in the repo:
 
 - `model.safetensors` (bf16, about 24 GB) with `config.json`, `generation_config.json`, `tokenizer.json`, `tokenizer_config.json` and `prompt_format.json` at the root: what transformers, vLLM and the MLX converter use.
-- `lite/` (previous E4B release): `humanizer-lite-Q8_0.gguf` (about 8.0 GB), `humanizer-lite-Q6_K.gguf` (about 6.2 GB), `humanizer-lite-bf16.gguf` (about 14.9 GB), and four safetensors shards (about 15.9 GB) with config, tokenizer and `prompt_format.json`. Same prompt format.
+- `lite/` (earlier E4B release): `humanizer-lite-Q8_0.gguf` (about 8.0 GB), `humanizer-lite-Q6_K.gguf` (about 6.2 GB), `humanizer-lite-bf16.gguf` (about 14.9 GB), and four safetensors shards (about 15.9 GB) with config, tokenizer and `prompt_format.json`. Same prompt format.
 
-**How much the quantised files differ from bf16.** We measured on 104 drafts and their rewrites from the evaluation set (no overlap with the calibration data). Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embeddings and output layer kept at 8-bit.
+**How much the quantised files differ from bf16.** In all three GGUF files the token embeddings and the output layer stay at 8-bit; Q6_K and Q4_K_M are also imatrix-calibrated on our own rewriting data. KL was measured over about 33,000 tokens of drafts and rewrites from the evaluation set (no overlap with the calibration data). The last column is the strict fact judge from the README on all 420 English rewrites of the evaluation set, run on each file with llama.cpp.
 
-| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity |
-|---|---|---|---|
-| Q8_0 | 0.0017 | 98.4% | +0.2% |
-| Q6_K | 0.0033 | 97.8% | +0.5% |
-| Q4_K_M | 0.0214 | 93.9% | +2.3% |
+| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity | No factual problem (English) |
+|---|---|---|---|---|
+| bf16 (reference) | | | | 368 / 420 |
+| Q8_0 | 0.0015 | 98.4% | +0.3% | 376 / 420 |
+| Q6_K | 0.0031 | 97.7% | +0.6% | 364 / 420 |
+| Q4_K_M | 0.0215 | 93.9% | +2.5% | 363 / 419 |
 
-The Q4_K_M loss is clearly larger, which is why it waits for the fact judge before release.
+Compared draft by draft with bf16, all three files are within noise on the fact judge.
 
 **Download:**
 
 ```bash
 pip install -U "huggingface_hub[cli]"
 hf download jialinyyzz/humanizer humanizer-12b-Q8_0.gguf prompt_format.json --local-dir ./humanizer-model
-# 16 GB machine: humanizer-12b-Q6_K.gguf instead of humanizer-12b-Q8_0.gguf
+# 16 GB machine: humanizer-12b-Q6_K.gguf instead of humanizer-12b-Q8_0.gguf (or humanizer-12b-Q4_K_M.gguf if disk is tight)
 # Slow from mainland China: put HF_ENDPOINT=https://hf-mirror.com in front of the command
-wc -c ./humanizer-model/*.gguf     # Q8_0: 12669627840 bytes, Q6_K: 10029797088 bytes
+wc -c ./humanizer-model/*.gguf     # Q8_0: 12669627840 bytes, Q6_K: 10029797088 bytes, Q4_K_M: 7625158368 bytes
 ```
 
 sha256 (`shasum -a 256 FILE` on macOS, `sha256sum FILE` on Linux, `certutil -hashfile FILE SHA256` on Windows):
 
 | File | sha256 |
 |---|---|
-| `humanizer-12b-Q8_0.gguf` | `3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9` |
-| `humanizer-12b-Q6_K.gguf` | `ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28` |
+| `humanizer-12b-Q8_0.gguf` | `74d0e61d62c1c9d472002b9175cc71b9e725d5b5a4236383d89b04bdc29f05b9` |
+| `humanizer-12b-Q6_K.gguf` | `bc2259fabf2a03de6894bdca0c65092608e52fefe48ba6b624a51c82c1e522c5` |
+| `humanizer-12b-Q4_K_M.gguf` | `5f0fd4bf39401e58c1d4b4a3eda3fc42f64cb9f28d7cd80bcfccca568b215a2f` |
 | `lite/humanizer-lite-Q6_K.gguf` | `baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c` |
 
 ## 3. llama.cpp (recommended)
@@ -523,19 +525,19 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 ## 11. Chinese
 
 - Use **the same English instruction**; don't translate it.
-- Chinese is **still catching up with English**: our fact judge found no factual problem in 135 of 204 Chinese rewrites; where it found one, more than 9 in 10 fixes are a single word or phrase.
-- Chinese rewrites copy the draft more often. In the evaluation, the anti-copy resample (triggered above 35% copying) fired for 17 of 204 Chinese outputs and 0 of 420 English ones. If a rewrite looks too close to the draft, sample again; the batch script does this automatically.
+- Chinese is **still catching up with English**: our fact judge found no factual problem in 149 of 204 Chinese rewrites; where it found one, about 9 in 10 fixes are a single word or phrase.
+- Chinese rewrites copy the draft more often. With the Q8_0 file, 14 of 204 Chinese rewrites copied more than 35% of the draft, against 1 of 420 English ones. If a rewrite looks too close to the draft, sample again; the batch script does this automatically.
 - **Numbers change form** more often in Chinese: Chinese numerals become digits (三 → 3) and dates get reformatted (6月14日 → 6.14). Digit-only checks, like the one in the app and in the batch script, can't see this. Check the numbers by reading.
 - Full-width and half-width punctuation may switch, and greeting, body and sign-off lines are sometimes merged into one paragraph. Fix the layout before sending.
 - Speed is similar to English. With llama.cpp Q8_0 on an M5 Max, a Chinese email of about 300 characters takes about 8.5 seconds.
 
 ## 12. Quality checklist
 
-- **Read the rewrite once.** Check every number, date, unit and name, and the direction of every claim (who did what, more or less, before or after). On our evaluation set a strict judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase, like a misspelled name.
-- **Restore formatting** you need: subject lines, lists, headings and sign-offs are sometimes dropped (35 of 420 outputs).
+- **Read the rewrite once.** Check every number, date, unit and name, and the direction of every claim (who did what, more or less, before or after). On our evaluation set a strict judge found no factual problem in 376 of 420 English rewrites; where it found one, more than 9 in 10 fixes are a single word or phrase, like "37 complaints" becoming "37% of complaints".
+- **Restore formatting** you need: subject lines, lists, headings and sign-offs are sometimes dropped (28 of 420 outputs).
 - **Too close to the draft? Sample again.** Each run is a fresh sample.
 - **Casual genres can drift in register.** In Reddit-style posts it sometimes adds slang or profanity that wasn't in the draft; edit it out.
-- **No detector guarantee.** Our detector numbers are one measurement on one date with one detector; templated genres (emoji or hashtag social posts, policy memos) are still often flagged. Nothing here promises any detector outcome.
+- **No detector guarantee.** Our detector numbers are one measurement on one date with one detector; templated genres (emoji or hashtag social posts, policy memos) are still the most often flagged. Nothing here promises any detector outcome.
 - It is a writing tool for your own drafts. Where a school, employer or publication has rules about AI assistance, follow them.
 
 ## 13. Troubleshooting
@@ -548,9 +550,9 @@ The copy ratio here is a rough measure (share of the rewrite's 5-word or 5-chara
 | Output is almost the same as the draft | Sampling luck, or temperature too low | Check temperature 1.0 and sample again |
 | Rambling, odd word choices, or repeated phrases | Wrong samplers (llama.cpp's default top-k 40 / min-p 0.05, the top-k 64 from `generation_config.json`, or a repetition penalty) | Set top-k 0, min-p 0, repetition penalty 1.0 explicitly |
 | Rewrite cut off mid-sentence | Output limit or context too small | Raise `n_predict` / `max_tokens`; give llama-server `-c 8192 -np 1`; split long drafts |
-| Out of memory while loading | File too large for your RAM or VRAM | Use Q6_K (16 GB) or the lite model (8 GB); lower `-ngl` |
+| Out of memory while loading | File too large for your RAM or VRAM | Use Q6_K (16 GB), Q4_K_M, or the lite model (8 GB); lower `-ngl` |
 | Very slow | Running on the CPU | Look for `offloaded N/N layers` in the llama.cpp log; install the Metal, CUDA or Vulkan build |
-| 404 when downloading | Wrong file name, or a file that isn't published yet (Q4_K_M) | Use the names in [section 2](#2-pick-a-file) |
+| 404 when downloading | Wrong file name | Use the names in [section 2](#2-pick-a-file) |
 | Self-test fingerprint fails | The prompt builder differs from training | Copy `build_prompt` from [section 1](#the-prompt) |
 
 **Self-test.** [AGENTS.md, section 8](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md#8-self-test-verify-the-install) has a standard-library script that sends a real draft from the evaluation set to llama-server and checks the prompt format, the endpoint, chat-template leaks and copying. It prints `PASS` when the setup is right.

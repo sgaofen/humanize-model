@@ -1,0 +1,1320 @@
+[
+ {
+  "case": "zh_email_00_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "学号2023214056、9月25日2点、理科楼A座412室、会议名称、分组报告、9月28日15-16点、周四前发邮箱等事实全部保留；问候'您好'、落款'祝好！张伟 2026年9月21日'保留；段落结构完整。但'我好随您一起变更''恳请改期一下时间'等表述生硬，稍欠自然。"
+  }
+ },
+ {
+  "case": "zh_email_00_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "学号、9月25日下午2点、理科楼A座412、会议全称、报告题目、9月28日3-4点、对照实验、周四前发稿等事实均保留；问候语'李明教授您好'、'祝好'及落款均在；段落结构完整。'能否请教老师一个问题'为口语化过渡语，未引入新事实。"
+  }
+ },
+ {
+  "case": "zh_email_02_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "日期(9月18/22/27日、10月1日前、9月25日)、金额(280元、168元)、地址、人名(李晨、王敏)、顺丰、公司名均保留;无新增事实;问候落款与分段格式保留。但“更新下客户经理李晨”“带到您那边”等表述生硬,略有翻译腔。"
+  }
+ },
+ {
+  "case": "zh_email_02_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "日期、金额、人名等事实全部保留。但草稿为'联系我'，输出写成'给我打个电话'，新增了打电话这一联系方式；'168元值的''争取加急运''经我们确认物流和财务部门'等表达生硬，影响自然度。"
+  }
+ },
+ {
+  "case": "zh_email_04_glm",
+  "i": 0,
+  "verdict": null
+ },
+ {
+  "case": "zh_email_04_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "日期、订单号20240512-3387、型号、399元、尾号6621、12315、3个工作日等事实全部保留；问候、此致敬礼、姓名电话落款均在；段落结构保留但问候被并入首段，行文略有口语化磕绊。"
+  }
+ },
+ {
+  "case": "zh_email_06_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "名单8人、岗位、邮箱格式、CRM4人、看板2人、VPN8人、9月28日9点报到、9月26日截止等全部保留；问候'大家好'与落款'市场部于世恒2026-09-21'仍在；条列与需求分项保留，仅措辞更口语化。"
+  }
+ },
+ {
+  "case": "zh_email_06_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "全部人名、日期、系统需求均保留，落款“市场部 于世恒 2026年9月21日”在。个别句子如“请基础权限。包括请假、报销”稍显生硬，故人物感4分。"
+  }
+ },
+ {
+  "case": "zh_email_08_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "地址、日期12月31日、押金6000元、工行尾号2386、户名张伟等全部保留；问候'李女士，您好'与'此致 敬礼'、落款及日期均在；分段结构保留，无新增事实；非逐字但自然流畅。"
+  }
+ },
+ {
+  "case": "zh_email_08_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "地址、退租日期、费用项目、押金6000元、工行户名张伟尾号2386等事实全部保留；问候'李女士您好'与'此致敬礼'及署名日期均在；书信分段格式未变；改动为口语化同义改写，非逐字。"
+  }
+ },
+ {
+  "case": "zh_email_10_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "事实被改：\"三个关键节点交付事项\"变成\"3个关键节点交接内容\"，\"界面改版需求的可行性评估\"变成\"界面修改的版本可能性讨论\"，交付/交接、可行性/可能性含义改变；其余问候、落款、条列、分机8021等均保留。"
+  }
+ },
+ {
+  "case": "zh_email_10_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "时间、地点、分机8021、三条议程、会前5分钟、共享文件夹等要点齐全；问候'大家好'与落款'李明/项目组/6月10日'保留；条列与段落结构未变，仅有同义替换与句式重组，无新增内容。"
+  }
+ },
+ {
+  "case": "zh_email_12_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "关键事实均保留:50万元、2024年1月启动、2025年10月1日生效、2026年9月30日到期、张敏9月底对接、王工连夜协作。问候'李总'与落款'祝商祺!此致 敬礼'均在,分段结构保留,无新增内容。"
+  }
+ },
+ {
+  "case": "zh_email_12_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "金额50万、日期、王工、张敏、迁移等事实均在；问候与‘祝商祺/此致敬礼’保留；分段保留。但‘夜以继日的配合’‘记忆犹新。所以’等表达生硬、句子破碎，读起来不够自然。"
+  }
+ },
+ {
+  "case": "zh_email_14_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "原文要求告知费用'具体计算方式和收费标准'，OUTPUT写成'还款方式及收费标准'，'计算方式'这一要点丢失；另有'我这边贵行客户'等不通顺表达，影响自然人语感。"
+  }
+ },
+ {
+  "case": "zh_email_14_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实保留：合同号SH202306150087、6382、86万、尾号4216、各日期均在；无新增内容。但\"是否收违约金手续费相关费用\"重复出现两次，问句堆叠成串，行文略显机械。"
+  }
+ },
+ {
+  "case": "zh_email_16_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实保留：1月10日提交、1月17日答辩、三组重复实验、1月6-12日预约、1月24日延期、王老师沟通。落款问候齐全。但\"推迟延期\"\"这三组重复实验要确保消除设备误差\"等表述生硬，个别句子翻译腔，自然度一般。"
+  }
+ },
+ {
+  "case": "zh_email_16_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实保留(日期1月10/17/24日、三组实验、1月6-12日预约、王老师等)。问候落款齐全。个别语句生硬,如\"我叫2023级博士生李明\"\"每周给您报以实验的进展\"\"给你和学院\"(您/你混用),略显机翻感,不够自然。"
+  }
+ },
+ {
+  "case": "zh_essay_00_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "数字与要点齐全：4.8公里、7/18/25/9/13/2分钟、20分钟、漕溪北路均在。无新增事实。但句子碎裂生硬，如“平台以更短时间吸引更多单。商家以更快出菜争取排名。”“他会说”略显翻译腔，不像自然中文写作。"
+  }
+ },
+ {
+  "case": "zh_essay_00_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "数字均保留：4.8公里、7/18/25/9/13/20/2/10分钟；“提前两分钟送达”“系统也没有报警”“下一单会更快”等要点齐全；四段结构保留；无新增事实，仅同义改写。"
+  }
+ },
+ {
+  "case": "zh_essay_02_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "事实全部保留：300元/时、压减九成、周六日程、王建国等均在；无新增内容；无问候落款；段落结构保留。但“她杭州一家互联网公司做运营”缺“在”字，大量句子被拆成碎句（“焦虑改头换面。”“精确到小时。”），读起来生硬不像自然行文。"
+  }
+ },
+ {
+  "case": "zh_essay_02_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "事实全保留：压减九成、李慧、杭州运营、300元/时、周六日程、王建国等均在。无问候落款、无标题，段落保留。但“焦虑不平均”“卸载了部分家庭，也加载倍增”“深夜11点。”等断句生硬、措辞机械，不够自然。"
+  }
+ },
+ {
+  "case": "zh_essay_04_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "国办文件由\"要求公共服务保留传统渠道\"变为\"建议公共服务保留传统渠道\"，改变了文件性质的确定性；\"合肥的社区医院\"变\"合肥部分社区医院\"改变了范围。全文句式破碎、多用省略号， unnatural。"
+  }
+ },
+ {
+  "case": "zh_essay_04_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有事实均保留：71岁、井岗镇、排50分钟、专家号7点抢完、60岁用智能手机不到四成、三甲自助超七成、小张一天帮20位、65岁以上近3000人、国办2年前发文。无新增事实，仅措辞与句式重组。"
+  }
+ },
+ {
+  "case": "zh_essay_06_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "DRAFT称'投诉率在一个月内下降了六成'，OUTPUT写成'投诉率从60%降低了60%'，凭空新增'从60%'这一基数，属添加内容。其余事实、人名、数字（40分钟、20→5分钟、0-4度、48小时、王芳等）均保留，四段结构未变。"
+  }
+ },
+ {
+  "case": "zh_essay_06_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有事实保留：时间缩短至40分钟、排队20→5分钟、李明、陈雨、三天土豆、两千余名、0-4度、48小时留样、王芳、投诉降六成(60%)均在。四段结构保持，无问候落款，属同义改写非逐字。"
+  }
+ },
+ {
+  "case": "zh_essay_08_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT\"容纳了数十万人口\"改为\"承接了十多万人口\"，数量级改变；DRAFT\"上世纪五六十年代\"被删并新添\"不久前\"，时间事实丢失且不实；其余数字、人名、路线、案例均保留。"
+  }
+ },
+ {
+  "case": "zh_essay_08_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "DRAFT称极端通勤'占通勤人口的比例居全国前列'，OUTPUT改为'是中国极端通勤人口比例最高的城市之一'，抬高确定性程度；另有'亦 competent庄'乱码、'程序猿'、'疏解+加密'等破坏可信度，标点破碎不自然。"
+  }
+ },
+ {
+  "case": "zh_essay_10_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "把“尾随进入”改成“串门”，漏洞事实被替换；吐槽被改成直接引语“早上起来没睡醒，头蓬蓬的出去拿快递……”，属DRAFT没有的虚构原话；其余事实（六成、2021年数千条数据等）保留。"
+  }
+ },
+ {
+  "case": "zh_essay_10_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实要点均保留：刷脸失败三次、近60%失窃案与门禁有关、2021年承包商数据泄露数千条、替代方案等均在。\"去年秋天\"对应\"2023年秋\"。无新增内容，段落结构保留。但语句破碎（\"再比如，对于视觉障碍、腿脚不便的学生。\"），自然度一般。"
+  }
+ },
+ {
+  "case": "zh_essay_12_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT明确\"2019年2月\"，OUTPUT开头只写\"翟天临。直播间被问…\"，时间事实丢失；另有病句\"不要只看，应该多看课堂讨论\"\"直接拿AI结果去教上去\"，口语化但多处不通顺。"
+  }
+ },
+ {
+  "case": "zh_essay_12_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "翟天临事件、知网、撤销学位、AI代写、医学工程政策、查重、答辩等要点均在,如“取消了翟天临的博士学位”。无新增事实。段落结构与四段布局保留。个别句式略生硬如“人工智能工具越聪明,但人类不能将责任外包”。"
+  }
+ },
+ {
+  "case": "zh_essay_14_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT\"话题播放量突破数亿次\"被改为\"播放量过亿\"，数量被缩小；要点\"这不是不懂得享受，而是只能在缝隙中享受\"被删。另新增DRAFT没有的段落：\"网友们纷纷称赞……这才是真正的'特种兵'啊！花最少的钱，看最美丽的风景！\""
+  }
+ },
+ {
+  "case": "zh_essay_14_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "事实全保留：1158万、播放量过亿、48小时极限游、四十分钟、不翻汤等均在。但译文破碎生硬，如\"深度游，不一定时间和成正比\"\"让远方在周末卷成\"\"怀中紧握一张行程表（打出来的）\"，语病多，不像自然行文。"
+  }
+ },
+ {
+  "case": "zh_essay_16_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "DRAFT称'上学期十九周…共计一百一十七项'，OUTPUT删去'十九周'，仅剩'共计117项'，数字事实缺失。且'也就是很清楚地说了''补充家访记录表上周的'等表述生硬，不像自然行文。"
+  }
+ },
+ {
+  "case": "zh_essay_16_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "数字与人名全保留：19周/117项/10小时/68.3%/6000余名/超7成/9个APP、林晓芸、张建国；五条待办与政策文件均保留，五段结构未变。无新增事实。个别句子如\"教案写\"\"落实下来还有不一样的\"稍显生硬，整体自然。"
+  }
+ },
+ {
+  "case": "zh_paper_00_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实保留：如8640幅图像、93.6%/90.8%/94.7%、48帧/s、6.8%误差、2025年2月18日实测等均在。结尾应用段落保留，无新增内容。非逐字相同，句式有重组。个别表述如\"尺度的不一致\"\"分别比原始YOLOv8s的精度提高\"稍显生硬。"
+  }
+ },
+ {
+  "case": "zh_paper_00_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字均一致:8640幅、93.6%/90.8%/94.7%、提升2.4/3.1/2.8、71.5%、48帧/秒、18.6%、6.8%;12区域、7∶2∶1、三个对比模型、实测日期均保留,无新增内容,仅同义改写。"
+  }
+ },
+ {
+  "case": "zh_paper_02_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字、人名、要点均保留(412份、86.7%、78.6%、76.4/71.2/64.8分、王立新副教授、23%、三重边界等)。但出现病句\"探索了ChatGPT在大语言模型在编程作业辅助中\"，且\"外部效度有待检验\"与\"有待多校验证\"语义重复，行文生硬。"
+  }
+ },
+ {
+  "case": "zh_paper_02_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "OUTPUT 出现两段几乎重复的摘要，属新增段落；且第一段丢失“摘要：”标题，标题被移到第二段前，原单段格式被打乱。事实数字基本齐全(412份、86.7%、78.6%、85.3%/63.2%、76.4/71.2/64.8、23%、王立新)。语句生硬重复，不像自然人写作。"
+  }
+ },
+ {
+  "case": "zh_paper_04_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "数字基本保留，但\"下降41.2个百分点\"被改为\"降低41.2%\"，百分点与百分数含义不同，影响量的大小。另有生硬错乱表述如\"注意力缩短在作业中的专注时间\"\"青少年度专注(一项任务)的注意力持续时间阈值\"，不像自然中文。"
+  }
+ },
+ {
+  "case": "zh_paper_04_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "全部数字保留：12043人、187→124秒、33.7%、41→68次、41.2/22.6个百分点、r=0.58、587份、78.4%等均在。仅“纵向追踪”简为“追踪研究”、“适应性调节”简为“调节”，属措辞精简不影响事实。格式摘要标题与分段保留。"
+  }
+ },
+ {
+  "case": "zh_paper_06_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字(18,642、3,216、0.881→0.927、91.4%、1.8pp、7分钟、62.5%、94.6%→99.1%、ε=1.0、12轮)与人名李明、王珂均保留，无新增内容；但句读生硬（'62.5%.一次通信7 min左右'），多处用句号断开从句，机器感较强。"
+  }
+ },
+ {
+  "case": "zh_paper_06_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字与人名均保留:18,642/3,216例、ε=1.0、12轮、AUC 0.881→0.927、91.4%、低1.8个百分点、7分钟、62.5%、94.6%→99.1%、李明/王珂、天津节点2024年7月等。仅'临床可解释性'简为'可解释性',未改变事实。"
+  }
+ },
+ {
+  "case": "zh_paper_08_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "各数字均保留：1123名、87.3%、67.5%、93.3%、3.5%、82%、2.6、92.7%、87.5%，人名Siderowf、Brockmann、Wang、Hawskins及PPMI均在；四段结构保留。但OUTPUT句读生硬，如\"达到2.6.\"\"87.5%.肠黏膜\"，略欠自然。"
+  }
+ },
+ {
+  "case": "zh_paper_08_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字、人名、要点均保留(1123例、87.3%/67.5%/93.3%/3.5%、82%、2.6、92.7%/87.5%、Siderowf、Brockmann、Wang、Hawskins、Syn-O2、¹¹C-PI-2620、PPMI)，段落结构保留。仅'提供了新途径'改为'有望应用于'略降确定性；'活检定磷酸化'稍有生硬。"
+  }
+ },
+ {
+  "case": "zh_paper_10_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字与人名均保留(412门、18万、12%、3247/2891人、23特征、AUC0.86/0.79、217名、李文博、183人、19.4%→11.2%、6.2小时)；四段结构保留；但'基于学习者4种行为日志数据'重复出现，略显生硬。"
+  }
+ },
+ {
+  "case": "zh_paper_10_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字与事实均保留：412门、18万、12%、3247/2891人、2.6万、47万条、23项特征、7.4万样本、AUC 0.86/0.79、217名、183人、19.4%→11.2%、6.2小时、李文博等均在。段落结构保留，无问候落款，非逐字，但表述略生硬如'无法在考前及时发现'。"
+  }
+ },
+ {
+  "case": "zh_paper_12_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字与要点均在：如“6.84万元下降至5.97万元，下降了12.7％”“1.86万元…0.42万元”“27.2％…7.0％”“31.5％…58.6％”，人名、日期、结论均保留，无新增事实；但句式偏电报体（“问卷调查+家庭账本+半结构访谈方式”），稍显机械。"
+  }
+ },
+ {
+  "case": "zh_paper_12_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT称学科类培训占比“从27.2%下降至7.0%”，OUTPUT仅写“比例下降至7.0%”，丢失27.2%这一数字；其余事实、人名、数据均保留，无新增内容。"
+  }
+ },
+ {
+  "case": "zh_paper_14_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字与要点保留：5000万/200元/25万人/3万家/320户68%/7.4%/5个百分点/T+1与0.38%-0.6%/14小时/230笔4.6万/800元/40万/12%/2%。段落结构保留且以第一二三分层，无问候落款。'回落至约2%'改为'约为2%'略弱化但事实仍在。个别句子稍显生硬。"
+  }
+ },
+ {
+  "case": "zh_paper_14_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字与要点均保留：5000万、200元/个、25万人、3万家、320户、68%、7.4%、5个百分点、T+1、0.38%-0.6%、14小时、230笔、4.6万、800元、40万、12%、2%。无新增事实，段落结构保留。但个别句子残缺，如“红包活动带动商户侧基础建设的溢出效应”缺谓语。"
+  }
+ },
+ {
+  "case": "zh_report_00_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字与事实全部保留(18%、126条、42%、32家、17家、45人、1.86万、4.8万、6200元、11%)，段落结构未变。但个别句子生硬，如'广告投入，本周共投入4.8万元'重复、'客户资料更新不及时的部分存在'表述别扭。"
+  }
+ },
+ {
+  "case": "zh_report_00_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "OUTPUT写'分配给王磊，陈思雨等等同事'，丢失'6名同事'这一数字；且'周颖负责签到'被改为'协助签到'，职责表述改变。无新增内容，日期分段的段落结构保留。"
+  }
+ },
+ {
+  "case": "zh_report_02_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "时间、编号BZ-03、订单KH-2403-056、人名王志强/李建军/张明华/刘伟/陈国平、1200件、18台、各节点时间均保留;标题、小标题、条列、落款'生产车间 2024年3月13日'均在;改写幅度大但无新增事实。"
+  }
+ },
+ {
+  "case": "zh_report_02_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "事实全保留：时间、编号BZ-03、订单KH-2403-056、1200件、人名、整改五条均在。落款'生产车间 2024.3.13'保留，标题与条列格式保留。'初步判断'改'判定'略增确定性但后文拆检已证实。断句破碎如'经设备拆检。'稍欠自然。"
+  }
+ },
+ {
+  "case": "zh_report_04_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字与要点齐全：单号CK-08023172、127件、89客户、63起投诉、3800单、2:15回滚、62%→91%、10月8日抽查等均在。无新增内容，无问候落款。标题保留、分段与编号条列保留，如“1.IT部…2.客服部…3.”。非逐字相同。"
+  }
+ },
+ {
+  "case": "zh_report_04_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "关键事实均保留:单号CK-08023172、127件/89人/12家企业客户、18时40分首诉、63起、3800单、凌晨2:15回滚、10%灰度24小时、4小时改1小时、李婷20点-次日8点、500元代金券、62%→91%、10月8日抽查等全在。标题与条列结构保留。但行文生硬,标点混用(半角括号、'1:'式编号),不像真人自然书写。"
+  }
+ },
+ {
+  "case": "zh_report_06_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "草稿'未发现用户数据泄露或丢失情况'改为'无用户数据泄露、丢失的情况'，把'未发现'的不确定性断言改成确定事实，改变了确定程度；其余时间、人名、数字均保留。"
+  }
+ },
+ {
+  "case": "zh_report_06_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "所有时间、数字、人名均保留（14:17/1小时43分/3.2万次/李晨/王雪/陈浩/赵明等）。但句式破碎机械，如\"增加了3种监控指标，HTTP错误率。连接数。接口延迟。\"\"镜像版本统一。镜像版本备份校验。\"，读起来不像真人自然书写。"
+  }
+ },
+ {
+  "case": "zh_report_08_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字、人名、要点均保留（2.87亿、51.3%、王芳4120万、安徽41.3%、应收4300万等），问候与落款保留，标题和分节条列仍在。但输出多为电报式短句、标点生硬（如“动员。”“影响客户连续跟进”），略显机械。"
+  }
+ },
+ {
+  "case": "zh_report_08_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "各数字与要点均保留：2.87亿、51.3%、王芳4120万、346条线索、应收4300万等全部在；问候语'尊敬的各位领导'与落款'陈建国 2024年7月5日'保留；标题与各小节仍在。语句标点较随意如'上海国际会展中心。'稍显生硬。"
+  }
+ },
+ {
+  "case": "zh_report_10_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT'下午2时40分左右'发生时间在OUTPUT首段被删,仅剩'下午'；数字时间点丢失。另'初步判断原因为'被改为'初步认定…可能为',确定性被弱化。其余事实、人名、数字均保留,标题与小节结构保留。"
+  }
+ },
+ {
+  "case": "zh_report_10_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "原文\"15时30分解除警戒，恢复通风柜局部区域使用限制\"意为保留限制，OUTPUT改为\"对通风柜局部区域使用解除\"，意思相反，改变了事实。其余数字、人名、要点均保留，无新增内容。"
+  }
+ },
+ {
+  "case": "zh_report_12_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字、人名、要点均保留：18根立柱、4mm偏差、12人班组、8处探伤、李娜3次检查等齐备，未新增内容。但行文较生硬，如\"影响当天气室外吊装约4h\"\"本周的工作重点电梯井道钢结构安装\"缺字，段落压得较紧。"
+  }
+ },
+ {
+  "case": "zh_report_12_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "所有数字与人名均保留：85%、18根立柱、24根横梁、4毫米偏差、王磊、李娜、8处探伤、10月18日等。但输出为电报式短句罗列（如“完成电梯门框进场验收。第三方对主体连接节点复检。”），缺乏自然行文衔接，读起来像清单而非真人写的周报。"
+  }
+ },
+ {
+  "case": "zh_report_14_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "326笔、87.4万、142人、9个工作日、张丽8021、王强、李总、10月21日到账等要点均在；问候、落款、小标题与编号结构保留；为同义改写非逐字。"
+  }
+ },
+ {
+  "case": "zh_report_14_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字与人名齐全：326笔、87.4万、142人、23笔、张丽8021、李总、王强、15天、2小时均保留。问候'各位：'与落款'财务部 2024.10.21'保留。但开头段落与'事件背景'整段重复叙述，行文冗余不自然。"
+  }
+ },
+ {
+  "case": "zh_social_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有数字与事实均保留：4300、8600、13500/月、2.5小时、55小时、82→75公斤、P7、年薪40%、林晓、银泰中心、轻度脂肪肝消失。标题要素保留，条列改为编号但仍在。新增'嘿嘿'仅为语气词非事实。整体口语化、碎片化短句，像社交媒体真人笔记。"
+  }
+ },
+ {
+  "case": "zh_social_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "数字与人名全保留(4300、8600、13500、64平米、P7、40%、林晓等)；标题改写仍在，条列仍在；无新增事实。但\"你条不再疲惫的命\"\"值不值。\"等语句生硬有错字，不像自然行文。"
+  }
+ },
+ {
+  "case": "zh_social_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "日期、医院、70岁、1.2厘米结节、空腹8.3、穿刺和糖耐量、王医生40来岁、引语、复查良性均保留，无新增事实。但改写后句子破碎（如\"王医生，中年，40来岁\"\"我妈脸白了\"），像笔记不像人写的信，自然度下降。"
+  }
+ },
+ {
+  "case": "zh_social_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "日期、医院、套餐、70岁、1.2cm结节、空腹8.3、王医生、复查良性等事实均在；医生引语改写但含义未变；无问候落款、分段保留；但'体检套''还么带父母''听完王医生这一句我妈的话'等错字与生硬表达，像机器改写。"
+  }
+ },
+ {
+  "case": "zh_social_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "事实全保留：分数、6:40、BBC、徐汇图书馆、Lily、陈浩、614二刷7分等均在；无新增内容；无问候落款；分段保留。但 OUTPUT 大量电报式短句（“笨办法，坚持每天”“问老师Lily修改，逐句”），像笔记不像人写的完整句子。"
+  }
+ },
+ {
+  "case": "zh_social_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "DRAFT说\"阅读限时60分钟\"(整个阅读部分限时),OUTPUT写成\"阅读60分钟搞定一篇文章\"，把限时范围从整套阅读改成一篇文章，改变了事实。另外\"录音后标记停顿\"被改成\"记下自己说的东西，暂停\"，含义有损。"
+  }
+ },
+ {
+  "case": "zh_social_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "全部事实保留：日期(8月12日→12.8)、三箱书、Nespresso、猫、600多奶茶钱→600+、2019工体越位、海底捞、稻城亚丁均一致；标题与1-7条列格式保留；无新增内容；改写自然口语化，仅'去成得稻城亚丁'有小笔误。"
+  }
+ },
+ {
+  "case": "zh_social_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有事实保留：8.12、陈屿、三箱书、Nespresso、猫、600多奶茶钱、2019工体越位、海底捞、稻城亚丁、7条清单编号齐；结尾仍问“姐妹们…评论聊一聊👇”。部分句子略生硬如“闻着咖啡香香的”。"
+  }
+ },
+ {
+  "case": "zh_social_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "事实全保留：一百块一位、娃六岁免票、九点场、史雯、96窟、八百、人均两千三等均在。但输出把句子剁成'第二天。''包车全过程。八百。'等碎句，顿号满天飞，像机器断句，极不自然。"
+  }
+ },
+ {
+  "case": "zh_social_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "“早上六点出发”被改成“下午6点从兰州出发”，出发时段被改错；“娃光脚爬了半小时沙丘也没喊累”被写成“也喊累”，否定丢失，事实相反。其余数字、店名、人名基本保留。"
+  }
+ },
+ {
+  "case": "zh_social_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": false,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "OUTPUT 添加了DRAFT没有的\"2017年\"年份；\"凉透了也没喝完\"被改成语义不通的\"喝不到凉透\"；连贯段落被拆成一字一句的碎行，破坏原文档格式，读起来像刻意排版而非自然行文。"
+  }
+ },
+ {
+  "case": "zh_social_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实均在:时间、N+1、小林29岁、陈涛、王磊、22块美式、草莓牛奶等无增删。但过度碎句化(如\"17分钟收拾我的东西\"\"买我的女儿最喜欢的草莓牛奶\")生硬不像自然行文,故人味3分。"
+  }
+ },
+ {
+  "case": "zh_social_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有事实保留：5年空白、凌晨1点改简历、婆婆每周来三天、薪资低20%、offer周四中午、钱塘江边哭。无新增事实。标题保留，无问候落款。碎句风格像随手记录，稍显刻意但自然。"
+  }
+ },
+ {
+  "case": "zh_social_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "标题、时间线与段落保留；数字均在：8点、2020-2025、3天、2秒、94年、2019、低20%、10分钟；无新增事实。但电报式短句过多（\"1点到\"\"妹子94的\"\"我知道不中\"），像刻意压缩，稍欠自然。"
+  }
+ },
+ {
+  "case": "zh_social_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": true,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "DRAFT首条为2026年3月4日，OUTPUT却给后几条添加'2024.06.17''2024.07.09'等年份，属新增且与2026矛盾；'这些年'被改成'这一年多'也改变时长。条列与段落格式保留。"
+  }
+ },
+ {
+  "case": "zh_social_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "两处事实改动：DRAFT「他手机借我扫码」(父亲的手机)被改成「他借我手机扫码」(变成借我的手机)；DRAFT「后来才反应过来」改成「当时就反应过来」，发现时机由事后变为当时。"
+  }
+ },
+ {
+  "case": "zh_zhihu_00_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "5年腾讯/CDG中台/T11/3星/62k->43k/降薪30%/14个月应急金/月供19k/71%->88%等数字全保留；'我就一算盘''大城市人才市场''公司死了'为口语化改写；结尾'祝你们都想明白'保留落款要素；条列与三点结构保留。"
+  }
+ },
+ {
+  "case": "zh_zhihu_00_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "\"服务过几千万用户\"改成\"服务了千万用户\"，数量级被降低；\"组织需要的是标准件\"改成\"组织需要的是标杆\"，含义改变；\"南山科技园\"写成\"南山科园\"。另有多处句子被句号切碎，读感生硬。"
+  }
+ },
+ {
+  "case": "zh_zhihu_02_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "投递量由“估计有六七百份”改为“快有几百份”，裁员人数由“小十万人”改为“10w＋”，数量与确定性被改变；“一笔钱应急”变“一点备用”弱化金额，属事实性偏差。"
+  }
+ },
+ {
+  "case": "zh_zhihu_02_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "evidence": "DRAFT称Meta/Amazon/Google\"裁了小十万人\"(接近十万),OUTPUT改为\"裁了10几万人\"(十万以上),数量被改变;\"掏空一部分积蓄\"改为\"掏空家底\"属强度变化可忽略。其余事实、格式均保留。"
+  }
+ },
+ {
+  "case": "zh_zhihu_04_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "evidence": "日期、金额(980、4.8w、100多、不到700)、尺寸、Bethesda II、复查建议均保留；无新增事实；分段结构保留；口语化改写自然但非逐字。"
+  }
+ },
+ {
+  "case": "zh_zhihu_04_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有日期、金额（980元、4.8万、700元）、Bethesda II类、医生姓名与建议均保留，如“4A只是超声风险分层”“6个月复查一次”。无新增事实，无问候落款，分段保留。但口语化碎片化过度，如“怎么办怎么办？”“长管”略生硬。"
+  }
+ },
+ {
+  "case": "zh_zhihu_06_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "所有事实数字均保留：21.9入学、22.12毕业、base 21k、六版简历、80家投递6面试3offer、12000字论文72分Merit、Dr.Whitfield、CFA一级等。段落结构与DRAFT对应，无问候落款。改动多为口语化同义改写，未增删事实。"
+  }
+ },
+ {
+  "case": "zh_zhihu_06_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有事实保留：2021.9入学、2022.12毕业、base 21k、六版简历、12000字论文、Dr. Whitfield、72分Merit、80家/6面试/3offer、CFA一级同学等均在。无新增事实。无问候落款。段落结构保留但句式碎、'把argument你逻辑中的漏洞无情的捅破'等表达生硬，稍欠自然。"
+  }
+ },
+ {
+  "case": "zh_zhihu_08_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "全部数字与要点保留:6-7h→40分钟、TM-001/JD_001、2h、3h、30%、10行、280行、四个函数名、fillna(ffill)、周报_20260921.xlsx 均在。三层结构与段落条列保留，无新增事实，非逐字，口语化但仍自然。"
+  }
+ },
+ {
+  "case": "zh_zhihu_08_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "全部事实保留：6-7小时→40分钟、SKU编码TM-001/JD_001、2小时+3小时、30%波动、280行、4个函数名、fillna(method='ffill')、周报_20260921.xlsx均在。三层结构与段落格式保留，无问候落款，无新增内容，仅句式重写。"
+  }
+ },
+ {
+  "case": "zh_zhihu_10_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "evidence": "所有事实数字保留：86.4均分、雅思7.0、2.8万/6所/6000文书、32所学校、8申5offer、2022.8企业授信、4.18改专业、爱大曼大华威、不到3k。无新增内容，段落结构保留，口语化自然流畅。"
+  }
+ },
+ {
+  "case": "zh_zhihu_10_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 5,
+   "evidence": "所有事实保留：李老师、均分86.4、雅思7.0、2.8万、4月18日改专业、32所学校、8申5offer、华威金融科技、不到3000元等均在；无新增内容；段落结构保留；口语化改写自然流畅。"
+  }
+ },
+ {
+  "case": "zh_zhihu_12_glm",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "五人事迹、年龄、数字均保留(降薪40%、月流水3w+、22年找7个月)。条列1-3仍在。但语句碎裂别扭，如「这5个人的共同启示给我」「她拒绝了管理岗两次主动的」「直接啪啪在你脸上」，不像真人自然表达。"
+  }
+ },
+ {
+  "case": "zh_zhihu_12_glm",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 2,
+   "evidence": "丢失事实:DRAFT“2010年从武汉一所双非毕业”中的2010年在OUTPUT中消失,只剩“双非毕业,武汉”。另外“睡得着了”被改成“睡着了”,语义受损。全文充斥句号碎片化断句,读起来不像自然真人写作。"
+  }
+ },
+ {
+  "case": "zh_zhihu_14_sonnet",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 3,
+   "evidence": "所有数字与事实(5900/3700/3400/3200/3500/-8%/40%、表姐案例、三条建议)均保留，未添加新事实。但\"亏得确实还行\"、\"'买改'动作\"等表述生硬含混，影响自然人感。"
+  }
+ },
+ {
+  "case": "zh_zhihu_14_sonnet",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": false,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "大部分事实保留，但\"经历好几轮腰斩再翻倍\"被改为\"大腰斩大反转\"，\"翻倍\"这一具体涨幅说法丢失，影响真实幅度；另\"把钱存了定期\"写成\"止损离场，定投，现在存成了定期\"，表述含混但事实未变。"
+  }
+ },
+ {
+  "case": "zh_zhihu_16_luna",
+  "i": 0,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "各数字均保留：4.2万日元/2000元、2.5万日元/1200元、990日元、6000日元、1.5万日元、8000元等。“两三万”写作“23万”属口语化表达，无新增内容，段落结构与要点对应。"
+  }
+ },
+ {
+  "case": "zh_zhihu_16_luna",
+  "i": 1,
+  "verdict": {
+   "facts_all_kept": true,
+   "added_content": false,
+   "greeting_signoff_kept": true,
+   "format_kept": true,
+   "identity": false,
+   "reads_like_person": 4,
+   "evidence": "全部数字与事实保留：4.2万日元/2000元、45平、2.5万/1200、500日元、3000日元、990日元、7000/5000、1.5万机动等均在；无新增事实；无问候落款要求；改写为口语化短句，内容真实性与确定性未变。"
+  }
+ }
+]

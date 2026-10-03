@@ -17,9 +17,9 @@ Either way the model runs on your own computer. The only network access is the o
 |---|---|---|---|
 | 32 GB or more | **Q8_0** (best quality) | `humanizer-12b-Q8_0.gguf` | about 12.7 GB |
 | 16 GB | **Q6_K** | `humanizer-12b-Q6_K.gguf` | about 10.0 GB |
-| 8 GB | **Lite**: the previous, smaller E4B release | `lite/humanizer-lite-Q6_K.gguf` | about 6.2 GB |
+| 8 GB | **Lite**: the earlier, smaller E4B release | `lite/humanizer-lite-Q6_K.gguf` | about 6.2 GB |
 
-A smaller `humanizer-12b-Q4_K_M.gguf` (about 7.6 GB) is *coming soon*: it is released only after it passes our fact judge. How close each file is to the full-precision model is measured in [Usage without the app](USAGE.md#2-pick-a-file).
+A smaller `humanizer-12b-Q4_K_M.gguf` (about 7.6 GB) is also on Hugging Face, for llama.cpp, Ollama or LM Studio; the app doesn't offer it. How close each file is to the full-precision model, including the fact judge on each file, is in [Usage without the app](USAGE.md#2-pick-a-file).
 
 The app allows 1 GB of slack, so a 32 GB PC that reports 31.x GB still gets Q8_0. You can always pick a different size on the setup page. All sizes use the same prompt and settings.
 
@@ -158,3 +158,5 @@ The prompt must be built exactly like this; see [Prompt format](../README.md#pro
 **Is my text sent anywhere?** No. The app and the server listen on `127.0.0.1` (your own computer) only, and the page loads nothing from the internet. The only download is the model itself.
 
 **How do I uninstall?** macOS: delete `Humanizer.app` and `~/Library/Application Support/Humanizer`. Windows: uninstall from Settings → Apps (or delete the portable folder), then delete `%LOCALAPPDATA%\Humanizer`.
+
+**How do I get the updated model?** The model files on Hugging Face were updated on 2026-10-02 (RLRt2, see the [README](../README.md#results)). The app doesn't replace a model it has already downloaded. Quit the app, delete the `.gguf` file in the `models` folder of its data folder (macOS `~/Library/Application Support/Humanizer/models`, Windows `%LOCALAPPDATA%\Humanizer\models`), and open the app again: it shows the size picker and downloads the current file. With `hf download`, run the same command again; it fetches the new version.

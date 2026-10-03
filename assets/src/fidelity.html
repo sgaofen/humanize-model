@@ -21,6 +21,8 @@
   .legend span { display: inline-flex; align-items: center; gap: 7px; }
   .legend i { width: 18px; height: 10px; border-radius: 0 3px 3px 0; background: #5B626C; }
   .legend i.me { background: var(--lime); }
+  .pq .bar.old, .legend i.old { background: #3A3F46; }
+  .pq .vals b.old { color: var(--ink-3); }
   .tiles.t3 { grid-template-columns: 1fr 1fr 1fr; }
 </style>
 </head>
@@ -31,41 +33,40 @@ import { lang, markSvg, esc, done } from './common.js';
 import { barRows, axis } from './chart.js';
 const zh = lang === 'zh';
 
-// 数字来自 release_facts.md「事实忠实度」一节(英文 420 发,GLM-5.3 单票从严)和 experiments/fact_errors/RLRt_summary.json
-// (第二遍复核:对照草稿重读每篇被标出的改写,列出每处问题和要改多少)。全图统一"越高越好",条长按分数算,轴 0–100%。
-// 事实错不报失败百分比:报"没挑出事实问题"的篇数 + 有问题时改一个词或短语就好的比例。
+// 数字来自 humantune/.cache/tmp/rlrt2pub/FACTS.md「Fact fidelity」一节(本版 = RLRt2 的 Q8_0 GGUF,llama.cpp 普通采样;英文 420 发,GLM-5.3 单票从严)
+// 和 eval/fidelity/humanizer-12b-Q8_0_fix-sizes_summary.json(第二遍复核:对照草稿重读每篇被标出的改写,列出每处问题和要改多少)。
+// 全图统一"越高越好",条长按分数算,轴 0–100%。事实错不报失败百分比:报"没挑出事实问题"的篇数 + 有问题时改一个词或短语就好的比例。
 const MAX = 1;
-const me = zh ? 'humanizer 12B（本版）' : 'humanizer 12B (this release)';
-const prev = zh ? '上一版 E4B（r7）' : 'previous E4B (r7)';
+const S = zh ? ['本版 12B（RLRt2，Q8_0 文件）', '上一版 12B（RLRt）', 'E4B（r7，lite/）'] : ['this release (RLRt2, Q8_0 file)', 'previous 12B (RLRt)', 'E4B (r7, lite/)'];
 const Q = zh ? [
-  ['没挑出事实问题', '数字、事件、意思都没改', [369 / 420, '369 / 420'], [341 / 409, '341 / 409']],
-  ['格式保住了', '主题行、列表、落款都在', [385 / 420, '385 / 420'], [356 / 409, '356 / 409']],
-  ['改写而非照抄', '与草稿的复用率不超过 0.5', [0.990, '99.0%'], [0.945, '94.5%']],
+  ['没挑出事实问题', '数字、事件、意思都没改', [376 / 420, '376 / 420'], [369 / 420, '369 / 420'], [341 / 409, '341 / 409']],
+  ['格式保住了', '主题行、列表、落款都在', [392 / 420, '392 / 420'], [385 / 420, '385 / 420'], [356 / 409, '356 / 409']],
+  ['改写而非照抄', '与草稿的复用率不超过 0.5', [0.998, '99.8%'], [0.990, '99.0%'], [0.945, '94.5%']],
 ] : [
-  ['No factual problem found', 'no changed number, event or meaning', [369 / 420, '369 / 420'], [341 / 409, '341 / 409']],
-  ['Kept the format', 'subject line, lists, sign-off all there', [385 / 420, '385 / 420'], [356 / 409, '356 / 409']],
-  ['Rewritten, not copied', 'reuse of the draft at most 0.5', [0.990, '99.0%'], [0.945, '94.5%']],
+  ['No factual problem found', 'no changed number, event or meaning', [376 / 420, '376 / 420'], [369 / 420, '369 / 420'], [341 / 409, '341 / 409']],
+  ['Kept the format', 'subject line, lists, sign-off all there', [392 / 420, '392 / 420'], [385 / 420, '385 / 420'], [356 / 409, '356 / 409']],
+  ['Rewritten, not copied', 'reuse of the draft at most 0.5', [0.998, '99.8%'], [0.990, '99.0%'], [0.945, '94.5%']],
 ];
 const T = zh ? {
   eye: '事实忠实度 · 英文 210 篇 × 2 发 = 420 篇改写', h: '没挑出事实问题的改写更多，照抄更少',
-  sub: 'LLM 判官 GLM-5.3，每篇一票、从严判 · 自建评测集（未参与训练）· 越高越好',
+  sub: 'LLM 判官 GLM-5.3，每篇一票、从严判 · 实测的是你下载的 Q8_0 文件 · 自建评测集（未参与训练）· 越高越好',
   p: '顺利过关的改写占比', ax: '占全部改写',
-  t0k: '判官挑出问题时', t0b: '近 9 成', t0s: '改一个词或短语就好',
-  t0n: '比如人名“Dame Aylin”被写成了“Dame Alyn”。要改一句的 17 处，要重写一段的只有 4 处。',
+  t0k: '判官挑出问题时', t0b: '9 成以上', t0s: '改一个词或短语就好',
+  t0n: '比如草稿里的“The remaining 37 complaints”被写成了“The other 37% of complaints”。要改一句的 8 处，要重写一段的只有 2 处。',
   t1k: '照抄程度中位数（复用率）', t1n: '与草稿重合的程度：逐字 5-gram 与句法骨架复用取大者。越低说明改得越深。',
-  t2k: '中文 204 篇改写', t2b: '135 / 204', t2s: '没挑出事实问题',
-  t2n: '中文还在追赶英文。有问题的，9 成以上改一个词或短语就好，比如“3楼第二会议室”写成了“3楼二楼会议室”。',
-  foot: '问题清单来自同一判官的第二遍复核：对照草稿重读每篇被标出的改写，连细小的措辞差别也列出来。上一版部分指标的分母是 409（原数据如此）。发出去之前请读一遍，重点看数字、日期和人名。',
+  t2k: '中文 204 篇改写', t2b: '149 / 204', t2s: '没挑出事实问题',
+  t2n: '中文还在追赶英文（上一版 135 篇）。有问题的，约 9 成改一个词或短语就好，比如“本月20日前后”写成了“20号以前”。',
+  foot: '问题清单来自同一判官的第二遍复核：对照草稿重读每篇被标出的改写，连细小的措辞差别也列出来。E4B 部分指标的分母是 409（原数据如此）。发出去之前请读一遍，重点看数字、日期和人名。',
 } : {
   eye: 'Fact fidelity · English, 210 drafts × 2 samples = 420 rewrites', h: 'More rewrites with no factual problem, and less copying',
-  sub: 'LLM judge GLM-5.3, one strict vote per rewrite · held-out eval set (not used in training) · higher is better',
+  sub: 'LLM judge GLM-5.3, one strict vote per rewrite · measured on the Q8_0 file you download · held-out eval set (not used in training) · higher is better',
   p: 'Share of rewrites that came through clean', ax: 'of all rewrites',
-  t0k: 'When the judge did find a problem', t0b: 'nearly 9 in 10', t0s: 'fixes are one word or phrase',
-  t0n: 'E.g. the name “Dame Aylin” came out as “Dame Alyn”. 17 fixes took one sentence; only 4 needed a passage rewritten.',
+  t0k: 'When the judge did find a problem', t0b: 'more than 9 in 10', t0s: 'fixes are one word or phrase',
+  t0n: 'E.g. the draft’s “The remaining 37 complaints” came out as “The other 37% of complaints”. 8 fixes took one sentence; only 2 needed a passage rewritten.',
   t1k: 'Median reuse', t1n: 'Overlap with the draft: the larger of verbatim 5-gram copy and syntactic-skeleton reuse. Lower means a deeper rewrite.',
-  t2k: 'Chinese, 204 rewrites', t2b: '135 / 204', t2s: 'no factual problem found',
-  t2n: 'Still catching up with English. More than 9 in 10 fixes are one word or phrase, e.g. “3楼第二会议室” became “3楼二楼会议室”.',
-  foot: 'Problems were listed by a second pass of the same judge, which re-read each flagged rewrite against its draft and lists every nitpick, down to small wording nuances. Some previous-release rows have 409 judged rewrites, as recorded. Read numbers, dates and names before you send.',
+  t2k: 'Chinese, 204 rewrites', t2b: '149 / 204', t2s: 'no factual problem found',
+  t2n: 'Still catching up with English (previous release: 135). About 9 in 10 fixes are one word or phrase, e.g. “本月20日前后” (around the 20th) became “20号以前” (before the 20th).',
+  foot: 'Problems were listed by a second pass of the same judge, which re-read each flagged rewrite against its draft and lists every nitpick, down to small wording nuances. Some E4B rows have 409 judged rewrites, as recorded. Read numbers, dates and names before you send.',
 };
 
 const tk = ['0%', '25%', '50%', '75%', '100%'];
@@ -74,17 +75,17 @@ document.getElementById('m').innerHTML = `
   <h2>${esc(T.h)}</h2><p class="sub">${esc(T.sub)}</p>
   <section class="panel sheet">
     <div class="ptitle">${esc(T.p)}</div>
-    <div class="legend"><span><i class="me"></i>${esc(me)}</span><span><i></i>${esc(prev)}</span></div>
-    <div class="plot"><div class="gl">${[0, 25, 50, 75, 100].map((p) => `<i style="left:${p}%"></i>`).join('')}</div>${Q.map(([q, n, a, b]) => `
+    <div class="legend"><span><i class="me"></i>${esc(S[0])}</span><span><i></i>${esc(S[1])}</span><span><i class="old"></i>${esc(S[2])}</span></div>
+    <div class="plot"><div class="gl">${[0, 25, 50, 75, 100].map((p) => `<i style="left:${p}%"></i>`).join('')}</div>${Q.map(([q, n, a, b, c]) => `
       <div class="pq"><div class="q">${esc(q)}<span>${esc(n)}</span></div>
-        <div class="bars"><div class="tr"><div class="bar me" style="width:${(a[0] / MAX * 100).toFixed(2)}%"></div></div><div class="tr"><div class="bar" style="width:${(b[0] / MAX * 100).toFixed(2)}%"></div></div></div>
-        <div class="vals"><b class="me">${esc(a[1])}</b><b>${esc(b[1])}</b></div></div>`).join('')}</div>
+        <div class="bars"><div class="tr"><div class="bar me" style="width:${(a[0] / MAX * 100).toFixed(2)}%"></div></div><div class="tr"><div class="bar" style="width:${(b[0] / MAX * 100).toFixed(2)}%"></div></div><div class="tr"><div class="bar old" style="width:${(c[0] / MAX * 100).toFixed(2)}%"></div></div></div>
+        <div class="vals"><b class="me">${esc(a[1])}</b><b>${esc(b[1])}</b><b class="old">${esc(c[1])}</b></div></div>`).join('')}</div>
     ${axis(tk, T.ax)}
   </section>
   <div class="tiles t3">
     <section class="tile sheet"><div class="k">${esc(T.t0k)}</div><div class="v"><b>${esc(T.t0b)}</b><span>${esc(T.t0s)}</span></div><div class="n">${esc(T.t0n)}</div></section>
     <section class="tile sheet"><div class="k">${esc(T.t2k)}</div><div class="v"><b>${T.t2b}</b><span>${esc(T.t2s)}</span></div><div class="n">${esc(T.t2n)}</div></section>
-    <section class="tile sheet"><div class="k">${esc(T.t1k)}</div><div class="v"><b>0.19</b><span><em>0.31</em>${esc(prev)}</span></div><div class="n">${esc(T.t1n)}</div></section>
+    <section class="tile sheet"><div class="k">${esc(T.t1k)}</div><div class="v"><b>0.165</b><span><em>0.19</em>${esc(S[1])}</span></div><div class="n">${esc(T.t1n)}</div></section>
   </div>
   <p class="foot">${esc(T.foot)}</p>`;
 await done();

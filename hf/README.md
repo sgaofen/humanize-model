@@ -45,20 +45,21 @@ tags:
 |---|---|---|
 | `humanizer-12b-Q8_0.gguf` | 12,669,627,840 bytes (about 12.7 GB) | 32 GB of memory or more. Recommended. |
 | `humanizer-12b-Q6_K.gguf` | 10,029,797,088 bytes (about 10.0 GB) | 16 GB of memory. |
-| `humanizer-12b-Q4_K_M.gguf` | about 7.6 GB | *Coming soon*: released only after it passes the fact judge. |
+| `humanizer-12b-Q4_K_M.gguf` | 7,625,158,368 bytes (about 7.6 GB) | The smallest 12B file, when memory or disk is tight. |
 | `model.safetensors` + `config.json`, `generation_config.json`, `tokenizer.json`, `tokenizer_config.json` | about 24 GB (bf16) | transformers, vLLM, converting to MLX. |
 | `prompt_format.json` | tiny | The instruction and separator, verbatim. |
-| `lite/` | `humanizer-lite-Q8_0.gguf` about 8.0 GB · `humanizer-lite-Q6_K.gguf` about 6.2 GB · `humanizer-lite-bf16.gguf` about 14.9 GB · safetensors (4 shards) about 15.9 GB, with config, tokenizer and `prompt_format.json` | The previous E4B release (formerly `jialinyyzz/humanizer-gemma-4-e4b`), for 8 GB machines. Same prompt format. |
+| `lite/` | `humanizer-lite-Q8_0.gguf` about 8.0 GB · `humanizer-lite-Q6_K.gguf` about 6.2 GB · `humanizer-lite-bf16.gguf` about 14.9 GB · safetensors (4 shards) about 15.9 GB, with config, tokenizer and `prompt_format.json` | The earlier E4B release (formerly `jialinyyzz/humanizer-gemma-4-e4b`), for 8 GB machines. Same prompt format. |
 
-Q6_K and Q4_K_M are imatrix-calibrated on our own rewriting data, with the embeddings and output layer kept at 8-bit. Difference from bf16, measured on 104 drafts and their rewrites from the evaluation set (no overlap with the calibration data):
+In all three GGUF files the token embeddings and the output layer stay at 8-bit; Q6_K and Q4_K_M are also imatrix-calibrated on our own rewriting data. How close each is to bf16: KL over about 33,000 tokens of drafts and rewrites from the evaluation set (no overlap with the calibration data), and the fact judge from [Results](#results) on all 420 English rewrites:
 
-| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity |
-|---|---|---|---|
-| Q8_0 | 0.0017 | 98.4% | +0.2% |
-| Q6_K | 0.0033 | 97.8% | +0.5% |
-| Q4_K_M | 0.0214 | 93.9% | +2.3% |
+| File | Mean KL vs. bf16 | Top token same as bf16 | Perplexity | No factual problem (English) |
+|---|---|---|---|---|
+| bf16 (reference) | | | | 368 / 420 |
+| Q8_0 | 0.0015 | 98.4% | +0.3% | 376 / 420 |
+| Q6_K | 0.0031 | 97.7% | +0.6% | 364 / 420 |
+| Q4_K_M | 0.0215 | 93.9% | +2.5% | 363 / 419 |
 
-The Q4_K_M loss is clearly larger, so it waits for the fact judge. sha256 checksums are in [USAGE.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#2-pick-a-file).
+Compared draft by draft with bf16, all three files are within noise on the fact judge. sha256 checksums are in [USAGE.md](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#2-pick-a-file).
 
 ## Prompt format
 
@@ -255,39 +256,41 @@ More examples (a Reddit post, a Zhihu answer) are in the [GitHub README](https:/
 
 Evaluation set: 312 drafts (210 English, 102 Chinese), 18 genres, written from scratch by GLM-5.3, GPT-5.6 luna and Claude Sonnet (about a third each), never used in training. Two samples per draft.
 
-**AI detection (external check only).** Originality.ai, API v3, AI Allowance 0% (strictest), 2026-10-01, 210 English drafts, first sample each.
+**AI detection (external check only): 95% judged human.** Originality.ai, API v3, AI Allowance 0% (strictest), 2026-10-02, 210 English drafts, first sample each, bf16 weights: 11 of 210 rewrites flagged as AI.
 
 | Model | Flagged as AI | Judged human |
 |---|---|---|
-| **humanizer 12B (this release)** | **26 / 210 (12%)** | **88%** |
-| humanizer E4B (previous release, r7) | 26 / 210 (12%) | 88% |
-| Early 12B checkpoint (R12s12b, temperature 0.85) | 61 / 210 (29%) | 71% |
+| **humanizer 12B, this release (RLRt2, bf16)** | **11 / 210 (5%)** | **95%** |
+| humanizer 12B, previous release (RLRt) | 26 / 210 (12%) | 88% |
+| humanizer E4B (r7, now in `lite/`) | 26 / 210 (12%) | 88% |
 
-Public baseline: the `blader/humanizer` skill (v3.1.0, 53k GitHub stars), applied by Claude Sonnet to the same 60 drafts: 60 / 60 flagged as AI (median AI score 100%). This release on those 60: 10 / 60 flagged. Flagged as AI by genre (all 210 drafts, same setting): social posts with emoji, hashtags or "1/ 2/" threads **8 / 16**, formal policy memos **5 / 13**, blog posts 3 / 16, essays 4 / 38, work reports 2 / 20, paper sections 2 / 22, Reddit posts 1 / 18, emails 1 / 35, forum answers 0 / 18, product reviews 0 / 14 (total 26 / 210). Failures concentrate in the most templated genres. Detectors change; this is one measurement on one date, not a promise.
+Flagged less than half as often as the previous release: on the same drafts, 20 were flagged only for the previous release and 5 only for this one (paired test, p = 0.004). The `humanizer-12b-Q8_0.gguf` file measured 15 / 210 (7%), within noise of bf16 (p = 0.48).
 
-<img src="assets/results-detector-en.png" alt="Originality.ai pass rates" width="100%">
+Public baseline: the `blader/humanizer` skill (v3.1.0, 53k GitHub stars), applied by Claude Sonnet to the same 60 drafts: 60 / 60 flagged as AI (median AI score 100%). This release (bf16) on those 60: **4 / 60** flagged. Flagged as AI by genre (all 210 drafts, bf16, same setting): social posts with emoji, hashtags or "1/ 2/" threads **3 / 16**, formal policy memos **2 / 13**, paper sections 2 / 22, essays 2 / 38, work reports 1 / 20, forum answers 1 / 18, blog posts 0 / 16, Reddit posts 0 / 18, emails 0 / 35, product reviews 0 / 14 (total 11 / 210). The most templated genres are still the hardest. Detectors change; this is one measurement on one date, not a promise.
 
-**Fact fidelity.** **369 of 420 English rewrites came back with no factual problem** from a strict LLM judge (GLM-5.3, one vote per rewrite). The previous release: 341 of 409.
+<img src="assets/results-detector-en.png" alt="Originality.ai: 95% of rewrites judged human" width="100%">
 
-| | **12B (this release)** | E4B (previous, r7) |
-|---|---|---|
-| No factual problem found (higher is better) | **369 / 420** | 341 / 409 |
-| Dropped a format element (lower is better) | **35 / 420** | 53 / 409 |
-| Median reuse, overlap with the draft (lower is better) | **0.19** | 0.31 |
-| Outputs with reuse > 0.5 (lower is better) | **1.0%** | 5.5% |
+**Fact fidelity.** **376 of 420 English rewrites came back with no factual problem** from a strict LLM judge (GLM-5.3, one vote per rewrite), measured on the `humanizer-12b-Q8_0.gguf` file you download. The previous release: 369 of 420.
 
-Where the judge did find a problem, the fix is usually small: a second pass re-read each flagged rewrite against its draft and listed every problem, down to small wording nuances, and nearly 9 in 10 of those fixes are a single word or phrase (for example, the name "Dame Aylin" came out as "Dame Alyn"). Chinese is still catching up with English: no factual problem in 135 of 204 Chinese rewrites; where there was one, more than 9 in 10 fixes are a single word or phrase ("3楼第二会议室" became "3楼二楼会议室"). The evaluation pipeline resamples once with an anti-copy penalty when an output copies more than 35% of the draft: 0 of 420 English and 17 of 204 Chinese outputs; the app never does this automatically (press *Regenerate*). **Still, read the result before you send it, especially numbers, dates and names.**
+| | **This release (RLRt2, Q8_0 file)** | Previous 12B (RLRt) | E4B (r7, `lite/`) |
+|---|---|---|---|
+| No factual problem found (higher is better) | **376 / 420** | 369 / 420 | 341 / 409 |
+| Dropped a format element (lower is better) | **28 / 420** | 35 / 420 | 53 / 409 |
+| Median reuse, overlap with the draft (lower is better) | **0.165** | 0.19 | 0.31 |
+| Outputs with reuse > 0.5 (lower is better) | **0.2%** | 1.0% | 5.5% |
 
-<img src="assets/results-fidelity-en.png" alt="Fact fidelity vs. the previous release" width="100%">
+Where the judge did find a problem, the fix is usually small: a second pass re-read each flagged rewrite against its draft and listed every problem, down to small wording nuances, and more than 9 in 10 of those fixes (125 of 135) are a single word or phrase (for example, the draft's "The remaining 37 complaints" came out as "The other 37% of complaints"). Chinese is still catching up with English: no factual problem in 149 of 204 Chinese rewrites (previous release: 135); where there was one, about 9 in 10 fixes (212 of 236) are a single word or phrase ("本月20日前后", around the 20th of this month, became "20号以前", before the 20th). **Still, read the result before you send it, especially numbers, dates and names.**
+
+<img src="assets/results-fidelity-en.png" alt="Fact fidelity compared with the previous releases" width="100%">
 
 ## Training
 
 **No AI detector was used anywhere in training**: not as a reward, not as a filter, not to pick a checkpoint.
 
 1. **SFT, 28,598 pairs** of AI draft → real human original. The human side is always real human writing (paper abstracts, government reports, student essays, company and mailing-list email, Reddit, Hacker News, Zhihu…); the AI side is a draft a frontier model wrote back from the human text.
-2. **DPO, about 4,100 preference pairs**, chosen only on fact fidelity and copying (LLM judge GLM-5.3).
-3. **GRPO**, 200 steps with a strict single-vote fact judge, then 150 steps of **RLRt** (16 drafts × 8 samples per step, temperature 1.0). Reward: an LLM judge reads the whole rewrite against the draft (severe errors, invented content, changed meaning and dropped formatting cost), plus a copy penalty on 5-gram and syntactic-skeleton reuse (free below .22, then linear).
-4. Release = the final RLRt checkpoint.
+2. **DPO, 3,918 preference pairs**, chosen only on fact fidelity and copying (LLM judge GLM-5.3).
+3. **GRPO in three rounds, 500 steps in total**: 200 steps with a strict single-vote fact judge, then 150 steps of **RLRt** and 150 more of **RLRt2** (16 drafts × 8 samples per step, temperature 1.0). Reward: an LLM judge reads the whole rewrite against the draft (severe errors, invented content, changed meaning and dropped formatting cost), plus a copy penalty on 5-gram and syntactic-skeleton reuse (free below .22, then linear). Round 3 drew its drafts from a genre-balanced pool of 8,268. In all, RL produced 41,600 rewrites, each scored by an LLM judge against its draft.
+4. Release = the final RLRt2 checkpoint.
 
 <img src="assets/training-en.png" alt="Training pipeline" width="100%">
 
@@ -297,10 +300,10 @@ Measured on an M5 Max. llama.cpp Q8_0 with Metal (what the app uses): about 36�
 
 ## Limitations
 
-- It can still change a detail: on our set the judge found no factual problem in 369 of 420 English rewrites, and nearly 9 in 10 of the fixes it did list are a single word or phrase. Proofread numbers, dates and names.
-- Chinese is still catching up with English (no factual problem in 135 of 204 Chinese rewrites; more than 9 in 10 fixes are a single word or phrase).
-- Templated genres (emoji/hashtag social posts, policy memos) are still often flagged by detectors.
-- Formatting can change: 35 of 420 outputs dropped a format element; paragraph breaks, lists and headings sometimes merge or disappear.
+- It can still change a detail: on our set the judge found no factual problem in 376 of 420 English rewrites, and more than 9 in 10 of the fixes it did list are a single word or phrase. Proofread numbers, dates and names.
+- Chinese is still catching up with English (no factual problem in 149 of 204 Chinese rewrites; about 9 in 10 fixes are a single word or phrase).
+- Templated genres are still the hardest for detectors: emoji/hashtag social posts (3 / 16 flagged) and policy memos (2 / 13).
+- Formatting can change: 28 of 420 outputs dropped a format element; paragraph breaks, lists and headings sometimes merge or disappear.
 - In casual genres it sometimes adds slang or profanity that wasn't in the draft.
 - Detector results change over time. Nothing here guarantees any detector outcome.
 - It is a writing tool for your own drafts. Where a school, employer or publication has rules about AI assistance, follow them.

@@ -75,40 +75,42 @@ assert hashlib.sha256(build_prompt("X").encode("utf-8")).hexdigest()[:16] == "cc
 |---|---|---|
 | 32 GB 及以上 | `humanizer-12b-Q8_0.gguf` | 12,669,627,840 字节（约 12.7 GB） |
 | 16 GB | `humanizer-12b-Q6_K.gguf` | 10,029,797,088 字节（约 10.0 GB） |
-| 8 GB | `lite/humanizer-lite-Q6_K.gguf`，即上一版更小的 E4B | 约 6.2 GB |
-| （暂未发布） | `humanizer-12b-Q4_K_M.gguf` | 约 7.6 GB，*即将推出*：过了事实判官才发 |
+| 16 GB，或硬盘紧张 | `humanizer-12b-Q4_K_M.gguf`，最小的 12B 文件 | 7,625,158,368 字节（约 7.6 GB） |
+| 8 GB | `lite/humanizer-lite-Q6_K.gguf`，即更早、更小的 E4B 版 | 约 6.2 GB |
 
 仓库里还有：
 
 - 根目录的 `model.safetensors`（bf16，约 24 GB），以及 `config.json`、`generation_config.json`、`tokenizer.json`、`tokenizer_config.json`、`prompt_format.json`：transformers、vLLM 和 MLX 转换都用它们。
-- `lite/`（上一版 E4B）：`humanizer-lite-Q8_0.gguf`（约 8.0 GB）、`humanizer-lite-Q6_K.gguf`（约 6.2 GB）、`humanizer-lite-bf16.gguf`（约 14.9 GB），以及 4 个 safetensors 分片（约 15.9 GB）和 config、tokenizer、`prompt_format.json`。提示词格式一样。
+- `lite/`（更早的 E4B 版）：`humanizer-lite-Q8_0.gguf`（约 8.0 GB）、`humanizer-lite-Q6_K.gguf`（约 6.2 GB）、`humanizer-lite-bf16.gguf`（约 14.9 GB），以及 4 个 safetensors 分片（约 15.9 GB）和 config、tokenizer、`prompt_format.json`。提示词格式一样。
 
-**量化版和 bf16 差多少。**我们拿评测集里 104 篇草稿和它们的改写当测试文本（和校准数据不重叠）实测。Q6_K 和 Q4_K_M 用我们自己的改写数据做 imatrix 校准，词表和输出层保留 8 bit。
+**量化版和 bf16 差多少。**三个 GGUF 文件的词表和输出层都保留 8 bit；Q6_K 和 Q4_K_M 另外用我们自己的改写数据做了 imatrix 校准。KL 在评测集草稿和改写上测了约 33,000 个 token（和校准数据不重叠）。最后一栏是 README 里那个从严的事实判官，用 llama.cpp 分别跑每个文件、判评测集全部 420 篇英文改写。
 
-| 文件 | 与 bf16 的平均 KL | 首选词与 bf16 一致 | 困惑度 |
-|---|---|---|---|
-| Q8_0 | 0.0017 | 98.4% | +0.2% |
-| Q6_K | 0.0033 | 97.8% | +0.5% |
-| Q4_K_M | 0.0214 | 93.9% | +2.3% |
+| 文件 | 与 bf16 的平均 KL | 首选词与 bf16 一致 | 困惑度 | 没挑出事实问题（英文） |
+|---|---|---|---|---|
+| bf16（基准） | | | | 368 / 420 |
+| Q8_0 | 0.0015 | 98.4% | +0.3% | 376 / 420 |
+| Q6_K | 0.0031 | 97.7% | +0.6% | 364 / 420 |
+| Q4_K_M | 0.0215 | 93.9% | +2.5% | 363 / 419 |
 
-Q4_K_M 的损失明显更大，所以要等事实判官通过才发。
+逐篇和 bf16 对比，三档在事实判官上的差别都在噪声范围内。
 
 **下载：**
 
 ```bash
 pip install -U "huggingface_hub[cli]"
 hf download jialinyyzz/humanizer humanizer-12b-Q8_0.gguf prompt_format.json --local-dir ./humanizer-model
-# 16 GB 的机器:把 humanizer-12b-Q8_0.gguf 换成 humanizer-12b-Q6_K.gguf
+# 16 GB 的机器:把 humanizer-12b-Q8_0.gguf 换成 humanizer-12b-Q6_K.gguf(硬盘紧张就用 humanizer-12b-Q4_K_M.gguf)
 # 国内下载慢:在命令前面加 HF_ENDPOINT=https://hf-mirror.com
-wc -c ./humanizer-model/*.gguf     # Q8_0 应为 12669627840 字节,Q6_K 应为 10029797088 字节
+wc -c ./humanizer-model/*.gguf     # Q8_0 应为 12669627840 字节,Q6_K 应为 10029797088 字节,Q4_K_M 应为 7625158368 字节
 ```
 
 sha256 校验值（macOS 用 `shasum -a 256 文件名`，Linux 用 `sha256sum 文件名`，Windows 用 `certutil -hashfile 文件名 SHA256`）：
 
 | 文件 | sha256 |
 |---|---|
-| `humanizer-12b-Q8_0.gguf` | `3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9` |
-| `humanizer-12b-Q6_K.gguf` | `ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28` |
+| `humanizer-12b-Q8_0.gguf` | `74d0e61d62c1c9d472002b9175cc71b9e725d5b5a4236383d89b04bdc29f05b9` |
+| `humanizer-12b-Q6_K.gguf` | `bc2259fabf2a03de6894bdca0c65092608e52fefe48ba6b624a51c82c1e522c5` |
+| `humanizer-12b-Q4_K_M.gguf` | `5f0fd4bf39401e58c1d4b4a3eda3fc42f64cb9f28d7cd80bcfccca568b215a2f` |
 | `lite/humanizer-lite-Q6_K.gguf` | `baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c` |
 
 ## 3. llama.cpp（推荐）
@@ -523,19 +525,19 @@ if __name__ == "__main__":
 ## 11. 中文
 
 - 用**同一段英文指令**，不要翻译。
-- 中文**还在追赶英文**：204 篇中文改写里，事实判官在 135 篇里没挑出问题；有问题的，9 成以上改一个词或短语就好。
-- 中文改写更容易照抄草稿。评测里，防照抄重采（照抄超过 35% 时触发）在中文 204 发里触发了 17 发，英文 420 发里是 0 发。改写看着和草稿太像就再采一次；批处理脚本会自动这样做。
+- 中文**还在追赶英文**：204 篇中文改写里，事实判官在 149 篇里没挑出问题；有问题的，约 9 成改一个词或短语就好。
+- 中文改写更容易照抄草稿。用 Q8_0 文件时，中文 204 发里有 14 发照抄草稿超过 35%，英文 420 发里只有 1 发。改写看着和草稿太像就再采一次；批处理脚本会自动这样做。
 - 中文里**数字更常换写法**：汉字数字变成阿拉伯数字（三 → 3），日期改格式（6月14日 → 6.14）。App 和批处理脚本里那种只看阿拉伯数字的核对发现不了这类问题，请读一遍核对。
 - 全角、半角标点可能互换；问候、正文、落款有时会被并成一段。发出去之前把格式理一理。
 - 速度和英文差不多：llama.cpp Q8_0 在 M5 Max 上，一封 300 字左右的中文邮件约 8.5 秒。
 
 ## 12. 质量检查清单
 
-- **通读一遍改写。**核对每个数字、日期、单位和人名，以及每个论断的方向（谁做了什么、多还是少、先还是后）。在我们的评测集上，英文 420 篇改写里有 369 篇判官没挑出事实问题；有问题的，近 9 成改一个词或短语就好，比如拼错一个人名。
-- **补回需要的格式：**主题行、列表、标题、落款有时会丢（420 发里有 35 发）。
+- **通读一遍改写。**核对每个数字、日期、单位和人名，以及每个论断的方向（谁做了什么、多还是少、先还是后）。在我们的评测集上，英文 420 篇改写里有 376 篇判官没挑出事实问题；有问题的，9 成以上改一个词或短语就好，比如“37 complaints”（37 条投诉）变成了“37% of complaints”（37% 的投诉）。
+- **补回需要的格式：**主题行、列表、标题、落款有时会丢（420 发里有 28 发）。
 - **和草稿太像？再采一次。**每次都是重新采样。
 - **随意体裁里语气会跑。**Reddit 一类的帖子里，它有时会加上原文没有的俚语或粗口，请删掉。
-- **不保证过检测器。**我们的检测数字是一个检测器在某一天的一次测量；模板化的体裁（带 emoji、井号的社交帖，政策备忘）仍然常被判 AI。这里不对任何检测结果做承诺。
+- **不保证过检测器。**我们的检测数字是一个检测器在某一天的一次测量；模板化的体裁（带 emoji、井号的社交帖，政策备忘）仍然最常被判 AI。这里不对任何检测结果做承诺。
 - 这是给你改自己草稿的写作工具。学校、单位或出版方对 AI 辅助有规定的，请按规定来。
 
 ## 13. 排错
@@ -548,9 +550,9 @@ if __name__ == "__main__":
 | 改写和草稿几乎一样 | 采样运气不好，或温度太低 | 确认 temperature 1.0，再采一次 |
 | 胡言乱语、用词古怪或反复重复 | 采样参数不对（llama.cpp 默认的 top-k 40 / min-p 0.05、`generation_config.json` 里的 top-k 64，或者开了重复惩罚） | 显式设 top-k 0、min-p 0、重复惩罚 1.0 |
 | 改写在句子中间断了 | 输出上限或上下文太小 | 调大 `n_predict` / `max_tokens`；llama-server 加 `-c 8192 -np 1`；长稿分段 |
-| 加载时内存不够 | 文件对你的内存或显存太大 | 16 GB 用 Q6_K，8 GB 用 lite；调低 `-ngl` |
+| 加载时内存不够 | 文件对你的内存或显存太大 | 16 GB 用 Q6_K 或 Q4_K_M，8 GB 用 lite；调低 `-ngl` |
 | 很慢 | 在用 CPU 跑 | 看 llama.cpp 日志里有没有 `offloaded N/N layers`；装 Metal、CUDA 或 Vulkan 版 |
-| 下载时 404 | 文件名写错，或文件还没发布（Q4_K_M） | 用[第 2 节](#2-选哪个文件)里的文件名 |
+| 下载时 404 | 文件名写错 | 用[第 2 节](#2-选哪个文件)里的文件名 |
 | 指纹自检不过 | 提示词拼法和训练时不一样 | 直接复制[第 1 节](#提示词)里的 `build_prompt` |
 
 **自检。**[AGENTS.md 第 8 节](https://github.com/sgaofen/humanize-model/blob/main/AGENTS.md#8-self-test-verify-the-install)有一个只用标准库的脚本：它把评测集里的一篇真实草稿发给 llama-server，检查提示词格式、接口、聊天模板有没有漏进来、有没有照抄。设置正确会打印 `PASS`。

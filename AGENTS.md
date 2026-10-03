@@ -6,7 +6,7 @@ Instructions for AI agents (Claude Code, Codex, Cursor, etc.) setting up **human
 
 - **What it does:** rewrites one AI-written draft (English or Chinese) so it reads like a person wrote it. It is trained to keep every number, unit, date, name and quote, and to add nothing. Output = the rewritten text only.
 - **Kind of model:** 12B **text-completion** model (fine-tuned from `google/gemma-4-12B`). **Not a chat model.** Never use a chat template, a system prompt, or `/v1/chat/completions`.
-- **Weights:** Hugging Face repo `jialinyyzz/humanizer`. Recommended file: `humanizer-12b-Q8_0.gguf` (12,669,627,840 bytes, about 12.7 GB); `humanizer-12b-Q6_K.gguf` (10,029,797,088 bytes, about 10.0 GB) for 16 GB machines. You also need `prompt_format.json` from the same repo.
+- **Weights:** Hugging Face repo `jialinyyzz/humanizer`. Recommended file: `humanizer-12b-Q8_0.gguf` (12,669,627,840 bytes, about 12.7 GB); `humanizer-12b-Q6_K.gguf` (10,029,797,088 bytes, about 10.0 GB) for 16 GB machines; `humanizer-12b-Q4_K_M.gguf` (7,625,158,368 bytes, about 7.6 GB) when memory or disk is tight. You also need `prompt_format.json` from the same repo.
 - **Runtime:** `llama-server` from llama.cpp (macOS, Windows, Linux). Alternatives in section 10.
 - **Sampling:** temperature 1.0, top_p 0.95, and nothing else: top_k 0, min_p 0, repeat_penalty 1.0. Stop on EOS only. No stop strings.
 - **License:** Apache 2.0.
@@ -29,10 +29,10 @@ powershell -c "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory/1GB"  
 | Memory | Use |
 |---|---|
 | 32 GB or more | `humanizer-12b-Q8_0.gguf` (12,669,627,840 bytes) |
-| 16 GB | `humanizer-12b-Q6_K.gguf` (10,029,797,088 bytes) |
-| 8 GB | `lite/humanizer-lite-Q6_K.gguf` (about 6.2 GB): the previous, smaller E4B release. Same prompt format. |
+| 16 GB | `humanizer-12b-Q6_K.gguf` (10,029,797,088 bytes); `humanizer-12b-Q4_K_M.gguf` (7,625,158,368 bytes) if memory or disk is tight |
+| 8 GB | `lite/humanizer-lite-Q6_K.gguf` (about 6.2 GB): the earlier, smaller E4B release. Same prompt format. |
 
-`humanizer-12b-Q4_K_M.gguf` is **not published yet** (it waits for the fact judge); don't try to download it. You also need free disk space for the file you pick. In the commands below, replace the Q8_0 file name if you picked another file.
+You also need free disk space for the file you pick. In the commands below, replace the Q8_0 file name if you picked another file.
 
 ## 3. Install llama.cpp
 
@@ -59,10 +59,11 @@ Check the download:
 
 ```bash
 head -c 4 ./humanizer-model/humanizer-12b-Q8_0.gguf; echo     # must print GGUF
-wc -c ./humanizer-model/*.gguf                                # Q8_0: 12669627840 bytes; Q6_K: 10029797088 bytes
+wc -c ./humanizer-model/*.gguf                                # Q8_0: 12669627840 bytes; Q6_K: 10029797088 bytes; Q4_K_M: 7625158368 bytes
 shasum -a 256 ./humanizer-model/*.gguf                       # macOS (Linux: sha256sum)
-# Q8_0: 3393fb7b978077ca5e0a6e3fef46f50c9cab82cd9496cd77069f090eb23fd5f9
-# Q6_K: ceb7db4eab56be50dc12216ce723eaddcb0c4cbcb88f129ee752510ed66fba28
+# Q8_0:   74d0e61d62c1c9d472002b9175cc71b9e725d5b5a4236383d89b04bdc29f05b9
+# Q6_K:   bc2259fabf2a03de6894bdca0c65092608e52fefe48ba6b624a51c82c1e522c5
+# Q4_K_M: 5f0fd4bf39401e58c1d4b4a3eda3fc42f64cb9f28d7cd80bcfccca568b215a2f
 # lite/humanizer-lite-Q6_K.gguf: baa27697697d87c85f5347b7673c357ff760ed6f7419ce459744c37026f7603c
 ```
 
@@ -191,9 +192,9 @@ if missing: print("NOTE: numbers not found in this sample:", missing,
 
 - Send **one draft per request**. Our setup uses an 8192-token context, so the draft plus the rewrite must fit. For long or structured documents, use `hz` ([section 12](#12-long-and-complex-documents-use-hz)); it splits them for you. For a folder of `.txt` files, [USAGE.md section 9](https://github.com/sgaofen/humanize-model/blob/main/docs/USAGE.md#9-rewrite-a-whole-folder) has a batch script.
 - **Never edit the output silently**, and never tell the user the result is guaranteed to pass an AI detector. Detection numbers in the README are one measurement on one date.
-- **Ask the user to proofread** numbers, dates, names and the direction of each claim. On the evaluation set a strict judge found no factual problem in 369 of 420 English rewrites; where it found one, nearly 9 in 10 fixes are a single word or phrase (for example a misspelled name). Compare the numbers in the draft and the output yourself and point out any that differ.
+- **Ask the user to proofread** numbers, dates, names and the direction of each claim. On the evaluation set a strict judge found no factual problem in 376 of 420 English rewrites; where it found one, more than 9 in 10 fixes are a single word or phrase (for example "37 complaints" became "37% of complaints"). Compare the numbers in the draft and the output yourself and point out any that differ.
 - If an output copies most of the draft, or a number differs, **sample again** (same prompt; sampling is random).
-- Chinese is still catching up with English (no factual problem in 135 of 204 Chinese rewrites; more than 9 in 10 fixes are a single word or phrase).
+- Chinese is still catching up with English (no factual problem in 149 of 204 Chinese rewrites; about 9 in 10 fixes are a single word or phrase).
 - Formatting can change: paragraph breaks, lists and headings are sometimes dropped or merged.
 
 ## 10. Other runtimes
@@ -214,9 +215,9 @@ All of them need the same prompt (step 6) and the same sampling (step 7). Comple
 | Output is cut off at `###` | A stop string was set | Remove all stop strings; rely on EOS |
 | Output is almost the same as the draft | Sampling bad luck, or temperature too low | Check temperature 1.0 and sample again |
 | Rambling or repeated phrases | Wrong sampler settings | Set `top_k: 0, min_p: 0, repeat_penalty: 1.0` explicitly |
-| Out of memory while loading | Not enough RAM or VRAM for Q8_0 | Use Q6_K (16 GB) or the lite model (8 GB); lower `-ngl` |
+| Out of memory while loading | Not enough RAM or VRAM for Q8_0 | Use Q6_K (16 GB), Q4_K_M, or the lite model (8 GB); lower `-ngl` |
 | Very slow | Running on the CPU | Check `offloaded N/N layers` in the log; install the Metal, CUDA or Vulkan build |
-| 404 when downloading a file | Wrong name, or Q4_K_M (not published yet) | Use the file names in step 2 |
+| 404 when downloading a file | Wrong file name | Use the file names in step 2 |
 
 ## 12. Long and complex documents: use `hz`
 
