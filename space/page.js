@@ -1,7 +1,7 @@
 // humanizer Space: language switch, theme toggle, sample drafts, word counter, copy buttons.
 // Runs from <head>; everything is delegated from document, so Gradio re-renders don't matter.
 (function () {
-  var MAX_WORDS = 700, MAX_CJK = 1200;
+  var MAX_WORDS = 700, MAX_CJK = 1200, PARTS = 3;  // keep in step with page.py
   var root = document.documentElement;
   var KEY = 'hz-space-lang';
 
@@ -33,10 +33,10 @@
     var n = c.cjk + c.latin, size = c.latin + c.cjk * MAX_WORDS / MAX_CJK;
     var unitEn = zh ? 'chars' : 'words', unitZh = '字';
     if (!n) zh = root.dataset.lang === 'zh';
-    var lim = zh ? MAX_CJK.toLocaleString('en-US') : String(MAX_WORDS);
+    var lim = (zh ? MAX_CJK * PARTS : MAX_WORDS * PARTS).toLocaleString('en-US');
     el.innerHTML = '<b>' + n.toLocaleString('en-US') + '</b> <span class="l-en">' + unitEn + '</span><span class="l-zh">' + unitZh +
       '</span> <span class="dim">/ ' + lim + '</span>';
-    el.classList.toggle('over', size > MAX_WORDS);
+    el.classList.toggle('over', size > MAX_WORDS * PARTS);
     ta.classList.toggle('cjk', zh);
   }
 

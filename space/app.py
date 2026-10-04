@@ -37,7 +37,7 @@ USAGE_DATASET = "jialinyyzz/humanizer-usage"
 FINGERPRINT = "cc51d66b4c593fbe"
 MOCK = os.environ.get("HUMANIZER_MOCK") == "1"
 
-MAX_WORDS, MAX_CJK = page.MAX_WORDS, page.MAX_CJK
+MAX_WORDS, MAX_CJK, PARTS = page.MAX_WORDS, page.MAX_CJK, page.PARTS
 MAX_DRAFT_TOKENS = 1400      # backstop behind the word / character cap
 TPS_EST = 16.0               # decode speed used to size the GPU slot (measured 17.3-17.5 tok/s on ZeroGPU, bf16)
 SLOT_MIN, SLOT_MAX = 30, 120  # seconds requested from ZeroGPU
@@ -224,10 +224,11 @@ def panel_wait() -> str:
     return _sheet("wait", body)
 
 
-def panel_stream(text: str, cjk: bool) -> str:
+def panel_stream(text: str, cjk: bool, part: int = 1, parts: int = 1) -> str:
+    n = hz_text.count_words(text)
+    prog = L(f" · part {part}/{parts}", f" · 第 {part}/{parts} 段") if parts > 1 else ""
     return _sheet("stream", html.escape(text) + '<span class="caret"></span>', cjk=cjk,
-                  meta=L(f"<b>{hz_text.count_words(text):,}</b> " + ("chars" if cjk else "words"),
-                         f"<b>{hz_text.count_words(text):,}</b> 字"))
+                  meta=L(f"<b>{n:,}</b> " + ("chars" if cjk else "words"), f"<b>{n:,}</b> 字") + prog)
 
 
 def panel_message(kind: str, en: str, zh: str) -> str:
@@ -239,7 +240,7 @@ def _join(xs, zh=False):
     return ("、" if zh else ", ").join(html.escape(x) for x in xs)
 
 
-def panel_done(draft: str, out: str, info: dict, wall: float, cjk: bool) -> str:
+def panel_done(draft: str, out: str, info: dict, wall: float, cjk: bool, extra=()) -> str:
     import diffmark
 
     chk = hz_text.check(draft, out, truncated=not info.get("eos", True))
@@ -264,7 +265,7 @@ def panel_done(draft: str, out: str, info: dict, wall: float, cjk: bool) -> str:
                 f'<span class="when-idle">{L("Copy", "复制")}</span><span class="when-done">{L("Copied", "已复制")}</span></button>')
     foot = f'{num_chip}{copy_chip}{stats}<span class="grow"></span>{copy_btn}'
 
-    notes = []
+    notes = list(extra)   # (kind, en, zh) from the run itself: GPU stopped mid-way, parts left out
     if miss:
         notes.append(("warn",
                       f"These numbers from the draft don't appear in the rewrite: <b>{_join(miss)}</b>. They may be spelled out (“60 minutes” → “an hour”) or actually dropped. Check them against your draft.",
@@ -323,44 +324,119 @@ def _gpu_error(msg: str):
             f"GPU 调用失败：{html.escape(msg)}<br>如果提示免费 GPU 时长用完，可以登录 Hugging Face、过一会儿再试，或者装到自己电脑上跑（见下方）。")
 
 
+def _parts(draft: str):
+    """[(part, sep)]: a draft over one run's size cut at paragraph breaks (an over-long paragraph at sentence
+    ends) into parts of at most MAX_WORDS. sep is what joined the part to the next one in the draft."""
+    sizer = hz_text.Sizer(MAX_WORDS, MAX_CJK)
+    if sizer(draft) <= MAX_WORDS:
+        return [(draft, "")]
+    pieces = []
+    for para in re.split(r"\n[ \t]*\n+", draft):
+        para = para.strip()
+        if not para:
+            continue
+        if sizer(para) > MAX_WORDS:
+            cut, j = hz_text.cut_long(para, sizer), hz_text._joiner(para)
+            pieces += [(c, j) for c in cut[:-1]] + [(cut[-1], "\n\n")]
+        else:
+            pieces.append((para, "\n\n"))
+    groups, buf, size = [], [], 0.0
+    for text, sep in pieces:
+        w = sizer(text)
+        if buf and size + w > MAX_WORDS:
+            groups.append(buf)
+            buf, size = [], 0.0
+        buf.append((text, sep))
+        size += w
+    if buf:
+        groups.append(buf)
+    out = [("".join(t + sp for t, sp in g[:-1]) + g[-1][0], g[-1][1]) for g in groups]
+    out[-1] = (out[-1][0], "")
+    return out
+
+
+def _err_kind(msg: str) -> str:
+    m = msg.lower()
+    return "quota" if "quota" in m else "timeout" if ("timeout" in m or "time limit" in m or "aborted" in m) else "other"
+
+
 def rewrite(draft: str):
+    """Never hand back nothing when something was written: parts that finished (and the half of a part the GPU
+    stopped in) stay on screen with a notice saying what is missing. An empty sample gets one automatic retry."""
     draft = (draft or "").strip()
-    n_tok, msg = _check_input(draft)
-    if msg:
-        if draft:
-            log_use(outcome="too_long", in_units=hz_text.count_words(draft))
-        yield panel_message("warn", *msg)
+    if not draft:
+        yield panel_message("warn", "Paste a draft first.", "先贴一篇草稿。")
         return
     cjk = hz_text.is_cjk(draft)
-    max_new, budget, _ = plan(n_tok)
+    parts = _parts(draft)
+    todo, left = parts[:PARTS], parts[PARTS:]
     yield panel_wait()
-    t0, last, text, info = time.time(), 0.0, "", None
-    try:
-        for kind, val in _generate(build_prompt(draft), max_new, budget):
-            if kind == "text":
-                text += val
-                if time.time() - last > 0.1:
-                    last = time.time()
-                    yield panel_stream(text, cjk)
-            elif kind == "done":
-                info = val
-            elif kind == "error":
-                raise RuntimeError(val)
-    except Exception as exc:
-        log_use(outcome="error", in_units=hz_text.count_words(draft), in_tokens=n_tok,
-                seconds=round(time.time() - t0, 1))
-        yield panel_message(*_gpu_error(getattr(exc, "message", None) or str(exc) or type(exc).__name__))
+    t0, done_out, done_draft = time.time(), "", ""
+    toks, gsec, eos_all, stop, retries = 0, 0.0, True, None, 0
+    for i, (part, sep) in enumerate(todo):
+        n_tok = count_tokens(part)
+        max_new, budget, _ = plan(n_tok)
+        for attempt in range(2):                   # an empty sample gets one automatic retry
+            text, info, last, err = "", None, 0.0, None
+            try:
+                for kind, val in _generate(build_prompt(part), max_new, budget):
+                    if kind == "text":
+                        text += val
+                        if time.time() - last > 0.1:
+                            last = time.time()
+                            yield panel_stream(done_out + text, cjk, i + 1, len(todo))
+                    elif kind == "done":
+                        info = val
+                    elif kind == "error":
+                        raise RuntimeError(val)
+            except Exception as exc:
+                err = getattr(exc, "message", None) or str(exc) or type(exc).__name__
+            if err or text.strip():
+                break
+            retries += 1
+        out = text.strip()
+        if out:
+            done_out += out + (sep if not err else "")
+            done_draft += part + (sep if not err else "")
+            toks += (info or {}).get("tokens", 0) or 0
+            gsec += (info or {}).get("gen_seconds", 0.0) or 0.0
+            eos_all = eos_all and bool((info or {}).get("eos", False)) and not err
+        if err or not out:
+            stop = (i, err or "empty sample twice")
+            break
+    wall = time.time() - t0
+    out_all, drafted = done_out.strip(), done_draft.strip()
+    base = dict(in_units=hz_text.count_words(draft), in_tokens=count_tokens(draft), parts=len(parts),
+                done_parts=(stop[0] if stop else len(todo)), retries=retries, seconds=round(wall, 1))
+    if not out_all:
+        if stop and stop[1] != "empty sample twice":
+            log_use(outcome="error", err=_err_kind(stop[1]), **base)
+            yield panel_message(*_gpu_error(stop[1]))
+        else:
+            log_use(outcome="empty", **base)
+            yield panel_message("warn", "Two samples in a row came back empty. Press the arrow again.",
+                                "连续两发都是空的，请再点一次箭头。")
         return
-    out, wall = text.strip(), time.time() - t0
-    if not out:
-        log_use(outcome="empty", in_units=hz_text.count_words(draft), in_tokens=n_tok, seconds=round(wall, 1))
-        yield panel_message("warn", "Empty sample. Press the arrow again.", "这一发是空的，再点一次箭头。")
-        return
-    info = info or {}
-    log_use(outcome="ok", lang="zh" if cjk else "en", in_units=hz_text.count_words(draft), in_tokens=n_tok,
-            out_tokens=info.get("tokens"), eos=info.get("eos"), copy=round(hz_text.copy_rate(draft, out), 3),
-            seconds=round(wall, 1), gen_seconds=round(info.get("gen_seconds", 0.0), 1))
-    yield panel_done(draft, out, info, wall, cjk)
+    extra = []
+    unit = "字" if cjk else "词"
+    if stop:
+        i, msg = stop
+        extra.append(("warn",
+                      f"The GPU stopped during part {i + 1} of {len(todo)} ({html.escape(msg)}). Everything that was written is above; the rest of the draft was not rewritten. Press the arrow again later, log in to Hugging Face for more GPU time, or use the app or <code>hz</code>.",
+                      f"改到第 {i + 1}/{len(todo)} 段时 GPU 停了（{html.escape(msg)}）。已经写出来的都在上面，后面的部分没有改。可以过一会儿再点一次、登录 Hugging Face 多拿些 GPU 时长，或者用 App / <code>hz</code>。"))
+    if left:
+        rest = sum(hz_text.count_words(p) for p, _ in left)
+        extra.append(("warn",
+                      f"This page rewrites up to {len(todo)} parts per run, so the last {rest:,} {'chars' if cjk else 'words'} of your draft were left out. Paste them as a new run, or use the app or <code>hz</code> for the whole document.",
+                      f"本页每次最多改 {len(todo)} 段，草稿最后约 {rest:,} {unit}没有改。把它们单独贴进来再改一次，或者用 App / <code>hz</code> 处理整篇。"))
+    if len(todo) > 1 and not stop:
+        extra.append(("info",
+                      f"Long draft: rewritten in {len(todo)} parts, cut at paragraph breaks.",
+                      f"稿子较长：在段落之间切成 {len(todo)} 段分别改写。"))
+    log_use(outcome="ok" if not (stop or left) else "partial", lang="zh" if cjk else "en", out_tokens=toks,
+            eos=eos_all, copy=round(hz_text.copy_rate(drafted, out_all), 3), gen_seconds=round(gsec, 1),
+            err=_err_kind(stop[1]) if stop else None, left_parts=len(left), **base)
+    yield panel_done(drafted, out_all, {"tokens": toks, "eos": eos_all, "gen_seconds": gsec}, wall, cjk, extra)
 
 
 def humanize(draft: str) -> dict:

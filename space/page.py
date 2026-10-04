@@ -26,8 +26,9 @@ USAGE_ZH = BLOB + "docs/USAGE.zh.md"
 AGENTS = BLOB + "AGENTS.md"
 BLADER = "https://github.com/blader/humanizer"
 
-MAX_WORDS = 700      # English words per run
-MAX_CJK = 1200       # Chinese characters per run
+MAX_WORDS = 700      # English words per part (one GPU call)
+MAX_CJK = 1200       # Chinese characters per part
+PARTS = 3            # a longer draft is split at paragraph breaks and rewritten part by part, at most this many per run
 
 
 def L(en: str, zh: str) -> str:
@@ -103,7 +104,7 @@ def draft_head() -> str:
     return f"""<div class="sheet-head">
   <span class="idx">01</span><h2 class="sheet-title">{L("Draft", "草稿")}</h2>
   <span class="sheet-sub">{L("what the AI wrote", "AI 写的原稿")}</span>
-  <span class="meta mono" id="draft-count"><b>0</b> {L("words", "字")} <span class="dim">/ {L(f"{MAX_WORDS}", f"{MAX_CJK:,}")}</span></span>
+  <span class="meta mono" id="draft-count"><b>0</b> {L("words", "字")} <span class="dim">/ {L(f"{MAX_WORDS * PARTS:,}", f"{MAX_CJK * PARTS:,}")}</span></span>
 </div>"""
 
 
@@ -126,12 +127,14 @@ def rail() -> str:
 
 def editor_note() -> str:
     return P(
-        f"Runs the full bf16 model on a shared Hugging Face GPU (ZeroGPU). One draft per run: up to about "
-        f"{MAX_WORDS} English words or {MAX_CJK:,} Chinese characters. Free GPU time per visitor is limited, "
+        f"Runs the full bf16 model on a shared Hugging Face GPU (ZeroGPU). Up to about {MAX_WORDS * PARTS:,} English "
+        f"words or {MAX_CJK * PARTS:,} Chinese characters per run; anything over {MAX_WORDS} words or {MAX_CJK:,} "
+        f"characters is split at paragraph breaks and rewritten part by part. Free GPU time per visitor is limited, "
         f"so the first run can wait in a queue. For long documents use the app or <code>hz</code> "
         f"(<a href=\"#local\">below</a>). Your text is not stored: this page logs counts and timing only.",
-        f"这里跑的是完整的 bf16 模型，用 Hugging Face 的共享 GPU（ZeroGPU）。每次一篇：英文约 {MAX_WORDS} 词、"
-        f"中文约 {MAX_CJK:,} 字以内。每位访客的免费 GPU 时长有限，第一次可能要排队。长文档请用 App 或 "
+        f"这里跑的是完整的 bf16 模型，用 Hugging Face 的共享 GPU（ZeroGPU）。每次最多英文约 {MAX_WORDS * PARTS:,} 词、"
+        f"中文约 {MAX_CJK * PARTS:,} 字；超过英文 {MAX_WORDS} 词或中文 {MAX_CJK:,} 字的，会在段落之间切开、一段一段改。"
+        f"每位访客的免费 GPU 时长有限，第一次可能要排队。长文档请用 App 或 "
         f"<code>hz</code>（见<a href=\"#local\">下方</a>）。不保存你的文字：只记录字数和耗时。",
         "editor-note")
 

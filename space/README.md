@@ -20,7 +20,9 @@ so they read like a person wrote them. It is trained to keep every number, unit,
 and to add nothing. No AI detector was used anywhere in training.
 
 This Space runs the bf16 weights from [`jialinyyzz/humanizer`](https://huggingface.co/jialinyyzz/humanizer)
-on ZeroGPU, one draft per run (up to about 700 English words or 1,200 Chinese characters). Real
+on ZeroGPU, up to about 2,100 English words or 3,600 Chinese characters per run: anything over 700 words
+or 1,200 characters is split at paragraph breaks and rewritten part by part, and if the GPU stops partway
+the finished text stays on screen with a note. The `/humanize` API still takes one part (700 words) per call. Real
 before/after pairs from the held-out evaluation set are on the page and need no GPU.
 
 **Run it on your own computer:** the desktop app for macOS (Apple silicon) and Windows is on
